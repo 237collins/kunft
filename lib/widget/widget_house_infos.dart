@@ -14,7 +14,7 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 33),
           child: Column(
             children: [
               Row(
@@ -69,7 +69,7 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
                           // fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(width: 40),
+                      SizedBox(width: 35),
                       Row(
                         children: [
                           Icon(
@@ -77,6 +77,7 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
                             size: 12,
                             color: Colors.white,
                           ),
+                          SizedBox(width: 5),
                           Text(
                             '2 hours ago',
                             style: TextStyle(
@@ -90,14 +91,13 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
                     ],
                   ),
                   // bouton du slider
-                  Text(
-                    '000',
-                    style: TextStyle(
-                      color: Color(0xffffffff),
-                      fontSize: 10,
-                      // fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  // Text(
+                  //   '000',
+                  //   style: TextStyle(
+                  //     color: Color(0xffffffff),
+                  //     fontSize: 10,
+                  //   ),
+                  // ),
                 ],
               ),
             ],

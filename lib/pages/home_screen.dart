@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:kunft/widget/widget_animated_switcher.dart';
+import 'package:kunft/widget/widget_animation.dart';
 import 'package:kunft/widget/widget_house_infos.dart';
 import 'package:kunft/widget/widget_profile_infos.dart';
 
@@ -26,47 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Stack(
                     children: [
                       Container(
-                        // Fait un slider un slider ici
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        height: screenHeight * .45,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50),
-                            bottomLeft: Radius.circular(30),
-                            bottomRight: Radius.circular(30),
-                          ),
-                          child: Image.asset(
-                            'assets/images/img03.jpg',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                        ),
-                      ),
-
-                      Positioned.fill(
-                        // bottom: 0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                              topRight: Radius.circular(50),
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.transparent, Colors.black54],
-                            ),
-                          ),
-                        ),
+                        // height: screenHeight * .45,
+                        child: WidgetAnimation(),
                       ),
 
                       SizedBox(
-                        height: screenHeight * .45,
+                        height: screenHeight * .47,
                         child: Column(
                           children: [
                             Expanded(child: WidgetProfileInfos()),

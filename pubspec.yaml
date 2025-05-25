@@ -37,6 +37,7 @@ dependencies:
   carousel_slider: ^5.0.0
   carousel_slider_plus: ^7.1.0
   card_swiper: ^3.0.1
+  animated_switcher_plus: ^1.1.1
 
 dev_dependencies:
   flutter_test:
