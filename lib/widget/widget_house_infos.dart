@@ -32,7 +32,11 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
-                          textAlign: TextAlign.end,
+                          maxLines: isExpanded ? null : 1,
+                          overflow:
+                              isExpanded
+                                  ? TextOverflow.visible
+                                  : TextOverflow.ellipsis,
                         ),
                         SizedBox(height: 8),
                         Text(
@@ -42,7 +46,6 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
                             fontSize: 8,
                             // fontWeight: FontWeight.w600,
                           ),
-                          textAlign: TextAlign.left,
                           maxLines: isExpanded ? null : 1,
                           overflow:
                               isExpanded

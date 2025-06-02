@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:animated_switcher_plus/animated_switcher_plus.dart';
+// import 'package:animated_switcher_plus/animated_switcher_plus.dart';
 
 class WidgetAnimatedSwitcher extends StatefulWidget {
   const WidgetAnimatedSwitcher({super.key});

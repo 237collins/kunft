@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 // import 'package:kunft/widget/widget_animated_switcher.dart';
 import 'package:kunft/widget/widget_animation.dart';
 import 'package:kunft/widget/widget_house_infos.dart';
+import 'package:kunft/widget/widget_house_infos2.dart';
+import 'package:kunft/widget/widget_house_infos3.dart';
 import 'package:kunft/widget/widget_profile_infos.dart';
+import 'package:kunft/widget/widget_property_category.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,10 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Stack(
                     children: [
-                      Container(
-                        // height: screenHeight * .45,
-                        child: WidgetAnimation(),
-                      ),
+                      WidgetAnimation(),
 
                       SizedBox(
                         height: screenHeight * .47,
@@ -70,50 +70,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: 5,
-                              left: 5,
-                              bottom: 5,
-                              right: 10,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Details
+                            WidgetPropertyCategory(
+                              number: '01',
+                              name: 'Residential',
                             ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(100),
+                            SizedBox(width: 10),
+                            WidgetPropertyCategory(
+                              number: '02',
+                              name: 'Commercial',
                             ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xfff7f7f7),
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child: Text(
-                                    '01',
-                                    style: TextStyle(
-                                      color: Color(0xff010101),
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  'Residential',
-                                  style: TextStyle(
-                                    color: Color(0xff010101),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
+                            SizedBox(width: 10),
+                            WidgetPropertyCategory(number: '03', name: 'Land'),
+                            SizedBox(width: 10),
+                            WidgetPropertyCategory(
+                              number: '04',
+                              name: 'Specialty',
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 10),
+                          ],
+                        ),
                       ),
                       SizedBox(height: 20),
                       Row(
@@ -137,6 +118,57 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ],
+                      ),
+                      SizedBox(height: 15),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        // Faut faire une liste  2 colonnes ici
+                        child: Column(
+                          children: [
+                            // Widget infos ici
+                            WidgetHouseInfos3(
+                              imgHouse: 'assets/images/img04.jpg',
+                              houseName: 'Single family home',
+                              price: '\$185 000',
+                              locate: '908 Elm Street, Unit 48, Aistin,',
+                              ownerName: '@abigail.moore',
+                              time: '2 hours ago',
+                            ),
+                            WidgetHouseInfos3(
+                              imgHouse: 'assets/images/img05.jpg',
+                              houseName: 'Single family home',
+                              price: '\$185 000',
+                              locate: '908 Elm Street, Unit 48, Aistin,',
+                              ownerName: '@abigail.moore',
+                              time: '2 hours ago',
+                            ),
+                            // SizedBox(height: 20),
+                            // Column(children: [Text('data2'), Text('data2')]),
+                          ],
+                        ),
+                        // Column(
+                        //   children: [
+                        //     // Widget infos ici
+                        //     WidgetHouseInfos2(
+                        //       imgHouse: 'assets/images/img04.jpg',
+                        //       houseName: 'Single family home',
+                        //       price: '\$185 000',
+                        //       locate: '908 Elm Street, Unit 48, Aistin,',
+                        //       ownerName: '@abigail.moore',
+                        //       time: '2 hours ago',
+                        //     ),
+                        //     WidgetHouseInfos2(
+                        //       imgHouse: 'assets/images/img05.jpg',
+                        //       houseName: 'Single family home',
+                        //       price: '\$185 000',
+                        //       locate: '908 Elm Street, Unit 48, Aistin,',
+                        //       ownerName: '@abigail.moore',
+                        //       time: '2 hours ago',
+                        //     ),
+                        //     // SizedBox(height: 20),
+                        //     // Column(children: [Text('data2'), Text('data2')]),
+                        //   ],
+                        // ),
                       ),
                     ],
                   ),
