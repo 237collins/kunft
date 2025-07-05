@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kunft/pages/property_detail.dart';
 
 class WidgetHouseInfos extends StatefulWidget {
   const WidgetHouseInfos({super.key});
@@ -14,7 +15,7 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 33),
+          padding: const EdgeInsets.only(left: 10.0, right: 10, top: 33),
           child: Column(
             children: [
               Row(
@@ -55,7 +56,19 @@ class _WidgetHouseInfosState extends State<WidgetHouseInfos> {
                       ],
                     ),
                   ),
-                  Icon(Icons.arrow_outward, color: Colors.white),
+                  InkWell(
+                    onTap: () {
+                      setState(() {});
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PropertyDetail(),
+                        ),
+                      );
+                    },
+
+                    child: Icon(Icons.arrow_outward, color: Colors.white),
+                  ),
                 ],
               ),
               SizedBox(height: 8),

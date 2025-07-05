@@ -10,6 +10,8 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Déclaration des contrôleurs
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -49,6 +51,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 30),
             Column(
               children: [
                 Text(
@@ -66,53 +69,63 @@ class LoginPage extends StatelessWidget {
             // Début formulaire
             Form(
               key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: emailController,
-                      style: TextStyle(color: Colors.purple),
-                      decoration: InputDecoration(
-                        // prefixIcon: Icon(Icons.email, color: Colors.grey),
-                        labelText: 'userneame@gmail.com',
-                        labelStyle: TextStyle(fontSize: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: emailController,
+                    style: TextStyle(color: Colors.purple),
+                    decoration: InputDecoration(
+                      // prefixIcon: Icon(Icons.email, color: Colors.grey),
+                      labelText: 'userneame@gmail.com',
+                      labelStyle: TextStyle(fontSize: 12),
+                      filled: true,
+                      fillColor: Color(0xfff7f7f7),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Color(0xffd3d3d3)),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 15),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            // prefixIcon: Icon(Icons.lock, color: Colors.grey),
+                            labelText: '********',
+                            labelStyle: TextStyle(fontSize: 12),
+                            filled: true,
+                            fillColor: Color(0xfff7f7f7),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Color(0xffd3d3d3)),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 15),
+                      SizedBox(width: 15),
+                      Icon(Icons.visibility_off),
+                    ],
+                  ),
 
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        // prefixIcon: Icon(Icons.lock, color: Colors.grey),
-                        labelText: '********',
-                        labelStyle: TextStyle(fontSize: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                    ),
-                    Icon(Icons.visibility_off),
-
-                    SizedBox(height: 15),
-                  ],
-                ),
+                  SizedBox(height: 15),
+                ],
               ),
             ),
             SizedBox(height: 16),

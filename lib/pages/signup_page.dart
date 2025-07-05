@@ -57,93 +57,117 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               SizedBox(height: 24),
-              Text(
-                'Join the Archilles Community!',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Start your journey to finding the perfect property.',
-                style: TextStyle(fontSize: 12),
-              ),
-              SizedBox(height: 20),
-              // Début formulaire
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.0),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: userNameController,
-                          style: TextStyle(color: Colors.purple),
-                          decoration: InputDecoration(
-                            // prefixIcon: Icon(Icons.person, color: Colors.grey),
-                            labelText: 'Username',
-                            labelStyle: TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Join the Archilles Community!',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Start your journey to finding the perfect property.',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  SizedBox(height: 20),
+                  // Début formulaire
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18.0),
+                      color: Colors.white,
+                    ),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: userNameController,
+                            style: TextStyle(color: Colors.purple),
+                            decoration: InputDecoration(
+                              // prefixIcon: Icon(Icons.person, color: Colors.grey),
+                              labelText: 'Username',
+                              labelStyle: TextStyle(fontSize: 12),
+                              filled: true,
+                              fillColor: Color(0xfff7f7f7),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                  color: Color(0xffd3d3d3),
+                                ),
+                              ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your username';
+                              }
+                              return null;
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your username';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: 15),
+                          SizedBox(height: 15),
 
-                        TextFormField(
-                          controller: emailController,
-                          style: TextStyle(color: Colors.purple),
-                          decoration: InputDecoration(
-                            // prefixIcon: Icon(Icons.email, color: Colors.grey),
-                            labelText: 'userneame@gmail.com',
-                            labelStyle: TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                          TextFormField(
+                            controller: emailController,
+                            style: TextStyle(color: Colors.purple),
+                            decoration: InputDecoration(
+                              // prefixIcon: Icon(Icons.email, color: Colors.grey),
+                              labelText: 'userneame@gmail.com',
+                              labelStyle: TextStyle(fontSize: 12),
+                              filled: true,
+                              fillColor: Color(0xfff7f7f7),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                  color: Color(0xffd3d3d3),
+                                ),
+                              ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              return null;
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            return null;
-                          },
-                        ),
 
-                        SizedBox(height: 15),
+                          SizedBox(height: 15),
 
-                        TextFormField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            // prefixIcon: Icon(Icons.lock, color: Colors.grey),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: passwordController,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    // prefixIcon: Icon(Icons.lock, color: Colors.grey),
+                                    labelText: 'Password',
+                                    labelStyle: TextStyle(fontSize: 12),
+                                    filled: true,
+                                    fillColor: Color(0xfff7f7f7),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: Color(0xffd3d3d3),
+                                      ),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your password';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 15),
+
+                              Icon(Icons.visibility_off),
+                            ],
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        Icon(Icons.visibility_off),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
 
               SizedBox(height: 25),

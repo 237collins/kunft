@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Navigation Flutter',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        // primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
+      ),
       home: HomePage(),
     );
   }

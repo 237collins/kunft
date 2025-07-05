@@ -13,7 +13,7 @@ class _WidgetProfileInfosState extends State<WidgetProfileInfos> {
     return Positioned(
       // top: 0,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 40),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -23,7 +23,7 @@ class _WidgetProfileInfosState extends State<WidgetProfileInfos> {
                 Container(
                   padding: EdgeInsets.all(3),
                   height: 56,
-                  width: 50,
+                  width: 56,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(100),
@@ -44,7 +44,7 @@ class _WidgetProfileInfosState extends State<WidgetProfileInfos> {
                 // ),
                 SizedBox(width: 8),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 5),

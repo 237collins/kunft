@@ -50,8 +50,8 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                     ),
                     child: Image.asset(
                       _showFirstChild
-                          ? 'assets/images/img01.jpg'
-                          : 'assets/images/img04.jpg',
+                          ? 'assets/images/img04.jpg'
+                          : 'assets/images/img01.jpg',
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),
@@ -70,7 +70,7 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                       gradient: const LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Colors.transparent, Colors.black54],
+                        colors: [Colors.transparent, Color(0xff101010)],
                       ),
                     ),
                   ),
@@ -85,46 +85,51 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                       children: [
                         SizedBox(width: 5),
                         // const Spacer(),
-                        Center(
-                          child:
-                          // ElevatedButton(
-                          //   onPressed:
-                          //       () => setState(() {
-                          //         _showFirstChild = !_showFirstChild;
-                          //       }),
-                          //   child: const Text(
-                          //     'Nest',
-                          //     style: TextStyle(fontSize: 12),
-                          //   ),
-                          // ),
-                          ElevatedButton(
-                            onPressed:
-                                () => setState(() {
-                                  _showFirstChild = !_showFirstChild;
-                                }),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black26,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 5,
-                              ),
 
-                              minimumSize:
-                                  Size.zero, // empêche un minimum implicite trop grand
-                              tapTargetSize:
-                                  MaterialTapTargetSize
-                                      .shrinkWrap, // réduit la zone cliquable
-                            ),
-                            child: const Text(
-                              'Next',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Bouton de swipe auto à ajouter ici bas
+
+                        // Center(
+                        //   child:
+                        //   // ElevatedButton(
+                        //   //   onPressed:
+                        //   //       () => setState(() {
+                        //   //         _showFirstChild = !_showFirstChild;
+                        //   //       }),
+                        //   //   child: const Text(
+                        //   //     'Nest',
+                        //   //     style: TextStyle(fontSize: 12),
+                        //   //   ),
+                        //   // ),
+
+                        //   // Boutons de preview e l'animation auto
+                        //   ElevatedButton(
+                        //     onPressed:
+                        //         () => setState(() {
+                        //           _showFirstChild = !_showFirstChild;
+                        //         }),
+                        //     style: ElevatedButton.styleFrom(
+                        //       backgroundColor: Colors.black26,
+                        //       padding: const EdgeInsets.symmetric(
+                        //         horizontal: 12,
+                        //         vertical: 5,
+                        //       ),
+
+                        //       minimumSize:
+                        //           Size.zero, // empêche un minimum implicite trop grand
+                        //       tapTargetSize:
+                        //           MaterialTapTargetSize
+                        //               .shrinkWrap, // réduit la zone cliquable
+                        //     ),
+                        //     child: const Text(
+                        //       'Next',
+                        //       style: TextStyle(
+                        //         fontSize: 10,
+                        //         color: Colors.white,
+                        //         fontWeight: FontWeight.w600,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

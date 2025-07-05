@@ -21,7 +21,7 @@ class _WidgetPropertyCategoryState extends State<WidgetPropertyCategory> {
     return Container(
       padding: EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 10),
       decoration: BoxDecoration(
-        color: Colors.black12,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Row(

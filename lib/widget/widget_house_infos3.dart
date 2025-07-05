@@ -26,14 +26,15 @@ class WidgetHouseInfos3 extends StatefulWidget {
 
 class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
   bool isExpanded = false;
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
         minHeight: 150,
         minWidth: 130,
-        maxWidth: 205,
-        maxHeight: 335,
+        maxWidth: 150,
+        maxHeight: 300,
       ),
       child: Column(
         children: [
@@ -46,7 +47,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                   widget.imgHouse,
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  height: 300,
+                  height: 265,
                 ),
               ),
               Positioned.fill(
@@ -125,9 +126,74 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                   ),
                 ),
               ),
+
+              // Bouton d'interaction
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // Bouton Share
+                    InkWell(
+                      onTap: () {
+                        // Ajoute l'action d partage ici
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: Color(0x1affffff),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: Icon(
+                                Icons.share,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Bouton j'aime
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          isFavorite = !isFavorite;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: Color(0x1affffff),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: Icon(
+                                isFavorite
+                                    ? Icons.favorite_rounded
+                                    : Icons.favorite_rounded,
+                                // color: Colors.white,
+                                color: isFavorite ? Colors.red : Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
