@@ -1,279 +1,186 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class WidgetHouseSpecs extends StatefulWidget {
   final String bed;
   final String bath;
-  final bool withSpacing;
+  final bool wifi;
+  final bool parking;
+  final bool generator;
+  final bool climatisation;
 
   const WidgetHouseSpecs({
-    Key? key,
-    Key? superkey,
+    super.key,
     required this.bed,
     required this.bath,
-    this.withSpacing = true,
-  }) : super(key: superkey);
+    this.wifi = false,
+    this.parking = false,
+    this.generator = false,
+    this.climatisation = false,
+  });
 
   @override
   State<WidgetHouseSpecs> createState() => _WidgetHouseSpecsState();
 }
 
 class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
+  // ✅ Fonction privée pour construire un élément de spécification réutilisable
+  // Elle prend maintenant un paramètre `boolValue` pour les commodités
+  Widget _buildSpecItem({
+    required IconData icon,
+    required String title,
+    required Widget valueWidget, // Peut être un Text ou une Icône colorée
+    double iconSize = 24.0,
+    bool isAvailable =
+        false, // ✅ Nouveau paramètre pour la disponibilité (booléen)
+  }) {
+    // Détermine la couleur de l'icône de valeur si c'est une commodité
+    Color valueIconColor =
+        isAvailable
+            ? Colors.green
+            : Colors.grey[400]!; // Vert si disponible, gris sinon
+
+    return Container(
+      margin: const EdgeInsets.only(right: 10),
+      width: 70,
+      height: 70,
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // L'icône principale du bloc (ex: lit, baignoire, clim)
+          Icon(icon, size: iconSize),
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.grey,
+              fontSize: 8,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 6),
+          // ✅ Affichage conditionnel :
+          // Si c'est une commodité (isAvailable est utilisé pour la couleur), affiche une icône de coche/croix ou un simple point
+          // Sinon, affiche le valueWidget fourni (pour les nombres de lits/douches)
+          isAvailable
+              ? Icon(
+                Icons
+                    .radio_button_checked_sharp, // Icône de coche pour "disponible"
+                color: valueIconColor, // Couleur basée sur la disponibilité
+                size: 18, // Ajustez la taille de cette icône si nécessaire
+              )
+              : valueWidget,
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // Nombre de Lits
-        Container(
-          margin: EdgeInsets.only(right: 10),
-          width: 80,
-          height: 80,
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+    // Le switchScaleFactor n'est plus nécessaire car nous n'utilisons plus de Switches
+    // const double switchScaleFactor = 0.5;
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // Nombre de Lits
+          _buildSpecItem(
+            icon: Icons.bed,
+            title: 'Chambres',
+            valueWidget: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.bed,
+                  style: const TextStyle(
+                    color: Color(0xff010101),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const Text(
+                  ' pièces',
+                  style: TextStyle(
+                    color: Color(0xff010101),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
 
-          child: Column(
-            children: [
-              Icon(Icons.bed),
-              SizedBox(height: 8),
-              Text(
-                'Bedroom',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 8,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w400,
+          // Nombre de douches
+          _buildSpecItem(
+            icon: Icons.bathtub,
+            title: 'Douches',
+            valueWidget: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.bath,
+                  style: const TextStyle(
+                    color: Color(0xff010101),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.bed,
-                    style: TextStyle(
-                      color: Color(0xff010101),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
+                const Text(
+                  ' pièces',
+                  style: TextStyle(
+                    color: Color(0xff010101),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
                   ),
-                  Text(
-                    ' Rooms',
-                    style: TextStyle(
-                      color: Color(0xff010101),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        // Nombre de douche
-        Container(
-          margin: EdgeInsets.only(right: 10),
-          width: 80,
-          height: 80,
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              Icon(Icons.bathtub),
-              SizedBox(height: 8),
-              Text(
-                'Bathroom',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 8,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w400,
                 ),
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.bath,
-                    style: TextStyle(
-                      color: Color(0xff010101),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    ' Rooms',
-                    style: TextStyle(
-                      color: Color(0xff010101),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
 
-        // Nombre clim
-        Container(
-          margin: EdgeInsets.only(right: 10),
-          width: 80,
-          height: 80,
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+          // ✅ Climatisation - Maintenant avec une icône colorée
+          _buildSpecItem(
+            icon: Icons.ac_unit,
+            title: 'Climatisation',
+            valueWidget:
+                const SizedBox.shrink(), // Pas de valueWidget direct pour les booléens
+            isAvailable:
+                widget
+                    .climatisation, // Passe la valeur booléenne pour la couleur de l'icône
           ),
-          child: Column(
-            children: [
-              Icon(Icons.air),
-              SizedBox(height: 8),
-              Text(
-                'Air conditionar',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 8,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Ajoute une action ici
 
-                  // Text(
-                  //   widget.number,
-                  //   style: TextStyle(
-                  //     color: Color(0xff010101),
-                  //     fontSize: 12,
-                  //     fontWeight: FontWeight.w500,
-                  //   ),
-                  // ),
-                  Text(
-                    ' Clim',
-                    style: TextStyle(
-                      color: Color(0xff010101),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          // ✅ Wi-Fi
+          _buildSpecItem(
+            icon: Icons.wifi,
+            title: 'Wi-Fi',
+            valueWidget: const SizedBox.shrink(),
+            isAvailable: widget.wifi,
           ),
-        ),
-        // Wifi dispo
-        Container(
-          margin: EdgeInsets.only(right: 10),
-          width: 80,
-          height: 80,
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              Icon(Icons.wifi_password_rounded),
-              SizedBox(height: 8),
-              Text(
-                'Wifi avaible ?',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 8,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Ajoute une action ici
 
-                  // Text(
-                  //   widget.number,
-                  //   style: TextStyle(
-                  //     color: Color(0xff010101),
-                  //     fontSize: 12,
-                  //     fontWeight: FontWeight.w500,
-                  //   ),
-                  // ),
-                  // afficher un bouton action ici
-                  Text(
-                    ' Wifi',
-                    style: TextStyle(
-                      color: Color(0xff010101),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          // ✅ Parking
+          _buildSpecItem(
+            icon: Icons.local_parking_rounded,
+            title: 'Parking',
+            valueWidget: const SizedBox.shrink(),
+            isAvailable: widget.parking,
           ),
-        ),
-        // Bloc 5
-        Container(
-          margin: EdgeInsets.only(right: 10),
-          width: 80,
-          height: 80,
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              Icon(Icons.local_parking_rounded),
-              SizedBox(height: 8),
-              Text(
-                'Parking',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 8,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Ajoute une action ici
-                  // Text(
-                  //   widget.number,
-                  //   style: TextStyle(
-                  //     color: Color(0xff010101),
-                  //     fontSize: 12,
-                  //     fontWeight: FontWeight.w500,
-                  //   ),
-                  // ),
-                  Text(
-                    ' Parking',
-                    style: TextStyle(
-                      color: Color(0xff010101),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
 
-              // if (widget.withSpacing) SizedBox(width: 15),
-            ],
+          // ✅ Générateur
+          _buildSpecItem(
+            icon: Icons.power,
+            title: 'Générateur',
+            valueWidget: const SizedBox.shrink(),
+            isAvailable: widget.generator,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

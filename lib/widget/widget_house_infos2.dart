@@ -41,7 +41,7 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
+                child: Image.network(
                   //insert image
                   widget.imgHouse,
                   fit: BoxFit.cover,
@@ -56,7 +56,7 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                     gradient: const LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.transparent, Colors.black87],
+                      colors: [Colors.transparent, Colors.black54],
                     ),
                   ),
                 ),
@@ -69,19 +69,19 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        // nom du mobilier
-                        widget.houseName,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                      SizedBox(
+                        width: 140,
+                        child: Text(
+                          // nom du mobilier
+                          widget.houseName,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: isExpanded ? null : 1,
-                        overflow:
-                            isExpanded
-                                ? TextOverflow.visible
-                                : TextOverflow.ellipsis,
                       ),
                       Text(
                         // Prix
@@ -89,10 +89,10 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       SizedBox(
                         // width: 150,
                         child: Row(
@@ -100,13 +100,14 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                             Icon(
                               Icons.location_on_rounded,
                               color: Colors.white,
+                              size: 17,
                             ),
-                            SizedBox(width: 10),
+                            SizedBox(width: 3),
                             Text(
                               // nom du lieu
                               widget.locate,
                               style: TextStyle(
-                                fontSize: 8,
+                                fontSize: 10,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),

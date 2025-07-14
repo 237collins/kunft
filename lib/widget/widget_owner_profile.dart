@@ -2,10 +2,15 @@
 import 'package:flutter/material.dart';
 
 class WidgetOwnerProfile extends StatefulWidget {
+  // final String propertyCount;
+  final String ownerName;
   final String imgOwner;
 
-  const WidgetOwnerProfile({Key? superkey, required this.imgOwner})
-    : super(key: superkey);
+  const WidgetOwnerProfile({
+    Key? key,
+    required this.ownerName,
+    required this.imgOwner,
+  }) : super(key: key);
 
   @override
   State<WidgetOwnerProfile> createState() => _WidgetOwnerProfileState();
@@ -32,15 +37,19 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.asset(
-                      // photo de profil du propriétaire
-                      widget.imgOwner,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(widget.imgOwner),
                   ),
+
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(100),
+                  //   child: Image.network(
+                  //     // photo de profil du propriétaire
+                  //     widget.imgOwner,
+                  //     fit: BoxFit.cover,
+                  //     width: double.infinity,
+                  //   ),
+                  // ),
                 ),
                 // Icon(
                 //   Icons.account_circle_rounded,
@@ -54,11 +63,13 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
                   children: [
                     SizedBox(height: 5),
                     Text(
-                      '@abigail.moore',
+                      // '@abigail.moore',
+                      'Propriétaire',
                       style: TextStyle(fontSize: 8, color: Colors.grey),
                     ),
                     Text(
-                      'Abigail Moore',
+                      // Nom du proprietaire
+                      widget.ownerName,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -66,7 +77,7 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
                       ),
                     ),
                     Text(
-                      'abigailmoore24@email.com',
+                      'Detient 10 logements',
                       style: TextStyle(
                         fontSize: 8,
                         fontStyle: FontStyle.italic,
@@ -88,19 +99,27 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
                     Column(
                       children: [
                         Icon(Icons.message, color: Colors.black),
+                        SizedBox(height: 8),
                         Text(
                           'Message',
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 20),
                     Column(
                       children: [
                         Icon(Icons.phone, color: Colors.black),
+                        SizedBox(height: 8),
                         Text(
                           'Call',
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),

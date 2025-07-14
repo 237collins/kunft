@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:kunft/pages/explore_screen.dart';
+import 'package:kunft/pages/home_screen.dart';
 
 class WidgetPropertyTopNavBar extends StatefulWidget {
   final String title;
@@ -30,9 +30,11 @@ class _WidgetPropertyTopNavBarState extends State<WidgetPropertyTopNavBar> {
                 InkWell(
                   onTap: () {
                     setState(() {});
-                    Navigator.push(
+                    Navigator.pop(
                       context,
-                      MaterialPageRoute(builder: (context) => ExploreScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(user: null),
+                      ),
                     );
                   },
                   child: Icon(Icons.arrow_back, size: 36, color: Colors.white),

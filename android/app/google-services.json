@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "874658104545",
+    "project_id": "kunft-3f7db",
+    "storage_bucket": "kunft-3f7db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874658104545:android:33f7802ea424fabc3123a0",
+        "android_client_info": {
+          "package_name": "com.example.kunft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874658104545-hoabpri1gv99btuu04mf9qi7s3479tgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVKLD1Kz1KI6AclxVJO8rkUKGJw-bC5rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874658104545-hoabpri1gv99btuu04mf9qi7s3479tgl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "874658104545-s1158765q7vt6nkskh79akbuudfi2nh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kunft"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

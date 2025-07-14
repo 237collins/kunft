@@ -5,7 +5,6 @@ import 'package:kunft/widget/widget_house_infos2.dart';
 import 'package:kunft/widget/widget_house_infos3.dart';
 import 'package:kunft/widget/widget_house_infos_explore.dart';
 import 'package:kunft/widget/widget_message_aleatoire.dart';
-import 'package:kunft/widget/widget_nav_bar_bottom.dart';
 import 'package:kunft/widget/widget_owner_list.dart';
 import 'package:kunft/widget/widget_profile_infos.dart';
 
@@ -316,7 +315,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
             ),
           ),
           // Barre de navigation
-          Positioned(bottom: 0, child: WidgetNavBarBottom()),
         ],
       ),
     );

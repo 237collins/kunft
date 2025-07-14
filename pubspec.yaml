@@ -38,6 +38,18 @@ dependencies:
   carousel_slider_plus: ^7.1.0
   card_swiper: ^3.0.1
   animated_switcher_plus: ^1.1.1
+  http: ^1.4.0
+  dio: ^5.8.0+1
+  http_parser: ^4.1.2
+  image_picker: ^1.1.2
+  shared_preferences: ^2.5.3
+  css_colors: ^1.1.7
+  firebase_core: ^3.15.1
+  firebase_auth: ^5.6.2
+  google_sign_in: ^7.1.0
+  sign_in_with_apple: ^7.0.1
+  firebase_app_installations: ^0.3.2+9
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

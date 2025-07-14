@@ -42,7 +42,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
+                child: Image.network(
                   //insert image
                   widget.imgHouse,
                   fit: BoxFit.cover,
@@ -70,19 +70,19 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        // nom du mobilier
-                        widget.houseName,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                      SizedBox(
+                        width: 130,
+                        child: Text(
+                          // nom du mobilier
+                          widget.houseName,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: isExpanded ? null : 1,
-                        overflow:
-                            isExpanded
-                                ? TextOverflow.visible
-                                : TextOverflow.ellipsis,
                       ),
                       Text(
                         // Prix
@@ -90,7 +90,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       SizedBox(height: 10),
@@ -101,13 +101,14 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                             Icon(
                               Icons.location_on_rounded,
                               color: Colors.white,
+                              size: 17,
                             ),
-                            SizedBox(width: 10),
+                            SizedBox(width: 3),
                             Text(
                               // nom du lieu
                               widget.locate,
                               style: TextStyle(
-                                fontSize: 8,
+                                fontSize: 10,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),
