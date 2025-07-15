@@ -59,23 +59,25 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
     }
   }
 
-  void _nextImage() {
-    if (widget.imageUrls.isEmpty) return;
-    setState(() {
-      _currentIndex = (_currentIndex + 1) % widget.imageUrls.length;
-      _currentDisplayImageUrl = widget.imageUrls[_currentIndex];
-    });
-  }
+  // Ces void sont pour les boutons de slide
 
-  void _previousImage() {
-    if (widget.imageUrls.isEmpty) return;
-    setState(() {
-      _currentIndex =
-          (_currentIndex - 1 + widget.imageUrls.length) %
-          widget.imageUrls.length;
-      _currentDisplayImageUrl = widget.imageUrls[_currentIndex];
-    });
-  }
+  // void _nextImage() {
+  //   if (widget.imageUrls.isEmpty) return;
+  //   setState(() {
+  //     _currentIndex = (_currentIndex + 1) % widget.imageUrls.length;
+  //     _currentDisplayImageUrl = widget.imageUrls[_currentIndex];
+  //   });
+  // }
+
+  // void _previousImage() {
+  //   if (widget.imageUrls.isEmpty) return;
+  //   setState(() {
+  //     _currentIndex =
+  //         (_currentIndex - 1 + widget.imageUrls.length) %
+  //         widget.imageUrls.length;
+  //     _currentDisplayImageUrl = widget.imageUrls[_currentIndex];
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

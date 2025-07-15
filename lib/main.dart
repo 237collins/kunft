@@ -31,22 +31,23 @@ class MyApp extends StatelessWidget {
       title: 'KUNFT App', // Un titre plus spécifique pour votre app
       theme: ThemeData(
         // primarySwatch: Colors.blue, // Commenté pour utiliser la couleur de fond par défaut de Scaffold si nécessaire
-        scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Barlow', // ✅ Police par défaut
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontFamily: 'BebasNeue', fontSize: 96.0),
+          // ... d'autres styles de texte où vous voulez Bebas Neue ou d'autres polices
+        ),
+        scaffoldBackgroundColor: Color(0xfff7f7f7),
       ),
-      home:
-          const SplashScreen(), // Assurez-vous que c'est le point d'entrée voulu
+      home: const SplashScreen(), // Point d'entrée voulu
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key}); // Ajoutez 'const' ici
+  const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(title: Text('Accueil')), // Commenté si non utilisé
-      body: const Center(child: OnBoardingPage()), // Ajoutez 'const' ici
-    );
+    return Scaffold(body: const Center(child: OnBoardingPage()));
   }
 }
 

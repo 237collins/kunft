@@ -200,8 +200,8 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                       width: screenWidth * .95,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
+                          // topLeft: Radius.circular(50),
+                          // topRight: Radius.circular(50),
                           bottomLeft: Radius.circular(30),
                           bottomRight: Radius.circular(30),
                         ),
@@ -232,7 +232,7 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                                   color:
                                       (_currentIndex == index)
                                           ? Colors.white
-                                          : Colors.white.withOpacity(0.4),
+                                          : Color(0x66ffffff),
                                 ),
                               );
                             }),

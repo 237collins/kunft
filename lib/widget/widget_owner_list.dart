@@ -44,7 +44,7 @@ class _WidgetOwnerListState extends State<WidgetOwnerList> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image.asset(widget.img, fit: BoxFit.cover),
+              child: Image.network(widget.img, fit: BoxFit.cover),
             ),
           ),
           SizedBox(height: 8),

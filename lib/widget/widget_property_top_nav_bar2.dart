@@ -2,18 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:kunft/pages/home_screen.dart';
 
-class WidgetPropertyTopNavBar extends StatefulWidget {
+class WidgetPropertyTopNavBar2 extends StatefulWidget {
   final String title;
 
-  const WidgetPropertyTopNavBar({Key? key, Key? superkey, required this.title})
+  const WidgetPropertyTopNavBar2({Key? key, Key? superkey, required this.title})
     : super(key: superkey);
 
   @override
-  State<WidgetPropertyTopNavBar> createState() =>
-      _WidgetPropertyTopNavBarState();
+  State<WidgetPropertyTopNavBar2> createState() =>
+      _WidgetPropertyTopNavBar2State();
 }
 
-class _WidgetPropertyTopNavBarState extends State<WidgetPropertyTopNavBar> {
+class _WidgetPropertyTopNavBar2State extends State<WidgetPropertyTopNavBar2> {
   bool isSelected = false;
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,14 @@ class _WidgetPropertyTopNavBarState extends State<WidgetPropertyTopNavBar> {
                     Navigator.pop(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomeScreen(user: null),
+                        builder:
+                            (context) => HomeScreen(
+                              user: null,
+                            ), // Doit envoyer sur les proprietes
                       ),
                     );
                   },
-                  child: Icon(Icons.arrow_back, size: 36, color: Colors.white),
+                  child: Icon(Icons.arrow_back, size: 36),
                 ),
 
                 SizedBox(width: 8),
@@ -45,7 +48,7 @@ class _WidgetPropertyTopNavBarState extends State<WidgetPropertyTopNavBar> {
                   // Titre de la nav
                   widget.title,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
                     // Apres remet en blanc
                     color: Colors.black,
@@ -55,18 +58,15 @@ class _WidgetPropertyTopNavBarState extends State<WidgetPropertyTopNavBar> {
             ),
             Row(
               children: [
-                Icon(Icons.share, color: Colors.white),
-                SizedBox(width: 15),
+                Icon(Icons.message),
+                SizedBox(width: 20),
                 InkWell(
                   onTap: () {
                     setState(() {
-                      isSelected = !isSelected;
+                      // isSelected = !isSelected;
                     });
                   },
-                  child: Icon(
-                    isSelected ? Icons.favorite : Icons.favorite,
-                    color: isSelected ? Colors.red : Colors.white,
-                  ),
+                  child: Icon(Icons.notification_important_rounded),
                 ),
               ],
             ),

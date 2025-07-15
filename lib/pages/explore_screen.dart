@@ -1,10 +1,11 @@
+// Ancien code
+
 import 'package:flutter/material.dart';
 import 'package:kunft/pages/map_search.dart';
 import 'package:kunft/widget/widget_animation.dart';
 import 'package:kunft/widget/widget_house_infos2.dart';
 import 'package:kunft/widget/widget_house_infos3.dart';
 import 'package:kunft/widget/widget_house_infos_explore.dart';
-import 'package:kunft/widget/widget_message_aleatoire.dart';
 import 'package:kunft/widget/widget_owner_list.dart';
 import 'package:kunft/widget/widget_profile_infos.dart';
 
@@ -83,7 +84,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 // Spacer(),
                                 Column(
                                   children: [
-                                    WidgetMessageAleatoire(),
+                                    // WidgetMessageAleatoire(),
                                     SizedBox(height: 5),
                                     SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,

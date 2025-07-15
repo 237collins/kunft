@@ -82,7 +82,6 @@ class _WidgetHouseTextInfosState extends State<WidgetHouseTextInfos> {
                         Text(
                           description,
                           style: const TextStyle(
-                            // Utilisation de const
                             color: Color(0xffffffff),
                             fontSize: 10,
                           ),
@@ -102,8 +101,9 @@ class _WidgetHouseTextInfosState extends State<WidgetHouseTextInfos> {
                           MaterialPageRoute(
                             builder:
                                 (context) => PropertyDetail(
-                                  logementData:
-                                      logement, // ✅ C'est ici que le logement actuel est passé !
+                                  logementData: logement,
+                                  // logementData:
+                                  //     logement, // ✅ C'est ici que le logement actuel est passé !
                                 ),
                           ),
                         );

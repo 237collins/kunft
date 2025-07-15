@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart'; // Importez intl pour le formatage des dates et nombres
+import 'package:intl/intl.dart';
 
-import 'package:kunft/pages/SplashScreen.dart';
 import 'package:kunft/widget/widget_animation.dart';
 import 'package:kunft/widget/widget_house_text_infos.dart';
 import 'package:kunft/widget/widget_house_infos2.dart';
-import 'package:kunft/widget/widget_house_infos3.dart'; // NOUVEL IMPORT pour WidgetHouseInfos3
+import 'package:kunft/widget/widget_house_infos3.dart';
 import 'package:kunft/widget/widget_profile_infos.dart';
 import 'package:kunft/widget/widget_property_category.dart';
 
@@ -16,6 +14,7 @@ const String API_BASE_URL = 'http://127.0.0.1:8000';
 
 final Dio _dio = Dio();
 
+// --- Fonction de récupération des logements ajustée pour le format API attendu ---
 Future<List<dynamic>> fetchLogements() async {
   try {
     final response = await _dio.get(
@@ -28,13 +27,13 @@ Future<List<dynamic>> fetchLogements() async {
     print('DEBUG: Response data : ${response.data}');
 
     if (response.statusCode == 200) {
-      if (response.data is Map &&
-          response.data.containsKey('logements') &&
-          response.data['logements'] is List) {
-        return response.data['logements'];
+      // ✅ CHANGEMENT ICI : Attendez-vous à une liste directement si l'API renvoie [{}, {}]
+      // Si l'API renvoie {'logements': [{}, {}]}, remettez response.data['logements']
+      if (response.data is List) {
+        return response.data;
       } else {
         throw Exception(
-          'Format de réponse API inattendu. La clé "logements" est manquante ou n\'est pas une liste.',
+          'Format de réponse API inattendu. La réponse n\'est pas une liste directement.',
         );
       }
     } else {
@@ -73,9 +72,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> logements = [];
   bool isLoading = true;
-  // Nouveau : variable pour stocker le dernier logement
-  Map<String, dynamic>?
-  dernierLogement; // Utiliser Map<String, dynamic> pour un objet JSON
+  Map<String, dynamic>? dernierLogement;
+  String? errorMessage; // Pour stocker les messages d'erreur de chargement
 
   @override
   void initState() {
@@ -84,12 +82,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> chargerLogements() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null; // Réinitialise l'erreur avant chaque chargement
+    });
     try {
       final data = await fetchLogements();
       setState(() {
         logements = data;
         isLoading = false;
-        // Si des logements sont chargés, prenez le premier (qui est le plus récent grâce à `latest()->get()` dans Laravel)
         if (logements.isNotEmpty) {
           dernierLogement = logements.first;
         }
@@ -102,70 +103,72 @@ class _HomeScreenState extends State<HomeScreen> {
       print('DEBUG: Erreur lors du chargement des propriétés: $e');
       setState(() {
         isLoading = false;
+        errorMessage =
+            'Impossible de charger les propriétés : $e'; // Stocke l'erreur
       });
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Impossible de charger les propriétés : $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(errorMessage!)));
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // final screenHeight = MediaQuery.of(context).size.height;
-    // final screenWidth = MediaQuery.of(context).size.width;
-
     List<Widget> colonneGWidgets = [];
     List<Widget> colonneDWidgets = [];
 
+    // On parcourt les logements et on prépare les données pour les widgets enfants
     for (int i = 0; i < logements.length; i++) {
-      final l = logements[i];
-      final imgUrl =
+      final l = logements[i]; // C'est l'objet Map<String, dynamic> complet
+
+      // --- Extraction et formatage des données pour les widgets inchangés ---
+      final String imgUrl =
           (l['images'] != null && l['images'].isNotEmpty)
               ? '$API_BASE_URL/storage/${l['images'][0]['image_path']}'
               : 'https://www.batiactu.com/images/auto/620-465-c/20210913_170834_immobilier-dossier-credit-istock.jpg';
 
-      final ownerName =
+      final String ownerName =
           (l['user'] != null && l['user']['name'] != null)
-              ? l['user']['name']
-              : 'Propriétaire Inconnu';
+              ? '@${(l['user']['name'] as String).replaceAll(' ', '.').toLowerCase()}'
+              : '@proprietaire.inconnu';
 
-      // --- Formatage de la date ---
       String formattedTime = 'Date inconnue';
       if (l['created_at'] != null) {
         try {
           final DateTime dateTime = DateTime.parse(l['created_at'] as String);
-          formattedTime = DateFormat(
-            'EEE d MMM HH:mm',
-            'fr_FR',
-          ).format(dateTime);
+          final Duration difference = DateTime.now().difference(dateTime);
+          if (difference.inDays > 30) {
+            formattedTime = DateFormat('dd MMM yyyy', 'fr_FR').format(dateTime);
+          } else if (difference.inDays > 0) {
+            formattedTime =
+                '${difference.inDays} jour${difference.inDays > 1 ? 's' : ''}';
+          } else if (difference.inHours > 0) {
+            formattedTime =
+                '${difference.inHours} heure${difference.inHours > 1 ? 's' : ''}';
+          } else if (difference.inMinutes > 0) {
+            formattedTime =
+                '${difference.inMinutes} minute${difference.inMinutes > 1 ? 's' : ''}';
+          } else {
+            formattedTime = 'à l\'instant';
+          }
         } catch (e) {
           print('DEBUG: Erreur de parsing ou formatage de date: $e');
           formattedTime = 'Date invalide';
         }
       }
 
-      // --- Formatage du prix ---
       String formattedPrice = 'N/A';
       if (l['prix_par_nuit'] != null) {
-        print(
-          'DEBUG: Valeur de prix_par_nuit reçue: ${l['prix_par_nuit']} (Type: ${l['prix_par_nuit'].runtimeType})',
-        );
         try {
           double price;
           if (l['prix_par_nuit'] is String) {
-            price = double.parse(
-              l['prix_par_nuit'] as String,
-            ); // Convertir la chaîne en double
+            price = double.parse(l['prix_par_nuit'] as String);
           } else if (l['prix_par_nuit'] is num) {
-            price =
-                (l['prix_par_nuit'] as num)
-                    .toDouble(); // Gérer les int/double directement
+            price = (l['prix_par_nuit'] as num).toDouble();
           } else {
-            throw FormatException(
-              'Type de prix inattendu',
-            ); // Si ce n'est ni string ni num
+            throw FormatException('Type de prix inattendu');
           }
           formattedPrice = NumberFormat('#,##0', 'fr_FR').format(price);
         } catch (e) {
@@ -176,28 +179,37 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
 
-      // ✅ MODIFICATION ICI : Alterner entre WidgetHouseInfos2 et WidgetHouseInfos3
+      // Alterner entre WidgetHouseInfos2 et WidgetHouseInfos3
       if (i.isEven) {
         colonneGWidgets.add(
-          WidgetHouseInfos2(
-            imgHouse: imgUrl,
-            houseName: l['titre'] ?? 'Titre Inconnu',
-            price: '$formattedPrice Fcfa', // Utilisation du prix formaté
-            locate: l['adresse'] ?? '',
-            ownerName: ownerName,
-            time: formattedTime, // Utilisation de la date formatée
+          Padding(
+            // Ajoutez un Padding si vous voulez un espacement vertical entre les widgets
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: WidgetHouseInfos2(
+              imgHouse: imgUrl,
+              houseName: l['titre'] ?? 'Titre Inconnu',
+              price: '$formattedPrice Fcfa',
+              locate: l['adresse'] ?? '',
+              ownerName: ownerName,
+              time: formattedTime,
+              logementData: l, // ✅ PASSEZ LE LOGEMENT DATA ICI
+            ),
           ),
         );
       } else {
         colonneDWidgets.add(
-          WidgetHouseInfos3(
-            // <--- Utilisation de WidgetHouseInfos3 ici
-            imgHouse: imgUrl,
-            houseName: l['titre'] ?? 'Titre Inconnu',
-            price: '$formattedPrice Fcfa', // Utilisation du prix formaté
-            locate: l['adresse'] ?? '',
-            ownerName: ownerName,
-            time: formattedTime, // Utilisation de la date formatée
+          Padding(
+            // Ajoutez un Padding si vous voulez un espacement vertical entre les widgets
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: WidgetHouseInfos3(
+              imgHouse: imgUrl,
+              houseName: l['titre'] ?? 'Titre Inconnu',
+              price: '$formattedPrice Fcfa',
+              locate: l['adresse'] ?? '',
+              ownerName: ownerName,
+              time: formattedTime,
+              logementData: l, // ✅ PASSEZ LE LOGEMENT DATA ICI
+            ),
           ),
         );
       }
@@ -215,19 +227,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Stack(
                     children: [
                       // Passez le dernier logement à WidgetAnimation
-                      // S'il n'y a pas de logement, passez null et WidgetAnimation gérera un placeholder
                       WidgetAnimation(logementData: dernierLogement),
-                      //  Widget statique
-                      // WidgetAnimation(),
                       SizedBox(
                         height: 400,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(child: WidgetProfileInfos()),
-                            Spacer(),
+                            const Expanded(child: WidgetProfileInfos()),
+                            const Spacer(),
                             WidgetHouseTextInfos(logementData: dernierLogement),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                           ],
                         ),
                       ),
@@ -236,9 +245,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 18),
                   Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Catégorie de logement',
                             style: TextStyle(
@@ -247,20 +256,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          // Text(
-                          //   'Voir tout',
-                          //   style: TextStyle(
-                          //     color: Color(0xffffd055),
-                          //     fontSize: 12,
-                          //     fontWeight: FontWeight.w400,
-                          //     fontStyle: FontStyle.italic,
-                          //   ),
-                          // ),
                         ],
                       ),
                       const SizedBox(height: 10),
-
-                      // Ajoute fonction de filtrage dynamique
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -288,54 +286,43 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      // Bouton de Deconnexion
-
-                      // ElevatedButton(
-                      //   onPressed: () async {
-                      //     await FirebaseAuth.instance.signOut();
-                      //     SharedPreferences prefs =
-                      //         await SharedPreferences.getInstance();
-                      //     await prefs.remove('token');
-                      //     Navigator.pushReplacement(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => const SplashScreen(),
-                      //       ),
-                      //     );
-                      //   },
-                      //   child: const Text('Déconnexion'),
-                      // ),
-
-                      // Ligne avec Title
-
-                      // const SizedBox(height: 18),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: const [
-                      //     Text(
-                      //       'Vie de luxe à son meilleur',
-                      //       style: TextStyle(
-                      //         color: Color(0xff010101),
-                      //         fontSize: 18,
-                      //         fontWeight: FontWeight.w600,
-                      //       ),
-                      //     ),
-                      //     Text(
-                      //       'Voir tout',
-                      //       style: TextStyle(
-                      //         color: Color(0xffffd055),
-                      //         fontSize: 12,
-                      //         fontWeight: FontWeight.w400,
-                      //         fontStyle: FontStyle.italic,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      // Bouton de Déconnexion (décommenter si nécessaire)
+                      /*
+                      ElevatedButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          // SharedPreferences prefs = await SharedPreferences.getInstance();
+                          // await prefs.remove('token');
+                          if (mounted) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SplashScreen(),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Déconnexion'),
+                      ),
+                      */
                     ],
                   ),
                   const SizedBox(height: 16),
+                  // Affichage des logements ou indicateur de chargement/message d'erreur
                   isLoading
                       ? const Center(child: CircularProgressIndicator())
+                      : errorMessage !=
+                          null // Affiche l'erreur si elle existe
+                      ? Center(
+                        child: Text(
+                          errorMessage!,
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
                       : logements.isEmpty
                       ? const Center(
                         child: Text(
@@ -343,11 +330,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       )
                       : SizedBox(
+                        // Calcul de la hauteur dynamique pour les ListView
+                        // Ajustez ces valeurs (ex: 250.0 ou 270.0) selon la hauteur réelle de vos cartes
                         height:
-                            (colonneGWidgets.length * 250.0) >
-                                    (colonneDWidgets.length * 250.0)
-                                ? (colonneGWidgets.length * 250.0)
-                                : (colonneDWidgets.length * 250.0),
+                            (colonneGWidgets.length * 270.0).toDouble() >
+                                    (colonneDWidgets.length * 270.0).toDouble()
+                                ? (colonneGWidgets.length * 270.0).toDouble()
+                                : (colonneDWidgets.length * 270.0).toDouble(),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -375,8 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                  //
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                 ],
               ),
             ),
@@ -386,6 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
 // //Ancien code pas encore Connecté
 
 // import 'package:flutter/material.dart';
