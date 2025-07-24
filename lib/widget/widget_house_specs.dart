@@ -29,20 +29,20 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
     required IconData icon,
     required String title,
     required Widget valueWidget, // Peut être un Text ou une Icône colorée
-    double iconSize = 24.0,
+    double iconSize = 17.0,
     bool isAvailable =
         false, // ✅ Nouveau paramètre pour la disponibilité (booléen)
   }) {
     // Détermine la couleur de l'icône de valeur si c'est une commodité
     Color valueIconColor =
         isAvailable
-            ? Colors.green
-            : Colors.black; // Vert si disponible, gris sinon
+            ? Colors.blue
+            : Colors.grey; // Vert si disponible, gris sinon
 
     return Container(
       margin: const EdgeInsets.only(right: 10),
-      width: 70,
-      height: 70,
+      width: 60,
+      height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -57,7 +57,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           Text(
             title,
             style: const TextStyle(
-              color: Colors.grey,
+              color: Colors.black87,
               fontSize: 8,
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w400,
@@ -73,7 +73,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
                 Icons
                     .radio_button_checked_sharp, // Icône de coche pour "disponible"
                 color: valueIconColor, // Couleur basée sur la disponibilité
-                size: 18, // Ajustez la taille de cette icône si nécessaire
+                size: 15, // Ajustez la taille de cette icône si nécessaire
               )
               : valueWidget,
         ],
@@ -106,14 +106,14 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const Text(
-                  ' pièces',
-                  style: TextStyle(
-                    color: Color(0xff010101),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                // const Text(
+                //   ' pièces',
+                //   style: TextStyle(
+                //     color: Color(0xff010101),
+                //     fontSize: 12,
+                //     fontWeight: FontWeight.w500,
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -133,14 +133,14 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const Text(
-                  ' pièces',
-                  style: TextStyle(
-                    color: Color(0xff010101),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                // const Text(
+                //   ' pièces',
+                //   style: TextStyle(
+                //     color: Color(0xff010101),
+                //     fontSize: 12,
+                //     fontWeight: FontWeight.w500,
+                //   ),
+                // ),
               ],
             ),
           ),

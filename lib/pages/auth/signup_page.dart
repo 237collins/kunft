@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:kunft/pages/login_page.dart'; // Import de LoginPage
+import 'package:kunft/pages/auth/login_page.dart'; // Import de LoginPage
 
 // Définissez votre URL de base d'API ici ou importez-la depuis un fichier de constantes si vous en avez un.
 const String API_BASE_URL = 'http://127.0.0.1:8000';

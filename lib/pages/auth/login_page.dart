@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http; // Import for HTTP requests
 import 'package:shared_preferences/shared_preferences.dart'; // Import for SharedPreferences
 import 'dart:convert'; // Import for jsonEncode/jsonDecode
 
-import 'package:kunft/pages/signup_page.dart';
+import 'package:kunft/pages/auth/signup_page.dart';
 import 'package:kunft/pages/home_screen.dart'; // Home page
 
 // Define your API base URL here or import it from a constants file if you have one.
@@ -195,13 +195,21 @@ class _LoginPageState extends State<LoginPage> {
             // Container for the image (might be too tall for some screens, adjust if necessary)
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  30,
-                ), // Larger to match ClipRRect
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
               ),
               height: screenHeight * .3,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
                 child: Image.asset(
                   'assets/images/img02.jpg',
                   fit: BoxFit.cover,

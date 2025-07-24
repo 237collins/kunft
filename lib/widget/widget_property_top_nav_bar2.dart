@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:kunft/pages/home_screen.dart';
+import 'package:kunft/pages/notifications_page.dart';
 
 class WidgetPropertyTopNavBar2 extends StatefulWidget {
   final String title;
@@ -62,11 +63,14 @@ class _WidgetPropertyTopNavBar2State extends State<WidgetPropertyTopNavBar2> {
                 SizedBox(width: 20),
                 InkWell(
                   onTap: () {
-                    setState(() {
-                      // isSelected = !isSelected;
-                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NotificationsPage(),
+                      ),
+                    );
                   },
-                  child: Icon(Icons.notification_important_rounded),
+                  child: Icon(Icons.notifications),
                 ),
               ],
             ),

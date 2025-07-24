@@ -256,14 +256,25 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                                     !_isDescriptionExpanded; // Bascule l'état
                                               });
                                             },
-                                            child: Text(
-                                              _isDescriptionExpanded
-                                                  ? 'Voir moins'
-                                                  : 'Voir plus', // Texte dynamique
-                                              style: const TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w800,
-                                                color: Colors.deepOrange,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 5,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.blue,
+                                                borderRadius:
+                                                    BorderRadius.circular(9),
+                                              ),
+                                              child: Text(
+                                                _isDescriptionExpanded
+                                                    ? 'Voir moins'
+                                                    : 'Voir plus', // Texte dynamique
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -297,7 +308,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Complete Images',
+                                    'Images Complètes',
                                     style: TextStyle(
                                       color: Color(0xff010101),
                                       fontSize: 16,
@@ -359,6 +370,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
               ),
             ],
           ),
+          // Ancien Bottom infos
           Positioned(
             bottom: 0,
             child: Container(

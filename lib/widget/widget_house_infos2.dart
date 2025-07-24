@@ -74,10 +74,10 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
+              color: Color(0x1a000000),
               spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
+              blurRadius: 3,
+              offset: const Offset(-2, 2),
             ),
           ],
         ),
@@ -132,21 +132,37 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Text(
-                          widget.price,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              widget.price,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                // fontSize: 16,
+                                // fontFamily: 'BebasNeue',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            //
+                            Text(
+                              ' | Nuit',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                // fontFamily: 'BebasNeue',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 7),
                         Row(
                           children: [
                             const Icon(

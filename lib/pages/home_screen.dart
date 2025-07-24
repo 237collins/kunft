@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:kunft/pages/list_logement.dart';
+import 'package:kunft/pages/list_logement_populaire.dart';
+import 'package:kunft/pages/profile_screen.dart';
 
 import 'package:kunft/widget/widget_animation.dart';
 import 'package:kunft/widget/widget_house_text_infos.dart';
 import 'package:kunft/widget/widget_house_infos2.dart';
 import 'package:kunft/widget/widget_house_infos3.dart';
+import 'package:kunft/widget/widget_popular_house_infos.dart';
 import 'package:kunft/widget/widget_profile_infos.dart';
-import 'package:kunft/widget/widget_property_category.dart';
 
 const String API_BASE_URL = 'http://127.0.0.1:8000';
 
@@ -243,68 +246,148 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 18),
+                  // Affichage des logements de ceux qui ont payé l'abonnement
                   Column(
                     children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      Column(
                         children: [
-                          Text(
-                            'Catégorie de logement',
-                            style: TextStyle(
-                              color: Color(0xff010101),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Logement Populaire',
+                                style: TextStyle(
+                                  color: Color(0xff010101),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              //
+                              InkWell(
+                                onTap: () {
+                                  setState(() {});
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => ListLogementPopulaire(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    'Voir tout',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          //
+                          SizedBox(height: 12),
+                          // Appel de Widget
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: SizedBox(
+                              height: 130,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  WidgetPopularHouseInfos(
+                                    imgHouse: 'assets/images/img03.jpg',
+                                    houseName: 'Studio test',
+                                    price: '30 000',
+                                    locate: 'Douala, NdogBong',
+                                    ownerName: 'Collins',
+                                    time: '20h34',
+                                  ),
+                                  //
+                                  WidgetPopularHouseInfos(
+                                    imgHouse: 'assets/images/img05.jpg',
+                                    houseName: 'Studio test',
+                                    price: '30 000',
+                                    locate: 'Douala, NdogBong',
+                                    ownerName: 'Collins',
+                                    time: '20h34',
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: const [
-                            WidgetPropertyCategory(
-                              number: '01',
-                              name: 'Résidentiel',
+                      //
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Logements Disponibles',
+                            // 'Catégorie de logement',
+                            style: TextStyle(
+                              color: Color(0xff010101),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
                             ),
-                            SizedBox(width: 10),
-                            WidgetPropertyCategory(
-                              number: '02',
-                              name: 'Commercial',
-                            ),
-                            SizedBox(width: 10),
-                            WidgetPropertyCategory(
-                              number: '03',
-                              name: 'Terrain',
-                            ),
-                            SizedBox(width: 10),
-                            WidgetPropertyCategory(
-                              number: '04',
-                              name: 'Spécialité',
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Bouton de Déconnexion (décommenter si nécessaire)
-                      /*
-                      ElevatedButton(
-                        onPressed: () async {
-                          await FirebaseAuth.instance.signOut();
-                          // SharedPreferences prefs = await SharedPreferences.getInstance();
-                          // await prefs.remove('token');
-                          if (mounted) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SplashScreen(),
+                          ),
+                          //
+                          InkWell(
+                            onTap: () {
+                              setState(() {});
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ListLogement(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
                               ),
-                            );
-                          }
-                        },
-                        child: const Text('Déconnexion'),
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                'Voir tout',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      */
+                      // Ce scroll sera dans un widget
+
+                      // Bouton page Profile "Teste"
+                      InkWell(
+                        onTap: () {
+                          setState(() {});
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfileScreen(),
+                            ),
+                          );
+                        },
+                        child: Text('Page profile'),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 16),

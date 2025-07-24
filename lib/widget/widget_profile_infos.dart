@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:kunft/pages/notifications_page.dart';
 
 class WidgetProfileInfos extends StatefulWidget {
   const WidgetProfileInfos({Key? key}) : super(key: key);
@@ -77,7 +78,17 @@ class _WidgetProfileInfosState extends State<WidgetProfileInfos> {
                 Icon(Icons.message, color: Colors.white),
                 SizedBox(width: 10),
                 // page de notifs
-                Icon(Icons.notification_add, color: Colors.white),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NotificationsPage(),
+                      ),
+                    );
+                  },
+                  child: Icon(Icons.notifications, color: Colors.white),
+                ),
               ],
             ),
           ],
