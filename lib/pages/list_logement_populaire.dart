@@ -46,36 +46,6 @@ class _ListLogementPopulaireState extends State<ListLogementPopulaire> {
             //   ),
             // ),
             //
-            Expanded(
-              child: HorizontalSectionNavigator(
-                sectionTitles: [
-                  'Tous',
-                  'Duplex',
-                  'Villas',
-                  'Appartements',
-                  'Studios',
-                  'Chambres',
-                ],
-                sectionContents: [
-                  // page 1
-                  TousLogements(),
-                  // Autres pays
-                  Duplex(),
-                  // page 2
-                  Villas(),
-                  // page 3
-                  Apparts(),
-                  // page 4
-                  Studio(),
-                  // page 5
-                  Chambres(),
-                ],
-                // Personnalisation optionnelle
-                // navigationBarColor: Colors.deepPurple,
-                // selectedTitleColor: Colors.amberAccent,
-                // unselectedTitleColor: Colors.white70,
-              ),
-            ),
           ],
         ),
       ),

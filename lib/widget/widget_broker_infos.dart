@@ -25,7 +25,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
       children: [
         Container(
           margin: const EdgeInsets.only(right: 10),
-          width: 130,
+          width: 100,
           height: 90,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
           decoration: BoxDecoration(
@@ -35,7 +35,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.person_pin, size: 36),
+              Icon(Icons.person_pin, size: 36, color: Colors.blue),
               Text(
                 'Following',
                 style: TextStyle(
@@ -51,11 +51,19 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                   Text(
                     // Nombres de suiveur
                     widget.follower,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                    ),
                   ),
                   Text(
                     ' People',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                    ),
                   ),
                 ],
               ),
@@ -65,7 +73,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
         //
         Container(
           margin: const EdgeInsets.only(right: 10),
-          width: 130,
+          width: 100,
           height: 90,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
           decoration: BoxDecoration(
@@ -75,7 +83,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.people_alt_outlined, size: 36),
+              Icon(Icons.people_alt_outlined, size: 36, color: Colors.blue),
               Text(
                 'Followers',
                 style: TextStyle(
@@ -91,11 +99,19 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                   Text(
                     // Nombres de suiveur
                     widget.following,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                    ),
                   ),
                   Text(
                     ' People',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                    ),
                   ),
                 ],
               ),
@@ -105,7 +121,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
         //
         Container(
           margin: const EdgeInsets.only(right: 10),
-          width: 130,
+          width: 100,
           height: 90,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
           decoration: BoxDecoration(
@@ -115,7 +131,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.houseboat_rounded, size: 36),
+              Icon(Icons.other_houses, size: 36, color: Colors.blue),
               Text(
                 'Logements',
                 style: TextStyle(
@@ -131,11 +147,19 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                   Text(
                     // Nombres de logement
                     widget.property,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                    ),
                   ),
                   Text(
                     ' Logements',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                    ),
                   ),
                 ],
               ),

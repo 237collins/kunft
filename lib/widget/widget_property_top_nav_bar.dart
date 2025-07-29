@@ -32,9 +32,7 @@ class _WidgetPropertyTopNavBarState extends State<WidgetPropertyTopNavBar> {
                     setState(() {});
                     Navigator.pop(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeScreen(user: null),
-                      ),
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
                     );
                   },
                   child: Icon(Icons.arrow_back, size: 36, color: Colors.white),

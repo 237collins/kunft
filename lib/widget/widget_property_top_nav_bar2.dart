@@ -35,9 +35,8 @@ class _WidgetPropertyTopNavBar2State extends State<WidgetPropertyTopNavBar2> {
                       context,
                       MaterialPageRoute(
                         builder:
-                            (context) => HomeScreen(
-                              user: null,
-                            ), // Doit envoyer sur les proprietes
+                            (context) =>
+                                HomeScreen(), // Doit envoyer sur les proprietes
                       ),
                     );
                   },

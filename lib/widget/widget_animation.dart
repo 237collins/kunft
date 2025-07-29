@@ -214,7 +214,6 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: Positioned(
-                          bottom: 10,
                           left: 0,
                           right: 0,
                           child: Row(
@@ -224,7 +223,7 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                                 width: 8.0,
                                 height: 8.0,
                                 margin: const EdgeInsets.symmetric(
-                                  horizontal: 4.0,
+                                  horizontal: 4,
                                   vertical: 20,
                                 ),
                                 decoration: BoxDecoration(

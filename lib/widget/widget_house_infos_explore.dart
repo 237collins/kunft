@@ -8,6 +8,7 @@ class WidgetHouseInfosExplore extends StatefulWidget {
   final String locate;
   final String ownerName;
   final String time;
+  final Map<String, dynamic>? logementData; // ✅ Nouveau paramètre facultatif
 
   const WidgetHouseInfosExplore({
     Key? superkey,
@@ -17,6 +18,7 @@ class WidgetHouseInfosExplore extends StatefulWidget {
     required this.locate,
     required this.ownerName,
     required this.time,
+    this.logementData, // ✅ Rendre facultatif
   }) : super(key: superkey);
 
   @override
@@ -59,7 +61,7 @@ class _WidgetHouseInfosExploreState extends State<WidgetHouseInfosExplore> {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
+                        child: Image.network(
                           //insert image
                           widget.imgHouse,
                           fit: BoxFit.cover,

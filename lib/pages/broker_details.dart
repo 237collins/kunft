@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kunft/widget/widget_animation3.dart';
 import 'package:kunft/widget/widget_broker_infos.dart';
 import 'package:kunft/widget/widget_broker_list.dart';
-import 'package:kunft/widget/widget_owner_profile.dart';
 import 'package:kunft/widget/widget_owner_profile2.dart';
 import 'package:kunft/widget/widget_property_top_nav_bar2.dart';
 

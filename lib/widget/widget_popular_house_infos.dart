@@ -10,6 +10,7 @@ class WidgetPopularHouseInfos extends StatefulWidget {
   final String locate;
   final String ownerName;
   final String time;
+  final Map<String, dynamic>? logementData; // ✅ Nouveau paramètre facultatif
 
   const WidgetPopularHouseInfos({
     Key? key,
@@ -20,6 +21,7 @@ class WidgetPopularHouseInfos extends StatefulWidget {
     required this.locate,
     required this.ownerName,
     required this.time,
+    this.logementData, // ✅ Rendre facultatif
   }) : super(key: superkey);
 
   @override
@@ -59,7 +61,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   //insert image
                   widget.imgHouse,
                   fit: BoxFit.cover,
@@ -177,6 +179,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                             color: Colors.blue,
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
+                            fontFamily: 'BebasNeue',
                           ),
                         ),
                         //
@@ -185,7 +188,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                           ' / Nuit',
                           style: TextStyle(
                             color: Colors.blue,
-                            // fontSize: 20,
+                            fontSize: 10,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

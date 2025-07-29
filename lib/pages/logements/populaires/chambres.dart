@@ -11,17 +11,6 @@ class Chambres extends StatefulWidget {
 class _ChambresState extends State<Chambres> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        WidgetPopularHouseInfos2(
-          imgHouse: 'assets/images/img03.jpg',
-          houseName: 'Chambre meublés',
-          price: '10 000',
-          locate: 'Douala, NdogBong',
-          ownerName: 'Collins',
-          time: '20h30',
-        ),
-      ],
-    );
+    return Column(children: [Text('Test 2')]);
   }
 }

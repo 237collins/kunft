@@ -61,7 +61,7 @@ class _WidgetPopularHouseInfos2State extends State<WidgetPopularHouseInfos2> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   //insert image
                   widget.imgHouse,
                   fit: BoxFit.cover,

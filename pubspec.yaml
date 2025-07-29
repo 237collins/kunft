@@ -50,6 +50,14 @@ dependencies:
   sign_in_with_apple: ^7.0.1
   firebase_app_installations: ^0.3.2+9
   intl: ^0.20.2
+  cloud_firestore: ^5.6.12
+  calendar_date_picker2: ^2.0.1
+  mobile_scanner: ^7.0.1
+  qr_code_scanner_plus: ^2.0.10+1
+  qr: ^3.0.2
+  lucide_icons: ^0.257.0
+  animated_notch_bottom_bar: ^1.0.3
+  salomon_bottom_bar: ^3.3.2
 
 dev_dependencies:
   flutter_test:
@@ -76,10 +84,10 @@ flutter:
   fonts:
     - family: Barlow # Nom de la famille de police
       fonts:
-        - asset: assets/fonts/Barlow-Bold.ttf # Chemin vers le fichier
-        - asset: assets/fonts/Barlow-Regular.ttf
+        - asset: assets/fonts/Raleway-Bold.ttf # Chemin vers le fichier
+        - asset: assets/fonts/Raleway-Regular.ttf
           weight: 500 # Poids pour le gras
-        - asset: assets/fonts/Barlow-SemiBold.ttf
+        - asset: assets/fonts/Raleway-SemiBold.ttf
           weight: 600 # Poids pour le semi-gras
     - family: BebasNeue # Autre famille de police
       fonts:

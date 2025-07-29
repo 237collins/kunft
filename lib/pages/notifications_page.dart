@@ -30,7 +30,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           Navigator.pop(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomeScreen(user: null),
+                              builder: (context) => HomeScreen(),
                             ),
                           );
                         },
