@@ -26,6 +26,14 @@ class _WidgetBrokerListState extends State<WidgetBrokerList> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            offset: Offset(0, 0),
+            spreadRadius: 3,
+            blurRadius: 6,
+          ),
+        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -51,12 +51,12 @@ class WidgetHouseImage2 extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
               child: Image.network(
                 imgHouse,
-                height: 220,
+                height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                    height: 150,
+                    height: 140,
                     width: double.infinity,
                     color: Colors.grey[300],
                     child: const Center(

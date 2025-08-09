@@ -49,17 +49,17 @@ class _WidgetAnimation3State extends State<WidgetAnimation3> {
               // borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
             child: Container(
-              height: screenHeight * .3,
+              height: screenHeight * .2,
               decoration: BoxDecoration(
                 // color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(20),
+                // borderRadius: BorderRadius.circular(20),
               ),
               child:
                   _showFirstChild
                       ? Stack(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
+                            // borderRadius: BorderRadius.circular(20),
                             child: Image.network(
                               widget.img,
                               fit: BoxFit.cover,
@@ -68,22 +68,22 @@ class _WidgetAnimation3State extends State<WidgetAnimation3> {
                           ),
                           //
                           Positioned(
-                            bottom: 6,
+                            bottom: 0,
                             child: Container(
-                              padding: EdgeInsets.only(right: 10),
+                              // padding: EdgeInsets.only(right: 10),
                               height: screenHeight * .15,
-                              width: screenWidth * .95,
+                              width: screenWidth,
                               decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                   // topLeft: Radius.circular(50),
                                   // topRight: Radius.circular(50),
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
+                                  // bottomLeft: Radius.circular(20),
+                                  // bottomRight: Radius.circular(20),
                                 ),
                                 gradient: LinearGradient(
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
-                                  colors: [Colors.transparent, Colors.black45],
+                                  colors: [Colors.transparent, Colors.black26],
                                 ),
                               ),
                               // child:

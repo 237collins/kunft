@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:kunft/pages/broker_details.dart';
+import 'package:kunft/pages/chat/messaging_page2.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class WidgetOwnerProfile extends StatefulWidget {
   // final String propertyCount;
@@ -94,45 +97,89 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
               Row(
                 children: [
                   // Ajoute les actions ici
-                  Column(
-                    children: [
-                      Icon(Icons.message, color: Colors.blue),
-                      SizedBox(height: 4),
-                      Text(
-                        'Message',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => const BrokerDetails(ownerData: {}),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
+                          topLeft: Radius.circular(30),
+                          // topRight: Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    // margin: EdgeInsets.only(right: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(30),
-                        bottomLeft: Radius.circular(30),
-                        topLeft: Radius.circular(30),
-                        // topRight: Radius.circular(20),
+                      child: Column(
+                        children: [
+                          Icon(
+                            LucideIcons.userCircle2,
+                            // size: 40,
+                            color: Colors.white,
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Profile',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        Icon(Icons.book_rounded, color: Colors.white),
-                        SizedBox(height: 4),
-                        Text(
-                          'Résa.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                  ),
+                  SizedBox(width: 15),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MessagingPage2(),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      // margin: EdgeInsets.only(right: 10), // Commenté car non fourni dans le snippet complet
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                          // topRight: Radius.circular(20), // Commenté car déjà présent dans l'exemple
+                        ),
+                      ),
+                      child: const Column(
+                        children: [
+                          Icon(Icons.book_rounded, color: Colors.white),
+                          SizedBox(height: 4),
+                          Text(
+                            'Résa.',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

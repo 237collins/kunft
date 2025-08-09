@@ -34,12 +34,17 @@ class _WidgetHouseInfosExploreState extends State<WidgetHouseInfosExplore> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(left: 10, bottom: 10),
-          padding: EdgeInsets.all(10),
+          // margin: EdgeInsets.only(left: 10, bottom: 10),
+          padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: Color(0x1affffff),
+            // color: Color(0x1affffff),
             border: Border.all(width: 1, color: Colors.white),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(15),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.transparent, Colors.black26],
+            ),
           ),
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -68,7 +73,7 @@ class _WidgetHouseInfosExploreState extends State<WidgetHouseInfosExplore> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 8),
                     // Text
                     SizedBox(
                       width: 155,
@@ -94,11 +99,13 @@ class _WidgetHouseInfosExploreState extends State<WidgetHouseInfosExplore> {
                             widget.price,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 20,
                               fontWeight: FontWeight.w500,
+                              fontFamily: 'BebasNeue',
+                              height: 1.1,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 5),
                           SizedBox(
                             // width: 150,
                             child: Row(
@@ -135,35 +142,38 @@ class _WidgetHouseInfosExploreState extends State<WidgetHouseInfosExplore> {
                 ),
 
                 SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      // Nom du proprietaire
-                      widget.ownerName,
-                      style: TextStyle(
-                        // color: Color(0xffffffff),
-                        fontSize: 10,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.access_time, size: 12, color: Colors.grey),
-                        SizedBox(width: 5),
-                        Text(
-                          widget.time,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 10,
-                            fontStyle: FontStyle.italic,
-                            // fontWeight: FontWeight.w600,
-                          ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        // Nom du proprietaire
+                        widget.ownerName,
+                        style: TextStyle(
+                          // color: Color(0xffffffff),
+                          fontSize: 10,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.access_time, size: 12, color: Colors.grey),
+                          SizedBox(width: 5),
+                          Text(
+                            widget.time,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10,
+                              fontStyle: FontStyle.italic,
+                              // fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

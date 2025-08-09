@@ -73,7 +73,7 @@ class _WidgetMessageAleatoireState extends State<WidgetMessageAleatoire> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              // SizedBox(height: 8),
             ],
           ),
         ),

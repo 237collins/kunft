@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:kunft/pages/home_screen.dart';
-import 'package:kunft/pages/notifications_page.dart';
+import 'package:kunft/pages/profile_screen/elements/notifications_page.dart';
 
 class WidgetPropertyTopNavBar2 extends StatefulWidget {
   final String title;
@@ -28,21 +28,33 @@ class _WidgetPropertyTopNavBar2State extends State<WidgetPropertyTopNavBar2> {
             Row(
               children: [
                 // Fleche de retour
-                InkWell(
+                GestureDetector(
                   onTap: () {
-                    setState(() {});
+                    // ✅ MODIFIÉ : Utilise Navigator.pushReplacement pour remplacer la page actuelle par HomeScreen
                     Navigator.pop(
                       context,
                       MaterialPageRoute(
-                        builder:
-                            (context) =>
-                                HomeScreen(), // Doit envoyer sur les proprietes
+                        builder: (context) => const HomeScreen(),
                       ),
                     );
                   },
-                  child: Icon(Icons.arrow_back, size: 36),
+                  child: const Icon(
+                    Icons.arrow_back,
+                    size: 36,
+                  ), // Ajout de const
                 ),
+                // GestureDetector(
+                //   onTap: () {
+                //     // Navigation en arrière jusqu'à la page d'accueil (HomeScreen)
+                //     Navigator.of(context).popUntil((route) => route.isFirst);
 
+                //     // Alternative si vous voulez revenir à une route spécifique :
+                //     // Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+                //   },
+                //   child: const Icon(Icons.arrow_back, size: 36),
+                // ),
+
+                //
                 SizedBox(width: 8),
                 Text(
                   // Titre de la nav
@@ -64,9 +76,7 @@ class _WidgetPropertyTopNavBar2State extends State<WidgetPropertyTopNavBar2> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => NotificationsPage(),
-                      ),
+                      MaterialPageRoute(builder: (context) => Notifications()),
                     );
                   },
                   child: Icon(Icons.notifications),

@@ -17,7 +17,7 @@ class HorizontalSectionNavigator extends StatefulWidget {
     this.navigationTitleStyle,
     this.selectedTitleColor,
     this.unselectedTitleColor,
-    required List<String> sectionTitles,
+    // ✅ RETIRÉ : required List<String> sectionTitles, // Cette ligne a été supprimée
   }) : assert(
          sectionTitlesData.length ==
              sectionContents.length, // Assert sur le nouveau nom
@@ -130,6 +130,141 @@ class _HorizontalSectionNavigatorState
     );
   }
 }
+
+// Ancien code Dynamique v1
+
+// import 'package:flutter/material.dart';
+
+// class HorizontalSectionNavigator extends StatefulWidget {
+//   // ✅ MODIFIÉ : sectionTitlesData contient des Maps avec 'title' et 'count'
+//   final List<Map<String, dynamic>> sectionTitlesData;
+//   final List<Widget> sectionContents;
+//   final Color? navigationBarColor;
+//   final TextStyle? navigationTitleStyle;
+//   final Color? selectedTitleColor;
+//   final Color? unselectedTitleColor;
+
+//   const HorizontalSectionNavigator({
+//     super.key,
+//     required this.sectionTitlesData, // Renommé de sectionTitles
+//     required this.sectionContents,
+//     this.navigationBarColor,
+//     this.navigationTitleStyle,
+//     this.selectedTitleColor,
+//     this.unselectedTitleColor,
+//     required List<String> sectionTitles,
+//   }) : assert(
+//          sectionTitlesData.length ==
+//              sectionContents.length, // Assert sur le nouveau nom
+//          'Titles and contents must have the same number of elements.',
+//        );
+
+//   @override
+//   State<HorizontalSectionNavigator> createState() =>
+//       _HorizontalSectionNavigatorState();
+// }
+
+// class _HorizontalSectionNavigatorState
+//     extends State<HorizontalSectionNavigator> {
+//   late PageController _pageController;
+//   int _currentPageIndex = 0;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _pageController = PageController();
+//   }
+
+//   @override
+//   void dispose() {
+//     _pageController.dispose();
+//     super.dispose();
+//   }
+
+//   void _goToPage(int pageIndex) {
+//     if (pageIndex != _currentPageIndex) {
+//       _pageController.animateToPage(
+//         pageIndex,
+//         duration: const Duration(milliseconds: 500),
+//         curve: Curves.easeInOutCirc,
+//       );
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         SingleChildScrollView(
+//           scrollDirection: Axis.horizontal,
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceAround,
+//             children: List.generate(widget.sectionTitlesData.length, (index) {
+//               final isSelected = index == _currentPageIndex;
+//               final sectionData = widget.sectionTitlesData[index];
+//               final String title = sectionData['title'] as String;
+//               final int? count =
+//                   sectionData['count'] as int?; // Le compte est optionnel
+
+//               return TextButton(
+//                 style: ButtonStyle(
+//                   padding: WidgetStateProperty.all<EdgeInsets>(
+//                     const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+//                   ),
+//                   shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+//                     RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(15),
+//                     ),
+//                   ),
+//                 ),
+//                 onPressed: () => _goToPage(index),
+//                 child: Container(
+//                   padding: const EdgeInsets.symmetric(
+//                     vertical: 7,
+//                     horizontal: 20,
+//                   ),
+//                   decoration: BoxDecoration(
+//                     color: isSelected ? Colors.blue : Colors.white,
+//                     borderRadius: BorderRadius.circular(10),
+//                   ),
+//                   alignment: Alignment.center,
+//                   child: Text(
+//                     // ✅ MODIFIÉ : Affiche le titre et le compte
+//                     count != null ? '$title (${count})' : title,
+//                     textAlign: TextAlign.center,
+//                     style: (widget.navigationTitleStyle ??
+//                             const TextStyle(fontSize: 11))
+//                         .copyWith(
+//                           color:
+//                               isSelected
+//                                   ? (widget.selectedTitleColor ?? Colors.white)
+//                                   : (widget.unselectedTitleColor ??
+//                                       Colors.blue),
+//                           fontWeight: FontWeight.w600,
+//                         ),
+//                     maxLines: 1,
+//                   ),
+//                 ),
+//               );
+//             }),
+//           ),
+//         ),
+//         const SizedBox(height: 20),
+//         Expanded(
+//           child: PageView(
+//             controller: _pageController,
+//             onPageChanged: (index) {
+//               setState(() {
+//                 _currentPageIndex = index;
+//               });
+//             },
+//             children: widget.sectionContents,
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 // Ancien code statique
 

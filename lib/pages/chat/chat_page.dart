@@ -1,3 +1,114 @@
+import 'package:flutter/material.dart';
+
+class Logout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return
+    // appBar: AppBar(title: Text('Logout Example')),
+    Center(
+      child: ElevatedButton(
+        onPressed: () {
+          showLogoutDialog(context);
+        },
+        child: Text('Show Logout Dialog'),
+      ),
+    );
+  }
+}
+
+void showLogoutDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // 🔴 Titre
+              const Text(
+                "Logout",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // 📝 Texte de confirmation
+              const Text(
+                "Are you sure you want to log out?",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 20),
+
+              // 🔘 Boutons d'action
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // ❌ Annuler
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Ferme le dialogue
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFF0F3FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(
+                        color: Color(0xFF4362F8),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+
+                  // ✅ Déconnexion
+                  ElevatedButton(
+                    onPressed: () {
+                      // 👉 Action de déconnexion ici
+                      Navigator.of(context).pop(); // Ferme la boîte
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1E5BFE), // Bleu foncé
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                    child: const Text(
+                      "Yes, Logout",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/material.dart';
 // import 'message.dart';

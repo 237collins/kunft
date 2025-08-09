@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:kunft/pages/notifications_page.dart';
+import 'package:kunft/pages/profile_screen/elements/notifications_page.dart';
 
 class WidgetProfileInfos extends StatefulWidget {
   const WidgetProfileInfos({Key? key}) : super(key: key);
@@ -82,9 +82,7 @@ class _WidgetProfileInfosState extends State<WidgetProfileInfos> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => NotificationsPage(),
-                      ),
+                      MaterialPageRoute(builder: (context) => Notifications()),
                     );
                   },
                   child: Icon(Icons.notifications, color: Colors.white),

@@ -1,9 +1,10 @@
-//
+// Nouveau Code Okay
 
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart'; // Importez ceci pour initializeDateFormatting
+import 'package:kunft/provider/logement_provider.dart';
+import 'package:provider/provider.dart'; // ✅ Import de Provider
 import 'package:kunft/pages/SplashScreen.dart';
-import 'package:kunft/pages/custom_nav_bar.dart'; // Votre page de splash screen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Assurez-vous que les bindings Flutter sont initialisés
@@ -12,7 +13,15 @@ void main() async {
   // Ceci est crucial pour que DateFormat puisse formater correctement les dates en français.
   await initializeDateFormatting('fr_FR', null);
 
-  runApp(const MyApp());
+  runApp(
+    // ✅ Enveloppe l'application avec ChangeNotifierProvider
+    ChangeNotifierProvider(
+      create:
+          (context) =>
+              LogementProvider(), // Crée une instance de votre LogementProvider
+      child: const MyApp(), // Votre application est l'enfant du Provider
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,7 +37,7 @@ class MyApp extends StatelessWidget {
         primarySwatch:
             Colors.deepOrange, // Couleur principale pour les Material widgets
         fontFamily:
-            'Poppins', // ✅ Police par défaut (vérifiez que 'Barlow' est bien configurée dans pubspec.yaml)
+            'Poppins', // ✅ Police par défaut (vérifiez que 'Poppins' est bien configurée dans pubspec.yaml)
         textTheme: const TextTheme(
           displayLarge: TextStyle(
             fontFamily: 'BebasNeue',
@@ -43,8 +52,7 @@ class MyApp extends StatelessWidget {
           0xfff7f7f7,
         ), // Couleur de fond par défaut pour les Scaffold
       ),
-      home:
-          const CustomNavBar(), // ✅ Le SplashScreen est le point d'entrée initial
+      home: const SplashScreen(),
     );
   }
 }

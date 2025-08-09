@@ -41,11 +41,11 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
 
     return Container(
       margin: const EdgeInsets.only(right: 10),
-      width: 60,
-      height: 60,
+      width: 80,
+      height: 65,
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0x1a2196f3),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -148,7 +148,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // ✅ Climatisation - Maintenant avec une icône colorée
           _buildSpecItem(
             icon: Icons.ac_unit,
-            title: 'Climatisation',
+            title: 'Clim / AC',
             valueWidget:
                 const SizedBox.shrink(), // Pas de valueWidget direct pour les booléens
             isAvailable:

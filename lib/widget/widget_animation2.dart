@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_switcher_plus/animated_switcher_plus.dart';
 
-const String API_BASE_URL = 'http://127.0.0.1:8000';
-
 class WidgetAnimation2 extends StatefulWidget {
   final List<String> imageUrls; // Reçoit toutes les URLs
   final String
@@ -198,7 +196,7 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
                   bottom: 0,
                   child: Container(
                     padding: EdgeInsets.only(right: 10),
-                    height: screenHeight * .2,
+                    height: screenHeight * .4,
                     width: screenWidth * .95,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(

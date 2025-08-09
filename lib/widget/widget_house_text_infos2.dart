@@ -125,7 +125,7 @@ class _WidgetHouseTextInfos2State extends State<WidgetHouseTextInfos2> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BrokerDetails(),
+                            builder: (context) => BrokerDetails(ownerData: {}),
                           ),
                         );
                       } else {

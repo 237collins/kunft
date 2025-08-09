@@ -48,9 +48,15 @@ class _MessagingPage2State extends State<MessagingPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Messagerie'),
-        backgroundColor:
-            Colors.deepOrange, // Couleur d'en-tête de l'application
+        title: const Text(
+          'Messagerie',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blue, // Couleur d'en-tête de l'application
       ),
       body: Column(
         children: [
@@ -79,7 +85,7 @@ class _MessagingPage2State extends State<MessagingPage2> {
                     decoration: BoxDecoration(
                       color:
                           message.isMe
-                              ? Colors.deepOrange.shade100
+                              ? Colors.blue.shade100
                               : Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(16.0),
                     ),
@@ -116,36 +122,47 @@ class _MessagingPage2State extends State<MessagingPage2> {
             ),
           ),
           // Champ de saisie de message
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: 'Écrire un message...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 12.0,
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _messageController,
+                        decoration: InputDecoration(
+                          hintText: 'Écrire un message...',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                        ),
+                        onSubmitted:
+                            (_) =>
+                                _sendMessage(), // Envoyer en appuyant sur Entrée
                       ),
                     ),
-                    onSubmitted:
-                        (_) => _sendMessage(), // Envoyer en appuyant sur Entrée
-                  ),
+                    const SizedBox(width: 8.0),
+                    FloatingActionButton(
+                      onPressed: _sendMessage,
+                      backgroundColor: Colors.blue,
+                      mini: true, // Rendre le bouton plus petit
+                      child: const Icon(
+                        Icons.send,
+                        color: Colors.white,
+                        // size: 36,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8.0),
-                FloatingActionButton(
-                  onPressed: _sendMessage,
-                  backgroundColor: Colors.deepOrange,
-                  mini: true, // Rendre le bouton plus petit
-                  child: const Icon(Icons.send, color: Colors.white),
-                ),
-              ],
-            ),
+              ),
+              //
+              SizedBox(height: 40),
+            ],
           ),
         ],
       ),

@@ -75,9 +75,9 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Color(0x1a000000),
-              spreadRadius: 2,
-              blurRadius: 8,
+              color: Color(0x80d9d9d9),
+              spreadRadius: 4,
+              blurRadius: 5,
               offset: const Offset(0, 1),
             ),
           ],
@@ -126,26 +126,26 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          debugPrint(
-                            'Partager le logement: ${widget.houseName}',
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: const Color(0x26000000),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Icon(
-                            Icons.share,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 5),
+                      // InkWell(
+                      //   onTap: () {
+                      //     debugPrint(
+                      //       'Partager le logement: ${widget.houseName}',
+                      //     );
+                      //   },
+                      //   child: Container(
+                      //     padding: const EdgeInsets.all(5),
+                      //     decoration: BoxDecoration(
+                      //       color: const Color(0x26000000),
+                      //       borderRadius: BorderRadius.circular(50),
+                      //     ),
+                      //     child: const Icon(
+                      //       Icons.share,
+                      //       color: Colors.white,
+                      //       size: 18,
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(width: 5),
                       InkWell(
                         onTap: () {
                           setState(() {
@@ -158,7 +158,7 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                         child: Container(
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: const Color(0x26000000),
+                            color: const Color(0x40ffffff),
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: Icon(
@@ -211,7 +211,7 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 3),
                   //
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,6 +224,7 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                             color: Colors.blue,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
+                            height: 1.2,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -236,8 +237,8 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                             widget.price,
                             style: const TextStyle(
                               color: Colors.blue,
-                              fontSize: 18,
-                              // fontFamily: 'BebasNeue',
+                              fontSize: 25,
+                              fontFamily: 'BebasNeue',
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -253,7 +254,7 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      // const SizedBox(height: 5),
                       Row(
                         children: [
                           const Icon(
@@ -279,6 +280,8 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                           ),
                         ],
                       ),
+                      //
+                      const SizedBox(height: 5),
                     ],
                   ),
                 ],
