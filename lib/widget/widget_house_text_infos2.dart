@@ -28,7 +28,7 @@ class _WidgetHouseTextInfos2State extends State<WidgetHouseTextInfos2> {
       } else {
         return 'Prix invalide';
       }
-      return NumberFormat('#,##0', 'fr_FR').format(p) + ' Fcfa';
+      return '${NumberFormat('#,##0', 'fr_FR').format(p)} Fcfa';
     } catch (e) {
       debugPrint('Erreur de formatage du prix dans WidgetHouseTextInfos2: $e');
       return 'Prix invalide';
@@ -52,7 +52,7 @@ class _WidgetHouseTextInfos2State extends State<WidgetHouseTextInfos2> {
       debugPrint('DEBUG: Raw created_at value: ${logement!['created_at']}');
       try {
         final DateTime dateTime = DateTime.parse(
-          logement!['created_at'] as String,
+          logement['created_at'] as String,
         );
         formattedTime = DateFormat(
           'dd MMM yyyy HH:mm',

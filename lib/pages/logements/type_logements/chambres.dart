@@ -96,7 +96,7 @@ class _ChambresState extends State<Chambres> {
                         crossAxisSpacing: 8.0, // Espacement horizontal
                         mainAxisSpacing: 8.0, // Espacement vertical
                         childAspectRatio:
-                            0.8, // Ajustez si nécessaire pour que les cartes s'affichent bien
+                            0.7, // Ajustez si nécessaire pour que les cartes s'affichent bien
                       ),
                       itemCount: logements.length,
                       itemBuilder: (context, index) {

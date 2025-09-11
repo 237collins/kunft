@@ -28,13 +28,14 @@ class WidgetHouseImage2 extends StatelessWidget {
       onTap: () => onTapImage(imgHouse),
       child: Container(
         margin: const EdgeInsets.only(bottom: 15.0),
+        padding: EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(23.0),
           // ✅ Ajout d'une bordure si sélectionné
           border:
               isSelected
-                  ? Border.all(color: Color(0xffff7866), width: 2.0)
+                  ? Border.all(color: const Color(0xcc2196F3), width: 2.0)
                   : null,
           boxShadow: [
             BoxShadow(
@@ -51,7 +52,7 @@ class WidgetHouseImage2 extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
               child: Image.network(
                 imgHouse,
-                height: 200,
+                height: 120,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
@@ -69,85 +70,88 @@ class WidgetHouseImage2 extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Text(
-                  //   'text',
-                  //   style: const TextStyle(
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 16.0,
-                  //   ),
-                  //   maxLines: 1,
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
 
-                  // Elements non utile ici
-                  // Text(
-                  //   houseName,
-                  //   style: const TextStyle(
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 16.0,
-                  //   ),
-                  //   maxLines: 1,
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
-                  // const SizedBox(height: 4.0),
-                  // Text(
-                  //   price,
-                  //   style: const TextStyle(
-                  //     color: Colors.orange,
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 14.0,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 4.0),
-                  // Row(
-                  //   children: [
-                  //     const Icon(
-                  //       Icons.location_on,
-                  //       size: 16.0,
-                  //       color: Colors.grey,
-                  //     ),
-                  //     const SizedBox(width: 4.0),
-                  //     Expanded(
-                  //       child: Text(
-                  //         locate,
-                  //         style: const TextStyle(
-                  //           color: Colors.grey,
-                  //           fontSize: 12.0,
-                  //         ),
-                  //         maxLines: 1,
-                  //         overflow: TextOverflow.ellipsis,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // const SizedBox(height: 4.0),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       ownerName,
-                  //       style: const TextStyle(
-                  //         color: Colors.blueAccent,
-                  //         fontSize: 12.0,
-                  //       ),
-                  //     ),
-                  //     Text(
-                  //       time,
-                  //       style: const TextStyle(
-                  //         color: Colors.grey,
-                  //         fontSize: 10.0,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                ],
-              ),
-            ),
+            // Elements non utiles pour le moment
+
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         'text',
+            //         style: const TextStyle(
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 16.0,
+            //         ),
+            //         maxLines: 1,
+            //         overflow: TextOverflow.ellipsis,
+            //       ),
+
+            //       // Elements non utile ici
+            //       Text(
+            //         houseName,
+            //         style: const TextStyle(
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 16.0,
+            //         ),
+            //         maxLines: 1,
+            //         overflow: TextOverflow.ellipsis,
+            //       ),
+            //       const SizedBox(height: 4.0),
+            //       Text(
+            //         price,
+            //         style: const TextStyle(
+            //           color: Colors.orange,
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 14.0,
+            //         ),
+            //       ),
+            //       const SizedBox(height: 4.0),
+            //       Row(
+            //         children: [
+            //           const Icon(
+            //             Icons.location_on,
+            //             size: 16.0,
+            //             color: Colors.grey,
+            //           ),
+            //           const SizedBox(width: 4.0),
+            //           Expanded(
+            //             child: Text(
+            //               locate,
+            //               style: const TextStyle(
+            //                 color: Colors.grey,
+            //                 fontSize: 12.0,
+            //               ),
+            //               maxLines: 1,
+            //               overflow: TextOverflow.ellipsis,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       const SizedBox(height: 4.0),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Text(
+            //             ownerName,
+            //             style: const TextStyle(
+            //               color: Colors.blueAccent,
+            //               fontSize: 12.0,
+            //             ),
+            //           ),
+            //           Text(
+            //             time,
+            //             style: const TextStyle(
+            //               color: Colors.grey,
+            //               fontSize: 10.0,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

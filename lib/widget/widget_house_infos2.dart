@@ -60,7 +60,7 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
   @override
   Widget build(BuildContext context) {
     // Hauteur totale estimée pour la carte, incluant l'image et les textes
-    const double totalCardHeight = 220.0; // Ajustez cette valeur au besoin
+    const double totalCardHeight = 215.0; // Ajustez cette valeur au besoin
 
     return GestureDetector(
       // ✅ Encapsule tout le widget avec GestureDetector

@@ -21,7 +21,7 @@ class _MapSearchState extends State<MapSearch> {
           SizedBox(
             width: screenWidth,
             height: screenHeight,
-            // Ajoute l'api de google mpas ici
+            // Ajoute maps ici eb bg
             child: ClipRRect(
               child: Image.asset(
                 'assets/images/img04.jpg',

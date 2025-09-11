@@ -25,7 +25,7 @@ class _WidgetHouseTextInfosState extends State<WidgetHouseTextInfos> {
         logement?['description'] ?? 'Aucune description disponible.';
     final String ownerName =
         (logement?['user'] != null && logement?['user']['name'] != null)
-            ? '@${logement!['user']['name'].toString().replaceAll(' ', '.').toLowerCase()}' // Format @prenom.nom
+            ? '@${logement!['user']['name'].toString().replaceAll(' ', '.').toUpperCase()}' // Format @prenom.nom
             : '@proprietaire.inconnu';
 
     String formattedTime = 'Date Inconnue';
@@ -34,7 +34,7 @@ class _WidgetHouseTextInfosState extends State<WidgetHouseTextInfos> {
       print('DEBUG: Raw created_at value: ${logement!['created_at']}');
       try {
         final DateTime dateTime = DateTime.parse(
-          logement!['created_at'] as String,
+          logement['created_at'] as String,
         );
         // ... (le reste de votre code de formatage) ...
         formattedTime = DateFormat(

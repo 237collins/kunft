@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kunft/pages/logements/populaires/apparts.dart';
-import 'package:kunft/pages/logements/populaires/chambres.dart';
-import 'package:kunft/pages/logements/populaires/duplex.dart';
-import 'package:kunft/pages/logements/populaires/studio.dart';
-import 'package:kunft/pages/logements/populaires/tous_logements.dart';
-import 'package:kunft/pages/logements/populaires/villas.dart';
-import 'package:kunft/widget/widget_horizontal_section_navigator.dart';
 
 class ListLogementPopulaire extends StatefulWidget {
   const ListLogementPopulaire({super.key});

@@ -66,9 +66,9 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
       // ✅ Encapsule tout le widget avec GestureDetector
       onTap: _navigateToPropertyDetail, // Appelle la fonction de navigation
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10.0), // Marge pour l'espacement
-        width: double.infinity,
-        // height: 160,
+        // width: double.infinity,
+        // height: 200,
+        margin: const EdgeInsets.only(bottom: 10.0),
         padding: EdgeInsets.all(3),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -264,7 +264,7 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                           ),
                           const SizedBox(width: 3),
                           SizedBox(
-                            width: 145,
+                            width: 135,
                             child: Text(
                               widget.locate,
                               style: const TextStyle(

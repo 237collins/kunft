@@ -27,9 +27,9 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
   // Elle prend maintenant un paramètre `boolValue` pour les commodités
   Widget _buildSpecItem({
     required IconData icon,
-    required String title,
+    // required String title,
     required Widget valueWidget, // Peut être un Text ou une Icône colorée
-    double iconSize = 17.0,
+    double iconSize = 22.0,
     bool isAvailable =
         false, // ✅ Nouveau paramètre pour la disponibilité (booléen)
   }) {
@@ -41,9 +41,9 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
 
     return Container(
       margin: const EdgeInsets.only(right: 10),
-      width: 80,
-      height: 65,
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+      width: 60,
+      height: 55,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: Color(0x1a2196f3),
         borderRadius: BorderRadius.circular(10),
@@ -54,17 +54,17 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // L'icône principale du bloc (ex: lit, baignoire, clim)
           Icon(icon, size: iconSize),
           const SizedBox(height: 4),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black87,
-              fontSize: 8,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w400,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 6),
+          // Text(
+          //   title,
+          //   style: const TextStyle(
+          //     color: Colors.black87,
+          //     fontSize: 8,
+          //     fontStyle: FontStyle.italic,
+          //     fontWeight: FontWeight.w400,
+          //   ),
+          //   textAlign: TextAlign.center,
+          // ),
+          // const SizedBox(height: 6),
           // ✅ Affichage conditionnel :
           // Si c'est une commodité (isAvailable est utilisé pour la couleur), affiche une icône de coche/croix ou un simple point
           // Sinon, affiche le valueWidget fourni (pour les nombres de lits/douches)
@@ -94,7 +94,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // Nombre de Lits
           _buildSpecItem(
             icon: Icons.bed,
-            title: 'Chambres',
+            // title: 'Chambres',
             valueWidget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -102,8 +102,8 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
                   widget.bed,
                   style: const TextStyle(
                     color: Color(0xff010101),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 // const Text(
@@ -121,7 +121,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // Nombre de douches
           _buildSpecItem(
             icon: Icons.bathtub,
-            title: 'Douches',
+            // title: 'Douches',
             valueWidget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -129,8 +129,8 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
                   widget.bath,
                   style: const TextStyle(
                     color: Color(0xff010101),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 // const Text(
@@ -148,7 +148,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // ✅ Climatisation - Maintenant avec une icône colorée
           _buildSpecItem(
             icon: Icons.ac_unit,
-            title: 'Clim / AC',
+            // title: 'Clim / AC',
             valueWidget:
                 const SizedBox.shrink(), // Pas de valueWidget direct pour les booléens
             isAvailable:
@@ -159,7 +159,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // ✅ Wi-Fi
           _buildSpecItem(
             icon: Icons.wifi,
-            title: 'Wi-Fi',
+            // title: 'Wi-Fi',
             valueWidget: const SizedBox.shrink(),
             isAvailable: widget.wifi,
           ),
@@ -167,7 +167,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // ✅ Parking
           _buildSpecItem(
             icon: Icons.local_parking_rounded,
-            title: 'Parking',
+            // title: 'Parking',
             valueWidget: const SizedBox.shrink(),
             isAvailable: widget.parking,
           ),
@@ -175,7 +175,7 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // ✅ Générateur
           _buildSpecItem(
             icon: Icons.power,
-            title: 'Générateur',
+            // title: 'Générateur',
             valueWidget: const SizedBox.shrink(),
             isAvailable: widget.generator,
           ),

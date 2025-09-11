@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kunft/pages/maps_test.dart';
 import 'package:kunft/widget/widget_owner_list.dart';
 import 'package:provider/provider.dart'; // Import de Provider
 // import 'package:intl/intl.dart'; // Pour le formatage des dates et nombres
@@ -287,16 +286,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                         width: 10,
                                       ), // Ajout de const
                                       InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder:
-                                                  (context) =>
-                                                      const MapsTest(), // Page test
-                                            ),
-                                          );
-                                        },
+                                        // onTap: () {
+                                        //   Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //       builder:
+                                        //           (context) =>
+                                        //               const MapTestScreen(), // Page test
+                                        //     ),
+                                        //   );
+                                        // },
                                         child: const Text(
                                           // Ajout de const
                                           'Google Map',

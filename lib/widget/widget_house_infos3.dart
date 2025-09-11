@@ -12,7 +12,7 @@ class WidgetHouseInfos3 extends StatefulWidget {
   final Map<String, dynamic>? logementData; // ✅ Nouveau paramètre facultatif
 
   const WidgetHouseInfos3({
-    Key? key, // Utilisation du paramètre Key standard
+    Key? superkey, // Utilisation du paramètre Key standard
     // Key? superkey, // Supprimé car redondant avec Key? key
     required this.imgHouse,
     required this.houseName,
@@ -21,7 +21,7 @@ class WidgetHouseInfos3 extends StatefulWidget {
     required this.ownerName,
     required this.time,
     this.logementData, // ✅ Rendre facultatif
-  }) : super(key: key); // Passe la clé au constructeur parent
+  }) : super(key: superkey); // Passe la clé au constructeur parent
 
   @override
   State<WidgetHouseInfos3> createState() => _WidgetHouseInfos3State();
@@ -38,11 +38,9 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder:
-              (context) => PropertyDetail(
-                logementData:
-                    widget.logementData!, // Passe les données complètes
-              ),
+          builder: (context) => PropertyDetail(
+            logementData: widget.logementData!, // Passe les données complètes
+          ),
         ),
       );
     } else {
@@ -61,7 +59,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
   @override
   Widget build(BuildContext context) {
     // Hauteur totale estimée pour la carte, incluant l'image et les textes
-    const double totalCardHeight = 300.0; // Basé sur votre maxHeight: 300
+    const double totalCardHeight = 235.0; // Basé sur votre maxHeight: 300
 
     return GestureDetector(
       // ✅ Encapsule tout le widget avec GestureDetector
@@ -77,7 +75,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color(0x1a000000),
               spreadRadius: 2,
@@ -96,10 +94,10 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                     widget.imgHouse,
                     fit: BoxFit.cover,
                     width: double.infinity,
-                    height: 265, // Hauteur fixe pour l'image
+                    height: 205, // Hauteur fixe pour l'image
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
-                        height: 265,
+                        height: 205,
                         width: double.infinity,
                         color: Colors.grey[300],
                         child: const Center(
@@ -156,9 +154,9 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                               ),
                             ),
                             //
-                            Text(
+                            const Text(
                               ' | Nuit',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
                                 // fontFamily: 'BebasNeue',
@@ -188,10 +186,9 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                                 softWrap: true,
                                 textAlign: TextAlign.left,
                                 maxLines: isExpanded ? null : 1,
-                                overflow:
-                                    isExpanded
-                                        ? TextOverflow.visible
-                                        : TextOverflow.ellipsis,
+                                overflow: isExpanded
+                                    ? TextOverflow.visible
+                                    : TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -246,7 +243,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                             isFavorite
                                 ? Icons.favorite_rounded
                                 : Icons
-                                    .favorite_border_rounded, // Icône de bordure si non favori
+                                      .favorite_border_rounded, // Icône de bordure si non favori
                             color: isFavorite ? Colors.red : Colors.white,
                             size: 18,
                           ),
@@ -292,7 +289,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            // const SizedBox(height: 10),
           ],
         ),
       ),

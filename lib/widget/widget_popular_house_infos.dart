@@ -157,7 +157,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 100,
+                      width: 120,
                       child: Text(
                         // nom du mobilier
                         widget.houseName,
@@ -241,12 +241,12 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                       Row(
                         children: [
                           Icon(Icons.access_time, size: 12, color: Colors.grey),
-                          SizedBox(width: 5),
+                          SizedBox(width: 3),
                           Text(
                             widget.time,
                             style: TextStyle(
                               color: Colors.grey,
-                              fontSize: 10,
+                              fontSize: 9,
                               fontStyle: FontStyle.italic,
                               // fontWeight: FontWeight.w600,
                             ),

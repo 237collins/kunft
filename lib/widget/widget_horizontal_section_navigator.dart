@@ -95,7 +95,7 @@ class _HorizontalSectionNavigatorState
                   alignment: Alignment.center,
                   child: Text(
                     // ✅ MODIFIÉ : Affiche le titre et le compte
-                    count != null ? '$title (${count})' : title,
+                    count != null ? '$title ($count)' : title,
                     textAlign: TextAlign.center,
                     style: (widget.navigationTitleStyle ??
                             const TextStyle(fontSize: 11))

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kunft/pages/SplashScreen.dart';
+// import 'package:kunft/pages/SplashScreen.dart';
+import 'package:kunft/pages/auth/login_page.dart';
+import 'package:kunft/pages/profile_screen/elements/my_booking.dart';
+import 'package:kunft/pages/profile_screen/elements/notifications_settings.dart';
+import 'package:kunft/provider/UserProvider.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 // --- Placeholders pour les pages de navigation ---
 // Remplacez ces classes par vos pages réelles lorsque vous les créerez.
 
@@ -11,8 +15,11 @@ class MyReservationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mes Réservations')),
-      body: const Center(child: Text('Contenu de Mes Réservations')),
+      // appBar: AppBar(title: const Text('Mes Réservations')),
+      body: const Center(
+        child: MyBooking(),
+        // Text('Contenu de Mes Réservations')
+      ),
     );
   }
 }
@@ -45,10 +52,11 @@ class NotificationSettingsPage extends StatelessWidget {
   const NotificationSettingsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Notifications')),
-      body: const Center(child: Text('Contenu des paramètres de notification')),
-    );
+    return NotificationsSettings();
+    // Scaffold(
+    //   appBar: AppBar(title: const Text('Notifications')),
+    //   body: const Center(child: Text('Contenu des paramètres de notification')),
+    // );
   }
 }
 
@@ -109,46 +117,99 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // État pour le mode sombre (pour l'interrupteur)
   bool _isDarkModeEnabled = false;
 
+  // Ancienne fonction
   // ✅ AJOUTÉ : Fonction pour afficher la boîte de dialogue de déconnexion
+  // void _showLogoutDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Déconnexion'), // Titre de la boîte de dialogue
+  //         content: const Text(
+  //           'Êtes-vous sûr de vouloir vous déconnecter ?',
+  //         ), // Message de confirmation
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop(); // Ferme la boîte de dialogue
+  //             },
+  //             child: const Text('Annuler'), // Bouton Annuler
+  //           ),
+  //           TextButton(
+  //             onPressed: () async {
+  //               Navigator.of(
+  //                 context,
+  //               ).pop(); // Ferme la boîte de dialogue avant de déconnecter
+  //               // ✅ LOGIQUE DE DÉCONNEXION DÉPLACÉE ICI
+  //               SharedPreferences prefs = await SharedPreferences.getInstance();
+  //               await prefs.remove('token'); // Supprime le token
+  //               if (context.mounted) {
+  //                 // Vérifie si le widget est toujours monté avant de naviguer
+  //                 Navigator.pushReplacement(
+  //                   // Redirige vers l'écran de splash
+  //                   context,
+  //                   MaterialPageRoute(builder: (context) => const LoginPage()),
+  //                 );
+  //               }
+  //             },
+  //             child: const Text(
+  //               'Oui, Déconnexion',
+  //               style: TextStyle(color: Colors.red),
+  //             ), // Bouton de confirmation
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  //
+
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
+        // Utilisation d'un nouveau BuildContext pour éviter les problèmes
         return AlertDialog(
-          title: const Text('Déconnexion'), // Titre de la boîte de dialogue
-          content: const Text(
-            'Êtes-vous sûr de vouloir vous déconnecter ?',
-          ), // Message de confirmation
+          title: const Text('Déconnexion'),
+          content: const Text('Êtes-vous sûr de vouloir vous déconnecter ?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Ferme la boîte de dialogue
+                Navigator.of(dialogContext).pop();
               },
-              child: const Text('Annuler'), // Bouton Annuler
+              child: const Text('Annuler'),
             ),
             TextButton(
               onPressed: () async {
-                Navigator.of(
+                // On utilise le 'dialogContext' pour pop la boîte de dialogue
+                Navigator.of(dialogContext).pop();
+
+                // On accède à l'instance de votre UserProvider
+                // 'listen: false' est crucial pour ne pas reconstruire le widget
+                // quand la valeur change, ce qui est inutile ici.
+                final userProvider = Provider.of<UserProvider>(
                   context,
-                ).pop(); // Ferme la boîte de dialogue avant de déconnecter
-                // ✅ LOGIQUE DE DÉCONNEXION DÉPLACÉE ICI
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.remove('token'); // Supprime le token
+                  listen: false,
+                );
+
+                // On appelle la méthode de déconnexion du provider
+                await userProvider.logout();
+
                 if (context.mounted) {
-                  // Vérifie si le widget est toujours monté avant de naviguer
+                  // On navigue vers la page de connexion
+                  // On utilise le 'context' initial, pas le 'dialogContext'
+                  // car le 'dialogContext' sera invalidé après le pop.
                   Navigator.pushReplacement(
-                    // Redirige vers l'écran de splash
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const SplashScreen(),
-                    ),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                 }
               },
               child: const Text(
                 'Oui, Déconnexion',
                 style: TextStyle(color: Colors.red),
-              ), // Bouton de confirmation
+              ),
             ),
           ],
         );
@@ -205,7 +266,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MyReservationsPage()),
+            MaterialPageRoute(
+              builder: (context) => const MyReservationsPage(),
+            ), // Page test
           );
         },
       ),
@@ -398,7 +461,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: Colors.white, // Couleur du "bouton" actif
+        activeThumbColor: Colors.white, // Couleur du "bouton" actif
         activeTrackColor: Colors.blue, // Couleur de la piste active
         inactiveThumbColor: Colors.white, // Bouton inactif
         inactiveTrackColor: const Color(0x40009fe3), // Piste inactive

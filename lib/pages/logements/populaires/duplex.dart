@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kunft/widget/widget_popular_house_infos2.dart';
 
 class Duplex extends StatefulWidget {
   const Duplex({super.key});

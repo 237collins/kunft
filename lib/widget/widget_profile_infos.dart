@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kunft/pages/profile_screen/elements/notifications_page.dart';
 
 class WidgetProfileInfos extends StatefulWidget {
-  const WidgetProfileInfos({Key? key}) : super(key: key);
+  const WidgetProfileInfos({super.key});
 
   @override
   State<WidgetProfileInfos> createState() => _WidgetProfileInfosState();

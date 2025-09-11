@@ -36,7 +36,7 @@ class _TousLogementsState extends State<TousLogements> {
           body:
               isLoading
                   ? const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(color: Colors.blue),
                   ) // Indicateur de chargement
                   : errorMessage != null
                   ? Center(
@@ -63,7 +63,7 @@ class _TousLogementsState extends State<TousLogements> {
                         crossAxisSpacing: 8.0, // Espacement horizontal
                         mainAxisSpacing: 8.0, // Espacement vertical
                         childAspectRatio:
-                            0.8, // Ajustez si nécessaire pour que les cartes s'affichent bien
+                            .72, // Ajustez si nécessaire pour que les cartes s'affichent bien
                       ),
                       itemCount: logements.length,
                       itemBuilder: (context, index) {

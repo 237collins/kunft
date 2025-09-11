@@ -13,7 +13,7 @@ class WidgetAnimation3 extends StatefulWidget {
 }
 
 class _WidgetAnimation3State extends State<WidgetAnimation3> {
-  bool _showFirstChild = true;
+  final bool _showFirstChild = true;
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;

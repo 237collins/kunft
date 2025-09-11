@@ -1,13 +1,14 @@
+// Code okay avec vefication
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:kunft/pages/auth/login_page.dart';
+import 'package:kunft/pages/auth/pin_code.dart';
 
-import 'package:kunft/pages/auth/login_page.dart'; // Import de LoginPage
-
-// Définissez votre URL de base d'API ici ou importez-la depuis un fichier de constantes si vous en avez un.
-const String API_BASE_URL =
-    'http://127.0.0.1:8000'; // Assurez-vous que c'est l'URL correcte de votre backend Laravel
+// Définissez votre URL de base d'API ici
+const String API_BASE_URL = 'http://127.0.0.1:8000';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -22,10 +23,13 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmedPasswordController =
       TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool _obscureTextPassword = true;
   bool _obscureTextConfirmPassword = true;
+
+  String? _selectedRole;
 
   @override
   void dispose() {
@@ -33,6 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmedPasswordController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
@@ -53,12 +58,14 @@ class _SignUpPageState extends State<SignUpPage> {
     bool isPassword = false,
     bool obscureText = false,
     VoidCallback? toggleObscureText,
+    Icon? prefixIcon,
   }) {
     return InputDecoration(
       labelText: label,
       labelStyle: const TextStyle(fontSize: 12),
       filled: true,
       fillColor: const Color(0xfff7f7f7),
+      prefixIcon: prefixIcon,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: Color(0xffd3d3d3)),
@@ -67,31 +74,29 @@ class _SignUpPageState extends State<SignUpPage> {
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: Color(0xffFFD055), width: 2),
       ),
-      suffixIcon:
-          isPassword
-              ? IconButton(
-                icon: Icon(
-                  obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.grey,
-                ),
-                onPressed: toggleObscureText,
-              )
-              : null,
+      suffixIcon: isPassword
+          ? IconButton(
+              icon: Icon(
+                obscureText ? Icons.visibility_off : Icons.visibility,
+                color: Colors.grey,
+              ),
+              onPressed: toggleObscureText,
+            )
+          : null,
     );
   }
 
-  // --- FONCTION PRINCIPALE D'INSCRIPTION AVEC LARAVEL ---
+  // --- FONCTION INSCRIPTION ---
   Future<void> _registerWithLaravel() async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Afficher un indicateur de chargement si nécessaire
-      // showDialog(...);
+      if (_selectedRole == null) {
+        _showErrorSnackBar("Veuillez sélectionner un type de compte.");
+        return;
+      }
 
       try {
-        print('DEBUG: Tentative d\'inscription avec Laravel...');
         final response = await http.post(
-          Uri.parse(
-            '$API_BASE_URL/api/register',
-          ), // Endpoint d'inscription Laravel
+          Uri.parse('$API_BASE_URL/api/register'),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -99,33 +104,26 @@ class _SignUpPageState extends State<SignUpPage> {
           body: jsonEncode({
             'name': _nameController.text.trim(),
             'email': _emailController.text.trim(),
+            'phone': _phoneController.text.trim(),
             'password': _passwordController.text,
-            'password_confirmation':
-                _confirmedPasswordController.text, // Nécessaire pour Laravel
+            'password_confirmation': _confirmedPasswordController.text,
+            'role': _selectedRole,
           }),
         );
 
-        print(
-          'DEBUG: Réponse Laravel (register) status: ${response.statusCode}',
-        );
-        print('DEBUG: Réponse Laravel (register) body: ${response.body}');
-
         if (response.statusCode == 201) {
-          // 201 Created est typique pour une nouvelle ressource
+          final userEmail = _emailController.text.trim();
           _showSuccessSnackBar(
-            'Compte créé avec succès ! Vous pouvez maintenant vous connecter.',
+            'Compte créé avec succès ! Un code de vérification a été envoyé à $userEmail.',
           );
-          print(
-            'DEBUG: Inscription Laravel réussie. Redirection vers LoginPage.',
-          );
-
-          // Redirection vers LoginPage après succès
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const LoginPage()),
+            // ✅ Passe l'email de l'utilisateur à PinCodePage
+            MaterialPageRoute(
+              builder: (context) => PinCodePage(email: userEmail),
+            ),
           );
         } else {
-          // Gérer les erreurs de validation ou autres erreurs du serveur Laravel
           final Map<String, dynamic> errorData = json.decode(response.body);
           String errorMessage = 'Erreur lors de l\'inscription.';
 
@@ -133,25 +131,17 @@ class _SignUpPageState extends State<SignUpPage> {
             errorMessage = errorData['message'];
           }
           if (errorData.containsKey('errors')) {
-            // Si Laravel renvoie des erreurs de validation détaillées
             final Map<String, dynamic> errors = errorData['errors'];
             errors.forEach((key, value) {
-              errorMessage +=
-                  '\n- ${value[0]}'; // Affiche la première erreur pour chaque champ
+              errorMessage += '\n- ${value[0]}';
             });
           }
           _showErrorSnackBar(errorMessage);
-          print('DEBUG: Erreur d\'inscription Laravel: $errorMessage');
         }
       } catch (e) {
-        // Erreurs générales (réseau, JSON, etc.)
         _showErrorSnackBar(
           'Une erreur inattendue est survenue : ${e.toString()}',
         );
-        print('DEBUG: Erreur générale lors de l\'inscription: $e');
-      } finally {
-        // Masquer l'indicateur de chargement
-        // Navigator.of(context).pop();
       }
     }
   }
@@ -159,17 +149,20 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            // --- IMAGE HEADER ---
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
               ),
-              height: screenHeight * .21,
+              height: screenHeight * .25,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(50),
@@ -184,46 +177,88 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
+
+            // --- TEXT HEADER ---
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   'Join the Archilles Community!',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600,
+                    height: 1.2,
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 const Text(
-                  'Start your journey to finding the perfect property.',
+                  'Sublimez votre séjour en choisissant le logement ideal.',
                   style: TextStyle(fontSize: 12),
                 ),
                 const SizedBox(height: 20),
+
+                // --- FORMULAIRE ---
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18.0),
-                    color: Colors.white,
                   ),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       children: [
-                        TextFormField(
-                          controller: _nameController,
-                          style: const TextStyle(color: Colors.purple),
-                          decoration: _inputDecoration('Username'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Veuillez entrer votre nom d\'utilisateur.';
-                            }
-                            return null;
-                          },
+                        // USERNAME + ROLE
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: screenWidth * .49,
+                              child: TextFormField(
+                                controller: _nameController,
+                                style: const TextStyle(color: Colors.purple),
+                                decoration: _inputDecoration('Nom'),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Veuillez entrer un nom d\'utilisateur.';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            SizedBox(
+                              width: screenWidth * .42,
+                              child: DropdownButtonFormField<String>(
+                                value: _selectedRole,
+                                decoration: _inputDecoration('Type de compte'),
+                                items: const [
+                                  DropdownMenuItem(
+                                    value: 'client',
+                                    child: Text('Client'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'hote',
+                                    child: Text('Hôte'),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedRole = value;
+                                  });
+                                },
+                                validator: (value) =>
+                                    value == null ? 'Choisissez un type' : null,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 15),
+
+                        // EMAIL
                         TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(color: Colors.purple),
-                          decoration: _inputDecoration('username@gmail.com'),
+                          decoration: _inputDecoration('monadresse_@gmail.com'),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Veuillez entrer votre email.';
@@ -237,11 +272,33 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                         ),
                         const SizedBox(height: 15),
+
+                        // PHONE
+                        TextFormField(
+                          controller: _phoneController,
+                          keyboardType: TextInputType.phone,
+                          decoration: _inputDecoration(
+                            'Téléphone',
+                            prefixIcon: const Icon(Icons.phone),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Veuillez entrer votre numéro de téléphone.';
+                            }
+                            if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                              return 'Veuillez n\'utiliser que des chiffres.';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 15),
+
+                        // PASSWORD
                         TextFormField(
                           controller: _passwordController,
                           obscureText: _obscureTextPassword,
                           decoration: _inputDecoration(
-                            'Password',
+                            'Mot de passe',
                             isPassword: true,
                             obscureText: _obscureTextPassword,
                             toggleObscureText: () {
@@ -255,13 +312,14 @@ class _SignUpPageState extends State<SignUpPage> {
                               return 'Veuillez entrer votre mot de passe.';
                             }
                             if (value.length < 8) {
-                              // Laravel Sanctum par défaut exige 8 caractères
                               return 'Le mot de passe doit contenir au moins 8 caractères.';
                             }
                             return null;
                           },
                         ),
                         const SizedBox(height: 15),
+
+                        // CONFIRM PASSWORD
                         TextFormField(
                           controller: _confirmedPasswordController,
                           obscureText: _obscureTextConfirmPassword,
@@ -293,11 +351,12 @@ class _SignUpPageState extends State<SignUpPage> {
               ],
             ),
             const SizedBox(height: 25),
+
+            // --- BUTTON ---
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed:
-                    _registerWithLaravel, // ✅ Appel de la nouvelle fonction d'inscription
+                onPressed: _registerWithLaravel,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffFFD055),
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -306,41 +365,1242 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 child: const Text(
-                  'Let’s Get Started',
+                  'Créer mon Compte',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
             ),
             const SizedBox(height: 25),
+
+            // --- LOGIN REDIRECT ---
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'already have account? ',
+                  'Vous avez déja un compte? ',
                   style: TextStyle(fontSize: 12, color: Colors.black),
                 ),
                 Text.rich(
                   TextSpan(
-                    text: ' log into your account now!',
-                    style: const TextStyle(
+                    text: ' Connectez-vous!',
+                    style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xffFFD055),
+                      color: Colors.yellow.shade700,
+                      fontWeight: FontWeight.w700,
                     ),
-                    recognizer:
-                        TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.pop(context);
-                          },
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // ✅ Navigue vers la page de connexion
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
                   ),
                 ),
               ],
             ),
+            const SizedBox(height: 35),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+// le package des tel auto pose souci au lancement de l'app
+
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+// import 'package:kunft/pages/auth/login_page.dart';
+// import 'package:kunft/pages/auth/pin_code.dart'; // Keep this import for the redirect in the `don't have an account` part
+
+// // Définissez votre URL de base d'API ici
+// const String API_BASE_URL = 'http://127.0.0.1:8000';
+
+// class SignUpPage extends StatefulWidget {
+//   const SignUpPage({super.key});
+
+//   @override
+//   State<SignUpPage> createState() => _SignUpPageState();
+// }
+
+// class _SignUpPageState extends State<SignUpPage> {
+//   final TextEditingController _nameController = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _confirmedPasswordController =
+//       TextEditingController();
+//   final TextEditingController _phoneController = TextEditingController();
+//   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+//   bool _obscureTextPassword = true;
+//   bool _obscureTextConfirmPassword = true;
+
+//   String? _selectedRole;
+
+//   @override
+//   void dispose() {
+//     _nameController.dispose();
+//     _emailController.dispose();
+//     _passwordController.dispose();
+//     _confirmedPasswordController.dispose();
+//     _phoneController.dispose();
+//     super.dispose();
+//   }
+
+//   void _showSuccessSnackBar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text(message), backgroundColor: Colors.green),
+//     );
+//   }
+
+//   void _showErrorSnackBar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text(message), backgroundColor: Colors.red),
+//     );
+//   }
+
+//   InputDecoration _inputDecoration(
+//     String label, {
+//     bool isPassword = false,
+//     bool obscureText = false,
+//     VoidCallback? toggleObscureText,
+//     Icon? prefixIcon,
+//   }) {
+//     return InputDecoration(
+//       labelText: label,
+//       labelStyle: const TextStyle(fontSize: 12),
+//       filled: true,
+//       fillColor: const Color(0xfff7f7f7),
+//       prefixIcon: prefixIcon,
+//       enabledBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(12),
+//         borderSide: const BorderSide(color: Color(0xffd3d3d3)),
+//       ),
+//       focusedBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(12),
+//         borderSide: const BorderSide(color: Color(0xffFFD055), width: 2),
+//       ),
+//       suffixIcon: isPassword
+//           ? IconButton(
+//               icon: Icon(
+//                 obscureText ? Icons.visibility_off : Icons.visibility,
+//                 color: Colors.grey,
+//               ),
+//               onPressed: toggleObscureText,
+//             )
+//           : null,
+//     );
+//   }
+
+//   // --- FONCTION INSCRIPTION ---
+//   Future<void> _registerWithLaravel() async {
+//     if (_formKey.currentState?.validate() ?? false) {
+//       if (_selectedRole == null) {
+//         _showErrorSnackBar("Veuillez sélectionner un type de compte.");
+//         return;
+//       }
+
+//       try {
+//         final response = await http.post(
+//           Uri.parse('$API_BASE_URL/api/register'),
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//           },
+//           body: jsonEncode({
+//             'name': _nameController.text.trim(),
+//             'email': _emailController.text.trim(),
+//             'phone': _phoneController.text.trim(),
+//             'password': _passwordController.text,
+//             'password_confirmation': _confirmedPasswordController.text,
+//             'role': _selectedRole,
+//           }),
+//         );
+
+//         if (response.statusCode == 201) {
+//           _showSuccessSnackBar(
+//             'Compte créé avec succès ! Un code de vérification a été envoyé par mail.',
+//           );
+//           Navigator.pushReplacement(
+//             context,
+//             // ✅ Redirige vers PinCodePage
+//             MaterialPageRoute(builder: (context) => const PinCodePage(email: '',)),
+//           );
+//         } else {
+//           final Map<String, dynamic> errorData = json.decode(response.body);
+//           String errorMessage = 'Erreur lors de l\'inscription.';
+
+//           if (errorData.containsKey('message')) {
+//             errorMessage = errorData['message'];
+//           }
+//           if (errorData.containsKey('errors')) {
+//             final Map<String, dynamic> errors = errorData['errors'];
+//             errors.forEach((key, value) {
+//               errorMessage += '\n- ${value[0]}';
+//             });
+//           }
+//           _showErrorSnackBar(errorMessage);
+//         }
+//       } catch (e) {
+//         _showErrorSnackBar(
+//           'Une erreur inattendue est survenue : ${e.toString()}',
+//         );
+//       }
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final screenHeight = MediaQuery.of(context).size.height;
+//     final screenWidth = MediaQuery.of(context).size.width;
+
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       body: SingleChildScrollView(
+//         padding: const EdgeInsets.all(10.0),
+//         child: Column(
+//           children: [
+//             // --- IMAGE HEADER ---
+//             Container(
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(30),
+//               ),
+//               height: screenHeight * .25,
+//               child: ClipRRect(
+//                 borderRadius: const BorderRadius.only(
+//                   topLeft: Radius.circular(50),
+//                   topRight: Radius.circular(50),
+//                   bottomLeft: Radius.circular(30),
+//                   bottomRight: Radius.circular(30),
+//                 ),
+//                 child: Image.asset(
+//                   'assets/images/img02.jpg',
+//                   fit: BoxFit.cover,
+//                   width: double.infinity,
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 16),
+
+//             // --- TEXT HEADER ---
+//             Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 const Text(
+//                   'Join the Archilles Community!',
+//                   style: TextStyle(
+//                     fontSize: 32,
+//                     fontWeight: FontWeight.w600,
+//                     height: 1.2,
+//                   ),
+//                 ),
+//                 const SizedBox(height: 12),
+//                 const Text(
+//                   'Sublimez votre séjour en choisissant le logement ideal.',
+//                   style: TextStyle(fontSize: 12),
+//                 ),
+//                 const SizedBox(height: 20),
+
+//                 // --- FORMULAIRE ---
+//                 Container(
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(18.0),
+//                   ),
+//                   child: Form(
+//                     key: _formKey,
+//                     child: Column(
+//                       children: [
+//                         // USERNAME + ROLE
+//                         Row(
+//                           children: [
+//                             SizedBox(
+//                               width: screenWidth * .49,
+//                               child: TextFormField(
+//                                 controller: _nameController,
+//                                 style: const TextStyle(color: Colors.purple),
+//                                 decoration: _inputDecoration('Nom'),
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Veuillez entrer un nom d\'utilisateur.';
+//                                   }
+//                                   return null;
+//                                 },
+//                               ),
+//                             ),
+//                             const SizedBox(width: 15),
+//                             SizedBox(
+//                               width: screenWidth * .42,
+//                               child: DropdownButtonFormField<String>(
+//                                 value: _selectedRole,
+//                                 decoration: _inputDecoration('Type de compte'),
+//                                 items: const [
+//                                   DropdownMenuItem(
+//                                     value: 'client',
+//                                     child: Text('Client'),
+//                                   ),
+//                                   DropdownMenuItem(
+//                                     value: 'hote',
+//                                     child: Text('Hôte'),
+//                                   ),
+//                                 ],
+//                                 onChanged: (value) {
+//                                   setState(() {
+//                                     _selectedRole = value;
+//                                   });
+//                                 },
+//                                 validator: (value) =>
+//                                     value == null ? 'Choisissez un type' : null,
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                         const SizedBox(height: 15),
+
+//                         // EMAIL
+//                         TextFormField(
+//                           controller: _emailController,
+//                           keyboardType: TextInputType.emailAddress,
+//                           style: const TextStyle(color: Colors.purple),
+//                           decoration: _inputDecoration('monadresse_@gmail.com'),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez entrer votre email.';
+//                             }
+//                             if (!RegExp(
+//                               r'^[^@]+@[^@]+\.[^@]+',
+//                             ).hasMatch(value)) {
+//                               return 'Veuillez entrer un email valide.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                         const SizedBox(height: 15),
+
+//                         // PHONE
+//                         TextFormField(
+//                           controller: _phoneController,
+//                           keyboardType: TextInputType.phone,
+//                           decoration: _inputDecoration(
+//                             'Téléphone',
+//                             prefixIcon: const Icon(Icons.phone),
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez entrer votre numéro de téléphone.';
+//                             }
+//                             if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+//                               return 'Veuillez n\'utiliser que des chiffres.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                         const SizedBox(height: 15),
+
+//                         // PASSWORD
+//                         TextFormField(
+//                           controller: _passwordController,
+//                           obscureText: _obscureTextPassword,
+//                           decoration: _inputDecoration(
+//                             'Mot de passe',
+//                             isPassword: true,
+//                             obscureText: _obscureTextPassword,
+//                             toggleObscureText: () {
+//                               setState(() {
+//                                 _obscureTextPassword = !_obscureTextPassword;
+//                               });
+//                             },
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez entrer votre mot de passe.';
+//                             }
+//                             if (value.length < 8) {
+//                               return 'Le mot de passe doit contenir au moins 8 caractères.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                         const SizedBox(height: 15),
+
+//                         // CONFIRM PASSWORD
+//                         TextFormField(
+//                           controller: _confirmedPasswordController,
+//                           obscureText: _obscureTextConfirmPassword,
+//                           decoration: _inputDecoration(
+//                             'Confirmer le mot de passe',
+//                             isPassword: true,
+//                             obscureText: _obscureTextConfirmPassword,
+//                             toggleObscureText: () {
+//                               setState(() {
+//                                 _obscureTextConfirmPassword =
+//                                     !_obscureTextConfirmPassword;
+//                               });
+//                             },
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez confirmer votre mot de passe.';
+//                             }
+//                             if (value != _passwordController.text) {
+//                               return 'Les mots de passe ne correspondent pas.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(height: 25),
+
+//             // --- BUTTON ---
+//             SizedBox(
+//               width: double.infinity,
+//               child: ElevatedButton(
+//                 onPressed: _registerWithLaravel,
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: const Color(0xffFFD055),
+//                   padding: const EdgeInsets.symmetric(vertical: 16),
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(12),
+//                   ),
+//                 ),
+//                 child: const Text(
+//                   'Créer mon Compte',
+//                   style: TextStyle(color: Colors.black),
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 25),
+
+//             // --- LOGIN REDIRECT ---
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 const Text(
+//                   'Vous avez déja un compte? ',
+//                   style: TextStyle(fontSize: 12, color: Colors.black),
+//                 ),
+//                 Text.rich(
+//                   TextSpan(
+//                     text: ' Connectez-vous!',
+//                     style: TextStyle(
+//                       fontSize: 12,
+//                       color: Colors.yellow.shade700,
+//                       fontWeight: FontWeight.w700,
+//                     ),
+//                     recognizer: TapGestureRecognizer()
+//                       ..onTap = () {
+//                         // ✅ Navigue vers la page de connexion
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                             builder: (context) => const LoginPage(),
+//                           ),
+//                         );
+//                       },
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(height: 35),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+//Code statique mais fonctionnel
+
+
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+
+// import 'package:kunft/pages/auth/login_page.dart';
+
+// // Définissez votre URL de base d'API ici
+// const String API_BASE_URL = 'http://127.0.0.1:8000';
+
+// class SignUpPage extends StatefulWidget {
+//   const SignUpPage({super.key});
+
+//   @override
+//   State<SignUpPage> createState() => _SignUpPageState();
+// }
+
+// class _SignUpPageState extends State<SignUpPage> {
+//   final TextEditingController _nameController = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _confirmedPasswordController =
+//       TextEditingController();
+//   final TextEditingController _phoneController = TextEditingController();
+//   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+//   bool _obscureTextPassword = true;
+//   bool _obscureTextConfirmPassword = true;
+
+//   // ✅ Nouveau champ : rôle
+//   String? _selectedRole;
+
+//   @override
+//   void dispose() {
+//     _nameController.dispose();
+//     _emailController.dispose();
+//     _passwordController.dispose();
+//     _confirmedPasswordController.dispose();
+//     super.dispose();
+//   }
+
+//   void _showSuccessSnackBar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text(message), backgroundColor: Colors.green),
+//     );
+//   }
+
+//   void _showErrorSnackBar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text(message), backgroundColor: Colors.red),
+//     );
+//   }
+
+//   InputDecoration _inputDecoration(
+//     String label, {
+//     bool isPassword = false,
+//     bool obscureText = false,
+//     VoidCallback? toggleObscureText,
+//   }) {
+//     return InputDecoration(
+//       labelText: label,
+//       labelStyle: const TextStyle(fontSize: 12),
+//       filled: true,
+//       fillColor: const Color(0xfff7f7f7),
+//       enabledBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(12),
+//         borderSide: const BorderSide(color: Color(0xffd3d3d3)),
+//       ),
+//       focusedBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(12),
+//         borderSide: const BorderSide(color: Color(0xffFFD055), width: 2),
+//       ),
+//       suffixIcon:
+//           isPassword
+//               ? IconButton(
+//                 icon: Icon(
+//                   obscureText ? Icons.visibility_off : Icons.visibility,
+//                   color: Colors.grey,
+//                 ),
+//                 onPressed: toggleObscureText,
+//               )
+//               : null,
+//     );
+//   }
+
+//   // --- FONCTION INSCRIPTION ---
+//   Future<void> _registerWithLaravel() async {
+//     if (_formKey.currentState?.validate() ?? false) {
+//       if (_selectedRole == null) {
+//         _showErrorSnackBar("Veuillez sélectionner un type de compte.");
+//         return;
+//       }
+
+//       try {
+//         final response = await http.post(
+//           Uri.parse('$API_BASE_URL/api/register'),
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//           },
+//           body: jsonEncode({
+//             'name': _nameController.text.trim(),
+//             'email': _emailController.text.trim(),
+//             'password': _passwordController.text,
+//             'password_confirmation': _confirmedPasswordController.text,
+//             'role': _selectedRole, // ✅ Envoi du rôle
+//           }),
+//         );
+
+//         if (response.statusCode == 201) {
+//           _showSuccessSnackBar(
+//             'Compte créé avec succès ! Vous pouvez maintenant vous connecter.',
+//           );
+//           Navigator.pushReplacement(
+//             context,
+//             MaterialPageRoute(builder: (context) => const LoginPage()),
+//           );
+//         } else {
+//           final Map<String, dynamic> errorData = json.decode(response.body);
+//           String errorMessage = 'Erreur lors de l\'inscription.';
+
+//           if (errorData.containsKey('message')) {
+//             errorMessage = errorData['message'];
+//           }
+//           if (errorData.containsKey('errors')) {
+//             final Map<String, dynamic> errors = errorData['errors'];
+//             errors.forEach((key, value) {
+//               errorMessage += '\n- ${value[0]}';
+//             });
+//           }
+//           _showErrorSnackBar(errorMessage);
+//         }
+//       } catch (e) {
+//         _showErrorSnackBar(
+//           'Une erreur inattendue est survenue : ${e.toString()}',
+//         );
+//       }
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final screenHeight = MediaQuery.of(context).size.height;
+//     final screenWidth = MediaQuery.of(context).size.width;
+
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       body: SingleChildScrollView(
+//         padding: const EdgeInsets.all(10.0),
+//         child: Column(
+//           children: [
+//             // --- IMAGE HEADER ---
+//             Container(
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(30),
+//               ),
+//               height: screenHeight * .31,
+//               child: ClipRRect(
+//                 borderRadius: const BorderRadius.only(
+//                   topLeft: Radius.circular(50),
+//                   topRight: Radius.circular(50),
+//                   bottomLeft: Radius.circular(30),
+//                   bottomRight: Radius.circular(30),
+//                 ),
+//                 child: Image.asset(
+//                   'assets/images/img02.jpg',
+//                   fit: BoxFit.cover,
+//                   width: double.infinity,
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 18),
+
+//             // --- TEXT HEADER ---
+//             Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 const Text(
+//                   'Join the Archilles Community!',
+//                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+//                 ),
+//                 const SizedBox(height: 12),
+//                 const Text(
+//                   'Sublimez votre séjour en choisissant le logement ideal.',
+//                   style: TextStyle(fontSize: 12),
+//                 ),
+//                 const SizedBox(height: 20),
+
+//                 // --- FORMULAIRE ---
+//                 Container(
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(18.0),
+//                     // color: Colors.white,
+//                   ),
+//                   child: Form(
+//                     key: _formKey,
+//                     child: Column(
+//                       children: [
+//                         // USERNAME
+//                         Row(
+//                           children: [
+//                             SizedBox(
+//                               width: screenWidth * .45,
+//                               child: TextFormField(
+//                                 controller: _nameController,
+//                                 style: const TextStyle(color: Colors.purple),
+//                                 decoration: _inputDecoration('Nom'),
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Veuillez entrer votre nom d\'utilisateur.';
+//                                   }
+//                                   return null;
+//                                 },
+//                               ),
+//                             ),
+//                             //
+//                             SizedBox(width: 15),
+//                             //
+//                             SizedBox(
+//                               width: screenWidth * .45,
+//                               // Code simple
+//                               child: TextFormField(
+//                                 controller:
+//                                     _phoneController, // ⚠️ je te conseille de créer un vrai _phoneController pour plus de clarté
+//                                 keyboardType: TextInputType.phone,
+//                                 decoration: _inputDecoration('Téléphone'),
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Veuillez entrer votre numéro de téléphone.';
+//                                   }
+//                                   // Exemple de regex simple pour numéro (tu peux l'adapter selon ton besoin et ton pays)
+//                                   if (!RegExp(
+//                                     r'^[0-9]{8,15}$',
+//                                   ).hasMatch(value)) {
+//                                     return 'Veuillez entrer un numéro valide (8 à 15 chiffres).';
+//                                   }
+//                                   return null;
+//                                 },
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                         const SizedBox(height: 15),
+
+//                         // EMAIL
+//                         Row(
+//                           children: [
+//                             SizedBox(
+//                               // height: 50,
+//                               width: screenWidth * .6,
+//                               child: TextFormField(
+//                                 controller: _emailController,
+//                                 keyboardType: TextInputType.emailAddress,
+//                                 style: const TextStyle(color: Colors.purple),
+//                                 decoration: _inputDecoration(
+//                                   'monadresse_@gmail.com',
+//                                 ),
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Veuillez entrer votre email.';
+//                                   }
+//                                   if (!RegExp(
+//                                     r'^[^@]+@[^@]+\.[^@]+',
+//                                   ).hasMatch(value)) {
+//                                     return 'Veuillez entrer un email valide.';
+//                                   }
+//                                   return null;
+//                                 },
+//                               ),
+//                             ),
+//                             //
+//                             const SizedBox(width: 15),
+//                             // ✅ ROLE DROPDOWN
+//                             SizedBox(
+//                               width: screenWidth * .3,
+//                               child: DropdownButtonFormField<String>(
+//                                 value: _selectedRole,
+//                                 decoration: _inputDecoration('Type de compte'),
+//                                 items: const [
+//                                   DropdownMenuItem(
+//                                     value: 'client',
+//                                     child: Text(
+//                                       'Client',
+//                                       style: TextStyle(
+//                                         fontSize: 12,
+//                                         fontWeight: FontWeight.w600,
+//                                       ),
+//                                     ),
+//                                   ),
+//                                   DropdownMenuItem(
+//                                     value: 'hôte',
+//                                     child: Text(
+//                                       'Hôte',
+//                                       style: TextStyle(
+//                                         fontSize: 12,
+//                                         fontWeight: FontWeight.w600,
+//                                       ),
+//                                     ),
+//                                   ),
+//                                 ],
+//                                 onChanged: (value) {
+//                                   setState(() {
+//                                     _selectedRole = value;
+//                                   });
+//                                 },
+//                                 validator:
+//                                     (value) =>
+//                                         value == null
+//                                             ? 'Veuillez sélectionner un type de compte.'
+//                                             : null,
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                         const SizedBox(height: 15),
+
+//                         // PASSWORD
+//                         TextFormField(
+//                           controller: _passwordController,
+//                           obscureText: _obscureTextPassword,
+//                           decoration: _inputDecoration(
+//                             'Mot de passe',
+//                             isPassword: true,
+//                             obscureText: _obscureTextPassword,
+//                             toggleObscureText: () {
+//                               setState(() {
+//                                 _obscureTextPassword = !_obscureTextPassword;
+//                               });
+//                             },
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez entrer votre mot de passe.';
+//                             }
+//                             if (value.length < 8) {
+//                               return 'Le mot de passe doit contenir au moins 8 caractères.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                         const SizedBox(height: 15),
+
+//                         // CONFIRM PASSWORD
+//                         TextFormField(
+//                           controller: _confirmedPasswordController,
+//                           obscureText: _obscureTextConfirmPassword,
+//                           decoration: _inputDecoration(
+//                             'Confirmer le mot de passe',
+//                             isPassword: true,
+//                             obscureText: _obscureTextConfirmPassword,
+//                             toggleObscureText: () {
+//                               setState(() {
+//                                 _obscureTextConfirmPassword =
+//                                     !_obscureTextConfirmPassword;
+//                               });
+//                             },
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez confirmer votre mot de passe.';
+//                             }
+//                             if (value != _passwordController.text) {
+//                               return 'Les mots de passe ne correspondent pas.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(height: 25),
+
+//             // --- BUTTON ---
+//             SizedBox(
+//               width: double.infinity,
+//               child: ElevatedButton(
+//                 onPressed: _registerWithLaravel,
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: const Color(0xffFFD055),
+//                   padding: const EdgeInsets.symmetric(vertical: 16),
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(12),
+//                   ),
+//                 ),
+//                 child: const Text(
+//                   'Créer mon Compte',
+//                   style: TextStyle(color: Colors.black),
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 25),
+
+//             // --- LOGIN REDIRECT ---
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 const Text(
+//                   'already have account? ',
+//                   style: TextStyle(fontSize: 12, color: Colors.black),
+//                 ),
+//                 Text.rich(
+//                   TextSpan(
+//                     text: ' log into your account now!',
+//                     style: const TextStyle(
+//                       fontSize: 12,
+//                       color: Color(0xffFFD055),
+//                     ),
+//                     recognizer:
+//                         TapGestureRecognizer()
+//                           ..onTap = () {
+//                             Navigator.pop(context);
+//                           },
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(height: 35),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+// Ancien code du 6 Sept 2025
+
+
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+
+// import 'package:kunft/pages/auth/login_page.dart'; // Import de LoginPage
+
+// // Définissez votre URL de base d'API ici ou importez-la depuis un fichier de constantes si vous en avez un.
+// const String API_BASE_URL =
+//     'http://127.0.0.1:8000'; // Assurez-vous que c'est l'URL correcte de votre backend Laravel
+
+// class SignUpPage extends StatefulWidget {
+//   const SignUpPage({super.key});
+
+//   @override
+//   State<SignUpPage> createState() => _SignUpPageState();
+// }
+
+// class _SignUpPageState extends State<SignUpPage> {
+//   final TextEditingController _nameController = TextEditingController();
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _confirmedPasswordController =
+//       TextEditingController();
+//   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+//   bool _obscureTextPassword = true;
+//   bool _obscureTextConfirmPassword = true;
+
+//   @override
+//   void dispose() {
+//     _nameController.dispose();
+//     _emailController.dispose();
+//     _passwordController.dispose();
+//     _confirmedPasswordController.dispose();
+//     super.dispose();
+//   }
+
+//   void _showSuccessSnackBar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text(message), backgroundColor: Colors.green),
+//     );
+//   }
+
+//   void _showErrorSnackBar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text(message), backgroundColor: Colors.red),
+//     );
+//   }
+
+//   InputDecoration _inputDecoration(
+//     String label, {
+//     bool isPassword = false,
+//     bool obscureText = false,
+//     VoidCallback? toggleObscureText,
+//   }) {
+//     return InputDecoration(
+//       labelText: label,
+//       labelStyle: const TextStyle(fontSize: 12),
+//       filled: true,
+//       fillColor: const Color(0xfff7f7f7),
+//       enabledBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(12),
+//         borderSide: const BorderSide(color: Color(0xffd3d3d3)),
+//       ),
+//       focusedBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(12),
+//         borderSide: const BorderSide(color: Color(0xffFFD055), width: 2),
+//       ),
+//       suffixIcon:
+//           isPassword
+//               ? IconButton(
+//                 icon: Icon(
+//                   obscureText ? Icons.visibility_off : Icons.visibility,
+//                   color: Colors.grey,
+//                 ),
+//                 onPressed: toggleObscureText,
+//               )
+//               : null,
+//     );
+//   }
+
+//   // --- FONCTION PRINCIPALE D'INSCRIPTION AVEC LARAVEL ---
+//   Future<void> _registerWithLaravel() async {
+//     if (_formKey.currentState?.validate() ?? false) {
+//       // Afficher un indicateur de chargement si nécessaire
+//       // showDialog(...);
+
+//       try {
+//         print('DEBUG: Tentative d\'inscription avec Laravel...');
+//         final response = await http.post(
+//           Uri.parse(
+//             '$API_BASE_URL/api/register',
+//           ), // Endpoint d'inscription Laravel
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//           },
+//           body: jsonEncode({
+//             'name': _nameController.text.trim(),
+//             'email': _emailController.text.trim(),
+//             'password': _passwordController.text,
+//             'password_confirmation':
+//                 _confirmedPasswordController.text, // Nécessaire pour Laravel
+//           }),
+//         );
+
+//         print(
+//           'DEBUG: Réponse Laravel (register) status: ${response.statusCode}',
+//         );
+//         print('DEBUG: Réponse Laravel (register) body: ${response.body}');
+
+//         if (response.statusCode == 201) {
+//           // 201 Created est typique pour une nouvelle ressource
+//           _showSuccessSnackBar(
+//             'Compte créé avec succès ! Vous pouvez maintenant vous connecter.',
+//           );
+//           print(
+//             'DEBUG: Inscription Laravel réussie. Redirection vers LoginPage.',
+//           );
+
+//           // Redirection vers LoginPage après succès
+//           Navigator.pushReplacement(
+//             context,
+//             MaterialPageRoute(builder: (context) => const LoginPage()),
+//           );
+//         } else {
+//           // Gérer les erreurs de validation ou autres erreurs du serveur Laravel
+//           final Map<String, dynamic> errorData = json.decode(response.body);
+//           String errorMessage = 'Erreur lors de l\'inscription.';
+
+//           if (errorData.containsKey('message')) {
+//             errorMessage = errorData['message'];
+//           }
+//           if (errorData.containsKey('errors')) {
+//             // Si Laravel renvoie des erreurs de validation détaillées
+//             final Map<String, dynamic> errors = errorData['errors'];
+//             errors.forEach((key, value) {
+//               errorMessage +=
+//                   '\n- ${value[0]}'; // Affiche la première erreur pour chaque champ
+//             });
+//           }
+//           _showErrorSnackBar(errorMessage);
+//           print('DEBUG: Erreur d\'inscription Laravel: $errorMessage');
+//         }
+//       } catch (e) {
+//         // Erreurs générales (réseau, JSON, etc.)
+//         _showErrorSnackBar(
+//           'Une erreur inattendue est survenue : ${e.toString()}',
+//         );
+//         print('DEBUG: Erreur générale lors de l\'inscription: $e');
+//       } finally {
+//         // Masquer l'indicateur de chargement
+//         // Navigator.of(context).pop();
+//       }
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final screenHeight = MediaQuery.of(context).size.height;
+
+//     return Scaffold(
+//       body: SingleChildScrollView(
+//         padding: const EdgeInsets.all(10.0),
+//         child: Column(
+//           children: [
+//             Container(
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(30),
+//               ),
+//               height: screenHeight * .21,
+//               child: ClipRRect(
+//                 borderRadius: const BorderRadius.only(
+//                   topLeft: Radius.circular(50),
+//                   topRight: Radius.circular(50),
+//                   bottomLeft: Radius.circular(30),
+//                   bottomRight: Radius.circular(30),
+//                 ),
+//                 child: Image.asset(
+//                   'assets/images/img02.jpg',
+//                   fit: BoxFit.cover,
+//                   width: double.infinity,
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 24),
+//             Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 const Text(
+//                   'Join the Archilles Community!',
+//                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+//                 ),
+//                 const SizedBox(height: 16),
+//                 const Text(
+//                   'Start your journey to finding the perfect property.',
+//                   style: TextStyle(fontSize: 12),
+//                 ),
+//                 const SizedBox(height: 20),
+//                 Container(
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(18.0),
+//                     color: Colors.white,
+//                   ),
+//                   child: Form(
+//                     key: _formKey,
+//                     child: Column(
+//                       children: [
+//                         TextFormField(
+//                           controller: _nameController,
+//                           style: const TextStyle(color: Colors.purple),
+//                           decoration: _inputDecoration('Username'),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez entrer votre nom d\'utilisateur.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                         const SizedBox(height: 15),
+//                         TextFormField(
+//                           controller: _emailController,
+//                           keyboardType: TextInputType.emailAddress,
+//                           style: const TextStyle(color: Colors.purple),
+//                           decoration: _inputDecoration('username@gmail.com'),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez entrer votre email.';
+//                             }
+//                             if (!RegExp(
+//                               r'^[^@]+@[^@]+\.[^@]+',
+//                             ).hasMatch(value)) {
+//                               return 'Veuillez entrer un email valide.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                         const SizedBox(height: 15),
+//                         TextFormField(
+//                           controller: _passwordController,
+//                           obscureText: _obscureTextPassword,
+//                           decoration: _inputDecoration(
+//                             'Password',
+//                             isPassword: true,
+//                             obscureText: _obscureTextPassword,
+//                             toggleObscureText: () {
+//                               setState(() {
+//                                 _obscureTextPassword = !_obscureTextPassword;
+//                               });
+//                             },
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez entrer votre mot de passe.';
+//                             }
+//                             if (value.length < 8) {
+//                               // Laravel Sanctum par défaut exige 8 caractères
+//                               return 'Le mot de passe doit contenir au moins 8 caractères.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                         const SizedBox(height: 15),
+//                         TextFormField(
+//                           controller: _confirmedPasswordController,
+//                           obscureText: _obscureTextConfirmPassword,
+//                           decoration: _inputDecoration(
+//                             'Confirmer le mot de passe',
+//                             isPassword: true,
+//                             obscureText: _obscureTextConfirmPassword,
+//                             toggleObscureText: () {
+//                               setState(() {
+//                                 _obscureTextConfirmPassword =
+//                                     !_obscureTextConfirmPassword;
+//                               });
+//                             },
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Veuillez confirmer votre mot de passe.';
+//                             }
+//                             if (value != _passwordController.text) {
+//                               return 'Les mots de passe ne correspondent pas.';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(height: 25),
+//             SizedBox(
+//               width: double.infinity,
+//               child: ElevatedButton(
+//                 onPressed:
+//                     _registerWithLaravel, // ✅ Appel de la nouvelle fonction d'inscription
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: const Color(0xffFFD055),
+//                   padding: const EdgeInsets.symmetric(vertical: 16),
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(12),
+//                   ),
+//                 ),
+//                 child: const Text(
+//                   'Let’s Get Started',
+//                   style: TextStyle(color: Colors.black),
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 25),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 const Text(
+//                   'already have account? ',
+//                   style: TextStyle(fontSize: 12, color: Colors.black),
+//                 ),
+//                 Text.rich(
+//                   TextSpan(
+//                     text: ' log into your account now!',
+//                     style: const TextStyle(
+//                       fontSize: 12,
+//                       color: Color(0xffFFD055),
+//                     ),
+//                     recognizer:
+//                         TapGestureRecognizer()
+//                           ..onTap = () {
+//                             Navigator.pop(context);
+//                           },
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
 // Ancien code pour l'authentification avec firebase

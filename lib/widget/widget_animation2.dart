@@ -131,6 +131,7 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
                       _currentDisplayImageUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
+                      height: screenHeight * .47,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: Colors.grey[300],
@@ -196,7 +197,7 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
                   bottom: 0,
                   child: Container(
                     padding: EdgeInsets.only(right: 10),
-                    height: screenHeight * .4,
+                    height: screenHeight * .17,
                     width: screenWidth * .95,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -208,7 +209,7 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Colors.transparent, Color(0xb3000000)],
+                        colors: [Colors.transparent, Color(0x73000000)],
                       ),
                     ),
                     child: Align(
