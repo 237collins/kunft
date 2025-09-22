@@ -80,7 +80,7 @@ class _WidgetHouseInfos3State extends State<WidgetHouseInfos3> {
               color: Color(0x1a000000),
               spreadRadius: 2,
               blurRadius: 3,
-              offset: const Offset(2, 2),
+              offset: Offset(2, 2),
             ),
           ],
         ),

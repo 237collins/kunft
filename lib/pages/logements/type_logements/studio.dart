@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kunft/provider/UserProvider.dart';
 import 'package:kunft/widget/widget_empty_house.dart';
 import 'package:provider/provider.dart'; // Import de Provider
 import 'package:kunft/widget/widget_house_infos2_bis.dart';
@@ -31,12 +32,21 @@ class _StudioState extends State<Studio> {
       _isLoading = true;
       _errorMessage = null;
     });
+    //
+
     try {
+      // Obtenez une instance du UserProvider pour récupérer le token
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final token = userProvider.authToken;
+
+      if (token == null) {
+        throw Exception('Token non trouvé. Veuillez vous connecter.');
+      }
       // Appelle la fonction du provider qui retourne la liste
       final data = await Provider.of<LogementProvider>(
         context,
         listen: false,
-      ).fetchLogementsForType('Studio');
+      ).fetchLogementsForType('Studio', token);
       setState(() {
         _logements = data;
         _isLoading = false;
@@ -66,71 +76,70 @@ class _StudioState extends State<Studio> {
         final String? errorMessage = _errorMessage;
 
         return Scaffold(
-          body:
-              isLoading
-                  ? const Center(
-                    child: CircularProgressIndicator(),
-                  ) // Indicateur de chargement
-                  : errorMessage != null
-                  ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        errorMessage,
-                        style: const TextStyle(color: Colors.red, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                  : logements.isEmpty
-                  ? WidgetEmptyHouse(
-                    message: 'Aucun Studio disponible pour le moment.',
-                  )
-                  : Padding(
-                    padding: const EdgeInsets.all(
-                      8.0,
-                    ), // Padding général pour la grille
-                    child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // 2 colonnes pour la grille
-                        crossAxisSpacing: 8.0, // Espacement horizontal
-                        mainAxisSpacing: 8.0, // Espacement vertical
-                        childAspectRatio:
-                            0.7, // Ajustez si nécessaire pour que les cartes s'affichent bien
-                      ),
-                      itemCount: logements.length,
-                      itemBuilder: (context, index) {
-                        final l = logements[index];
-
-                        // Utilise le helper formatLogementData du provider
-                        final formattedData = logementProvider
-                            .formatLogementData(l);
-
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        PropertyDetail(logementData: l),
-                              ),
-                            );
-                          },
-                          child: WidgetHouseInfos2Bis(
-                            imgHouse: formattedData['imgUrl']!,
-                            houseName: formattedData['houseName']!,
-                            price: formattedData['price']!,
-                            locate: formattedData['locate']!,
-                            ownerName: formattedData['ownerName']!,
-                            time: formattedData['time']!,
-                            logementData:
-                                l, // Passez les données complètes du logement
-                          ),
-                        );
-                      },
+          body: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                ) // Indicateur de chargement
+              : errorMessage != null
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      errorMessage,
+                      style: const TextStyle(color: Colors.red, fontSize: 16),
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                )
+              : logements.isEmpty
+              ? WidgetEmptyHouse(
+                  message: 'Aucun Studio disponible pour le moment.',
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(
+                    8.0,
+                  ), // Padding général pour la grille
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // 2 colonnes pour la grille
+                      crossAxisSpacing: 8.0, // Espacement horizontal
+                      mainAxisSpacing: 8.0, // Espacement vertical
+                      childAspectRatio:
+                          0.7, // Ajustez si nécessaire pour que les cartes s'affichent bien
+                    ),
+                    itemCount: logements.length,
+                    itemBuilder: (context, index) {
+                      final l = logements[index];
+
+                      // Utilise le helper formatLogementData du provider
+                      final formattedData = logementProvider.formatLogementData(
+                        l,
+                      );
+
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PropertyDetail(logementData: l),
+                            ),
+                          );
+                        },
+                        child: WidgetHouseInfos2Bis(
+                          imgHouse: formattedData['imgUrl']!,
+                          houseName: formattedData['houseName']!,
+                          price: formattedData['price']!,
+                          locate: formattedData['locate']!,
+                          ownerName: formattedData['ownerName']!,
+                          time: formattedData['time']!,
+                          logementData:
+                              l, // Passez les données complètes du logement
+                        ),
+                      );
+                    },
+                  ),
+                ),
         );
       },
     );

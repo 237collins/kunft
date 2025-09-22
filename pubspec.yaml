@@ -57,6 +57,7 @@ dependencies:
   intl: ^0.20.2
   flutter_local_notifications: ^19.4.1
   animated_text_kit: ^4.2.3
+  flutter_svg: ^2.2.1
   # phone_form_field: ^10.0.10
   
   # Firebase (Uncomment and manage versions if you use them)
@@ -96,6 +97,8 @@ flutter:
   assets:
     - assets/images/
     - assets/logo-payment/
+    - assets/password/
+    - assets/svg/
 
 
 # Ancien avec souci

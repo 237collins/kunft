@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kunft/provider/UserProvider.dart';
 import 'package:kunft/widget/widget_owner_list.dart';
 import 'package:provider/provider.dart'; // Import de Provider
 // import 'package:intl/intl.dart'; // Pour le formatage des dates et nombres
@@ -30,14 +31,38 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   @override
+  // ---- Ancien code ---
+  // void initState() {
+  //   super.initState();
+  //   // Appelle la fonction de fetch du provider pour ExploreScreen
+  //   // listen: false car nous ne voulons pas reconstruire le widget ici, juste appeler la fonction
+  //   Provider.of<LogementProvider>(
+  //     context,
+  //     listen: false,
+  //   ).fetchExploreScreenData();
+  // }
+  // -------- Nouveau Code --------
+  @override
   void initState() {
     super.initState();
-    // Appelle la fonction de fetch du provider pour ExploreScreen
-    // listen: false car nous ne voulons pas reconstruire le widget ici, juste appeler la fonction
-    Provider.of<LogementProvider>(
-      context,
-      listen: false,
-    ).fetchExploreScreenData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final logementProvider = Provider.of<LogementProvider>(
+        context,
+        listen: false,
+      );
+      final token = userProvider.authToken;
+
+      if (token != null) {
+        logementProvider.fetchExploreScreenData(token);
+      } else {
+        // Gérer le cas où le jeton n'est pas disponible, par exemple, en affichant un message d'erreur.
+        print('Erreur: Jeton d\'authentification non trouvé.');
+        logementProvider.setErrorMessage(
+          'Veuillez vous connecter pour voir les données.',
+        );
+      }
+    });
   }
 
   @override
@@ -139,76 +164,80 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     // WidgetHouseInfosExplore: Affiche les 10 derniers logements
                                     isLoadingLatest
                                         ? const SizedBox(
-                                          height:
-                                              150, // Hauteur fixe pour le CircularProgressIndicator
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
+                                            height:
+                                                150, // Hauteur fixe pour le CircularProgressIndicator
+                                            child: Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          )
                                         : errorLatest != null
                                         ? SizedBox(
-                                          height:
-                                              150, // Hauteur fixe pour le message d'erreur
-                                          child: Center(
-                                            child: Text(
-                                              'Erreur: $errorLatest',
-                                              textAlign: TextAlign.center,
+                                            height:
+                                                150, // Hauteur fixe pour le message d'erreur
+                                            child: Center(
+                                              child: Text(
+                                                'Erreur: $errorLatest',
+                                                textAlign: TextAlign.center,
+                                              ),
                                             ),
-                                          ),
-                                        )
+                                          )
                                         : latestLogements.isEmpty
                                         ? const SizedBox(
-                                          height:
-                                              150, // Hauteur fixe pour le message 'aucun logement'
-                                          child: Center(
-                                            child: Text(
-                                              'Aucun logement récent disponible',
+                                            height:
+                                                150, // Hauteur fixe pour le message 'aucun logement'
+                                            child: Center(
+                                              child: Text(
+                                                'Aucun logement récent disponible',
+                                              ),
                                             ),
-                                          ),
-                                        )
+                                          )
                                         : SizedBox(
-                                          // height:
-                                          //     130, // Hauteur fixe pour les cartes
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
-                                            ),
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Row(
-                                                children:
-                                                    latestLogements.map((l) {
-                                                      final formattedData =
-                                                          logementProvider
-                                                              .formatLogementData(
-                                                                l,
-                                                              );
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets.only(
-                                                              right: 10.0,
-                                                            ),
-                                                        child: WidgetHouseInfosExplore(
-                                                          imgHouse:
-                                                              formattedData['imgUrl']!,
-                                                          houseName:
-                                                              formattedData['houseName']!,
-                                                          price:
-                                                              formattedData['price']!,
-                                                          locate:
-                                                              formattedData['locate']!,
-                                                          ownerName:
-                                                              formattedData['ownerName']!,
-                                                          time:
-                                                              formattedData['time']!,
-                                                          logementData: l,
-                                                        ),
-                                                      );
-                                                    }).toList(),
+                                            // height:
+                                            //     130, // Hauteur fixe pour les cartes
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                  ),
+                                              child: SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  children: latestLogements.map((
+                                                    l,
+                                                  ) {
+                                                    final formattedData =
+                                                        logementProvider
+                                                            .formatLogementData(
+                                                              l,
+                                                            );
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                            right: 10.0,
+                                                          ),
+                                                      child: WidgetHouseInfosExplore(
+                                                        imgHouse:
+                                                            formattedData['imgUrl']!,
+                                                        houseName:
+                                                            formattedData['houseName']!,
+                                                        price:
+                                                            formattedData['price']!,
+                                                        locate:
+                                                            formattedData['locate']!,
+                                                        ownerName:
+                                                            formattedData['ownerName']!,
+                                                        time:
+                                                            formattedData['time']!,
+                                                        logementData: l,
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
                                     //
                                     const SizedBox(
                                       height: 10,
@@ -341,32 +370,31 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               ? const Center(child: CircularProgressIndicator())
                               : errorOwners != null
                               ? Center(
-                                child: Text(
-                                  'Erreur: $errorOwners',
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
+                                  child: Text(
+                                    'Erreur: $errorOwners',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
                               : trendingOwners.isEmpty
                               ? const Center(
-                                child: Text(
-                                  'Aucun propriétaire tendance disponible',
-                                ),
-                              )
+                                  child: Text(
+                                    'Aucun propriétaire tendance disponible',
+                                  ),
+                                )
                               : SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children:
-                                      trendingOwners.map((owner) {
-                                        // ✅ MODIFIÉ : Passe l'objet 'owner' complet à ownerData
-                                        return WidgetOwnerList(
-                                          withSpacing: true,
-                                          ownerData: owner,
-                                        );
-                                      }).toList(),
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: trendingOwners.map((owner) {
+                                      // ✅ MODIFIÉ : Passe l'objet 'owner' complet à ownerData
+                                      return WidgetOwnerList(
+                                        withSpacing: true,
+                                        ownerData: owner,
+                                      );
+                                    }).toList(),
+                                  ),
                                 ),
-                              ),
                           const SizedBox(height: 18), // Ajout de const
                           const Row(
                             // Ajout de const
@@ -400,117 +428,120 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           ? const Center(child: CircularProgressIndicator())
                           : errorRecent != null
                           ? Center(
-                            child: Text(
-                              'Erreur: $errorRecent',
-                              textAlign: TextAlign.center,
-                            ),
-                          )
+                              child: Text(
+                                'Erreur: $errorRecent',
+                                textAlign: TextAlign.center,
+                              ),
+                            )
                           : recentSearches.isEmpty
                           ? const Center(
-                            child: Text(
-                              'Aucun logement récemment recherché disponible.',
-                            ),
-                          )
+                              child: Text(
+                                'Aucun logement récemment recherché disponible.',
+                              ),
+                            )
                           : SizedBox(
-                            height: (recentSearches.length / 2).ceil() * 270.0,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount:
-                                        (recentSearches.length / 2).ceil(),
-                                    itemBuilder: (context, index) {
-                                      final l = recentSearches[index * 2];
-                                      final formattedData = logementProvider
-                                          .formatLogementData(l);
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 8.0,
-                                        ),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (context) => PropertyDetail(
-                                                      logementData: l,
-                                                    ),
-                                              ),
-                                            );
-                                          },
-                                          child: WidgetHouseInfos2Bis(
-                                            imgHouse: formattedData['imgUrl']!,
-                                            houseName:
-                                                formattedData['houseName']!,
-                                            price: formattedData['price']!,
-                                            locate: formattedData['locate']!,
-                                            ownerName:
-                                                formattedData['ownerName']!,
-                                            time: formattedData['time']!,
-                                            logementData: l,
+                              height:
+                                  (recentSearches.length / 2).ceil() * 270.0,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: (recentSearches.length / 2)
+                                          .ceil(),
+                                      itemBuilder: (context, index) {
+                                        final l = recentSearches[index * 2];
+                                        final formattedData = logementProvider
+                                            .formatLogementData(l);
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 8.0,
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  // Ajout de const
-                                  width: 10,
-                                ), // Espace entre les Colonnes
-                                Expanded(
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount:
-                                        (recentSearches.length / 2).floor(),
-                                    itemBuilder: (context, index) {
-                                      final l = recentSearches[index * 2 + 1];
-                                      final formattedData = logementProvider
-                                          .formatLogementData(l);
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 8.0,
-                                        ),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (context) => PropertyDetail(
-                                                      logementData: l,
-                                                    ),
-                                              ),
-                                            );
-                                          },
-                                          child: WidgetHouseInfos2Bis(
-                                            imgHouse: formattedData['imgUrl']!,
-                                            houseName:
-                                                formattedData['houseName']!,
-                                            price: formattedData['price']!,
-                                            locate: formattedData['locate']!,
-                                            ownerName:
-                                                formattedData['ownerName']!,
-                                            time: formattedData['time']!,
-                                            logementData: l,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PropertyDetail(
+                                                        logementData: l,
+                                                      ),
+                                                ),
+                                              );
+                                            },
+                                            child: WidgetHouseInfos2Bis(
+                                              imgHouse:
+                                                  formattedData['imgUrl']!,
+                                              houseName:
+                                                  formattedData['houseName']!,
+                                              price: formattedData['price']!,
+                                              locate: formattedData['locate']!,
+                                              ownerName:
+                                                  formattedData['ownerName']!,
+                                              time: formattedData['time']!,
+                                              logementData: l,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                        );
+                                      },
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    // Ajout de const
+                                    width: 10,
+                                  ), // Espace entre les Colonnes
+                                  Expanded(
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: (recentSearches.length / 2)
+                                          .floor(),
+                                      itemBuilder: (context, index) {
+                                        final l = recentSearches[index * 2 + 1];
+                                        final formattedData = logementProvider
+                                            .formatLogementData(l);
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 8.0,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PropertyDetail(
+                                                        logementData: l,
+                                                      ),
+                                                ),
+                                              );
+                                            },
+                                            child: WidgetHouseInfos2Bis(
+                                              imgHouse:
+                                                  formattedData['imgUrl']!,
+                                              houseName:
+                                                  formattedData['houseName']!,
+                                              price: formattedData['price']!,
+                                              locate: formattedData['locate']!,
+                                              ownerName:
+                                                  formattedData['ownerName']!,
+                                              time: formattedData['time']!,
+                                              logementData: l,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                     ],
                   ),
                 ),

@@ -70,18 +70,23 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
         children: [
           Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  widget.imageUrl,
-                  fit: BoxFit.cover,
-                  height: 90,
-                  width: 90,
-                  errorBuilder: (context, error, stackTrace) => Image.network(
-                    'https://png.pngtree.com/png-vector/20230831/ourmid/pngtree-house-with-no-background-png-image_9197435.png',
+              SizedBox(
+                width: 90,
+                height: 90,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    widget.imageUrl,
                     fit: BoxFit.cover,
                     height: 90,
                     width: 90,
+                    // Image en cas d'ereur
+                    // errorBuilder: (context, error, stackTrace) => Image.network(
+                    //   'https://placehold.co/600x400',
+                    //   fit: BoxFit.cover,
+                    //   height: 90,
+                    //   width: 90,
+                    // ),
                   ),
                 ),
               ),
@@ -149,6 +154,7 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                         ],
                       ),
                       const SizedBox(width: 20),
+                      // Affichage du Statut  de la reservation
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
@@ -166,6 +172,7 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: _getStatutsColor(widget.reservationStatuts),
+                            fontSize: 12,
                           ),
                         ),
                       ),

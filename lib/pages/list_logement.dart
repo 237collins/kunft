@@ -1,6 +1,7 @@
 // Noubeu code
 
 import 'package:flutter/material.dart';
+import 'package:kunft/provider/UserProvider.dart';
 import 'package:provider/provider.dart'; // ✅ Import de Provider
 // Retirez dio et shared_preferences, car ils sont gérés par le Provider
 // import 'package:dio/dio.dart';
@@ -43,12 +44,45 @@ class _ListLogementState extends State<ListLogement> {
   // bool _isLoadingCounts = true;
   // String? _countsErrorMessage;
 
+  //  -------------  Ancien code --------------
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // ✅ Appelle la fonction de fetch du provider pour les compteurs
+  //   // listen: false car nous ne voulons pas reconstruire le widget ici, juste appeler la fonction
+  //   Provider.of<LogementProvider>(context, listen: false).fetchLogementCounts();
+  // }
+
+  // ----------- Nouveau code -------------
+
   @override
   void initState() {
     super.initState();
-    // ✅ Appelle la fonction de fetch du provider pour les compteurs
+    // Appelle la fonction de fetch du provider pour les compteurs
     // listen: false car nous ne voulons pas reconstruire le widget ici, juste appeler la fonction
-    Provider.of<LogementProvider>(context, listen: false).fetchLogementCounts();
+
+    // ✅ NOUVEAU: Utilisation de `WidgetsBinding.instance.addPostFrameCallback`
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Obtenez le UserProvider pour récupérer le jeton
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final logementProvider = Provider.of<LogementProvider>(
+        context,
+        listen: false,
+      );
+      final token = userProvider.authToken;
+
+      if (token != null) {
+        logementProvider.fetchLogementCounts(token);
+      } else {
+        // Gérer le cas où le jeton est null (par exemple, afficher un message d'erreur)
+        print(
+          "Erreur : Impossible de charger les compteurs. Jeton d'authentification non trouvé.",
+        );
+        logementProvider.setErrorMessage(
+          "Impossible de charger les compteurs. Veuillez vous reconnecter.",
+        );
+      }
+    });
   }
 
   // ✅ RETIRÉ : Fonction pour récupérer les compteurs de logements depuis Laravel
@@ -90,40 +124,40 @@ class _ListLogementState extends State<ListLogement> {
           ),
           body:
               isLoadingCounts // ✅ Afficher un indicateur de chargement pour les compteurs
-                  ? const Center(child: CircularProgressIndicator())
-                  : countsErrorMessage !=
-                      null // ✅ Afficher un message d'erreur si la récupération échoue
-                  ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        countsErrorMessage,
-                        style: const TextStyle(color: Colors.red, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                  : Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: HorizontalSectionNavigator(
-                            sectionTitlesData:
-                                sectionTitlesData, // ✅ Passez les données avec les compteurs
-                            sectionContents: sectionContents,
-                            // La propriété 'sectionTitles' n'existe plus dans HorizontalSectionNavigator
-                            // Si vous l'avez ajoutée manuellement, retirez-la ici.
-                            // sectionTitles: [],
-                            // Personnalisation optionnelle
-                            // navigationBarColor: Colors.deepPurple,
-                            // selectedTitleColor: Colors.amberAccent,
-                            // unselectedTitleColor: Colors.white70,
-                          ),
-                        ),
-                      ],
+              ? const Center(child: CircularProgressIndicator())
+              : countsErrorMessage !=
+                    null // ✅ Afficher un message d'erreur si la récupération échoue
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      countsErrorMessage,
+                      style: const TextStyle(color: Colors.red, fontSize: 16),
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: HorizontalSectionNavigator(
+                          sectionTitlesData:
+                              sectionTitlesData, // ✅ Passez les données avec les compteurs
+                          sectionContents: sectionContents,
+                          // La propriété 'sectionTitles' n'existe plus dans HorizontalSectionNavigator
+                          // Si vous l'avez ajoutée manuellement, retirez-la ici.
+                          // sectionTitles: [],
+                          // Personnalisation optionnelle
+                          // navigationBarColor: Colors.deepPurple,
+                          // selectedTitleColor: Colors.amberAccent,
+                          // unselectedTitleColor: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
         );
       },
     );

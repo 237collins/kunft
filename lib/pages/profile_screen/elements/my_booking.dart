@@ -143,8 +143,8 @@ class _MyBookingState extends State<MyBooking> {
         // ✅ Corrected image and price retrieval
         final images = logement['images'];
         final imageUrl = (images != null && images.isNotEmpty)
-            ? images[0]['url'] ?? 'https://via.placeholder.com/150'
-            : 'https://via.placeholder.com/150';
+            ? images[0]['url'] ?? 'https://placehold.co/600x400'
+            : 'https://placehold.co/600x400';
 
         final price = (logement['prix_par_nuit'] is int)
             ? logement['prix_par_nuit']

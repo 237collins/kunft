@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kunft/pages/home_screen.dart';
 import 'package:kunft/pages/profile_screen/elements/my_booking.dart';
-import 'package:kunft/pages/profile_screen/elements/my_reservations_page.dart';
 import 'package:kunft/provider/ReservationProvider.dart';
 import 'package:kunft/provider/UserProvider.dart';
 import 'package:lucide_icons/lucide_icons.dart';

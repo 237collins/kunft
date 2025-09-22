@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kunft/main.dart';
-import 'package:kunft/pages/profile_screen/elements/my_reservations_page.dart';
+import 'package:kunft/pages/auth/forgot_password/forgot_password.dart';
 import 'package:kunft/pages/profile_screen/profile_screen.dart';
-import 'package:kunft/provider/ReservationProvider.dart';
+import 'package:kunft/provider/UserProvider.dart';
 import 'package:provider/provider.dart'; // Import de Provider
 
 import 'package:kunft/pages/list_logement.dart';
@@ -29,15 +29,41 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  // ----- Ancien code -------
+  // void initState() {
+  //   super.initState();
+  //   // Utilise addPostFrameCallback pour s'assurer que la fonction de
+  //   // chargement est appelée après le premier rendu du widget.
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     Provider.of<LogementProvider>(
+  //       context,
+  //       listen: false,
+  //     ).fetchHomeScreenData();
+  //   });
+  // }
+  // ----- Nouveau code. ------
+  @override
   void initState() {
     super.initState();
     // Utilise addPostFrameCallback pour s'assurer que la fonction de
     // chargement est appelée après le premier rendu du widget.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LogementProvider>(
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final logementProvider = Provider.of<LogementProvider>(
         context,
         listen: false,
-      ).fetchHomeScreenData();
+      );
+
+      final token = userProvider.authToken;
+
+      if (token != null) {
+        logementProvider.fetchHomeScreenData(token);
+      } else {
+        // Optionnel : Gérer le cas où le jeton n'est pas disponible,
+        // par exemple, en affichant un message d'erreur ou en naviguant vers la page de connexion.
+        print('Erreur: Jeton d\'authentification non trouvé.');
+        // logementProvider.setErrorMainLogements('Veuillez vous connecter pour voir les logements.');
+      }
     });
   }
 
@@ -319,11 +345,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MyBooking2(),
+                                  builder: (context) => const ForgotPassword(),
                                 ),
                               );
                             },
-                            child: const Text('Mes Réservations'),
+                            child: const Text('Password test'),
                           ),
 
                           // InkWell(

@@ -6,12 +6,6 @@ import 'package:kunft/provider/UserProvider.dart';
 const String API_BASE_URL = 'http://127.0.0.1:8000';
 
 class ReservationProvider with ChangeNotifier {
-  // Ces variables ne sont plus nécessaires car confirmReservation les reçoit en tant que paramètres.
-  // int? _logementId;
-  // String? _userId;
-  // DateTime? _dateDebut;
-  // DateTime? _dateFin;
-
   List<dynamic> _reservations = [];
   bool _isLoading = false;
   String? _errorMessage;
@@ -25,10 +19,6 @@ class ReservationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // La méthode setReservationDetails est supprimée car elle est maintenant redondante.
-  // La logique de validation est directement dans confirmReservation.
-
-  // ✅ Fonction confirmReservation mise à jour pour recevoir un Map logementData
   Future<void> confirmReservation(
     BuildContext context, {
     required Map<String, dynamic> logementData,
@@ -50,12 +40,10 @@ class ReservationProvider with ChangeNotifier {
       return;
     }
 
-    // Extraction des données du logementData à l'intérieur du Provider
     final dynamic rawId = logementData['id'];
     final int logementId = rawId is String ? int.parse(rawId) : rawId as int;
     final String? userId = userProvider.user?['id']?.toString();
 
-    // Validation des données pour éviter les erreurs de serveur
     if (userId == null || dateDebut == null || dateFin == null) {
       _isLoading = false;
       _errorMessage = 'Détails de réservation incomplets.';
@@ -128,6 +116,7 @@ class ReservationProvider with ChangeNotifier {
 
     try {
       final dio = Dio();
+      // ✅ Mise à jour de l'URL pour inclure les relations 'logement' et 'images'
       const apiUrl = '$API_BASE_URL/api/user/reservations';
 
       final response = await dio.get(
@@ -140,7 +129,17 @@ class ReservationProvider with ChangeNotifier {
         ),
       );
 
+      // if (response.statusCode == 200) {
+      //   // ✅ Assurez-vous que la clé 'reservations' existe
+      //   _reservations = response.data['reservations'];
+      //   _errorMessage = null;
+      // }
+
+      // Essaie pour voir l'erreur
       if (response.statusCode == 200) {
+        print(
+          'Données de l\'API : ${response.data}',
+        ); // Affichez les données ici
         _reservations = response.data['reservations'];
         _errorMessage = null;
       } else {

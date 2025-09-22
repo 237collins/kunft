@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:kunft/widget/simple_navigation/top_navigation.dart';
 import 'login_page.dart'; // Assure-toi d'importer ta LoginPage
 
+// Définissez votre URL de base d'API ici
+const String API_BASE_URL = 'http://127.0.0.1:8000';
+
 class PinCodePage extends StatefulWidget {
   // ✅ L'e-mail de l'utilisateur est requis pour la vérification API
   final String email;
@@ -62,7 +65,7 @@ class _PinCodePageState extends State<PinCodePage> {
     try {
       final response = await http.post(
         // Remplace par ton URL d'API
-        Uri.parse('http://127.0.0.1:8000/api/verify-code'),
+        Uri.parse('$API_BASE_URL/api/verify-code'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'email': widget.email, // ✅ Envoi de l'e-mail avec le code

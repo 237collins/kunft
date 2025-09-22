@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
     textTheme: const TextTheme(
       displayLarge: TextStyle(fontFamily: 'BebasNeue', fontSize: 96.0),
     ),
-    scaffoldBackgroundColor: const Color(0xfff7f7f7),
+    scaffoldBackgroundColor: Colors.white,
   );
 }
 

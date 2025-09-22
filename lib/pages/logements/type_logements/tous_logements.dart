@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kunft/provider/UserProvider.dart';
 import 'package:provider/provider.dart'; // Import de Provider
 import 'package:kunft/widget/widget_house_infos2_bis.dart';
 import 'package:kunft/pages/property_detail.dart'; // Import pour la navigation vers les détails
@@ -15,11 +16,41 @@ class TousLogements extends StatefulWidget {
 
 class _TousLogementsState extends State<TousLogements> {
   @override
+  // -------- Ancien code --------
+  // void initState() {
+  //   super.initState();
+  //   // ✅ MODIFIÉ : Appelle la fonction de fetch des logements principaux du provider
+  //   // listen: false car nous ne voulons pas reconstruire le widget ici, juste appeler la fonction
+  //   Provider.of<LogementProvider>(context, listen: false).fetchMainLogements();
+  // }
+  // ------ Nouveau code ------------
+  @override
   void initState() {
     super.initState();
-    // ✅ MODIFIÉ : Appelle la fonction de fetch des logements principaux du provider
-    // listen: false car nous ne voulons pas reconstruire le widget ici, juste appeler la fonction
-    Provider.of<LogementProvider>(context, listen: false).fetchMainLogements();
+    // We use WidgetsBinding.instance.addPostFrameCallback to ensure the context
+    // is fully available before we attempt to fetch data.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Get instances of both providers
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final logementProvider = Provider.of<LogementProvider>(
+        context,
+        listen: false,
+      );
+
+      // Get the authentication token
+      final token = userProvider.authToken;
+
+      if (token != null) {
+        // ✅ Call the fetch function and pass the token
+        logementProvider.fetchMainLogements(authToken: token);
+      } else {
+        // Optional: Handle the case where the token is not available
+        print('Erreur: Jeton d\'authentification non trouvé.');
+        logementProvider.setErrorMessage(
+          'Veuillez vous connecter pour voir les logements.',
+        );
+      }
+    });
   }
 
   @override
@@ -33,71 +64,70 @@ class _TousLogementsState extends State<TousLogements> {
         final String? errorMessage = logementProvider.errorMainLogements;
 
         return Scaffold(
-          body:
-              isLoading
-                  ? const Center(
-                    child: CircularProgressIndicator(color: Colors.blue),
-                  ) // Indicateur de chargement
-                  : errorMessage != null
-                  ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        errorMessage,
-                        style: const TextStyle(color: Colors.red, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                  : logements.isEmpty
-                  ? const Center(
-                    child: Text('Aucun logement disponible pour le moment.'),
-                  )
-                  : Padding(
-                    padding: const EdgeInsets.all(
-                      8.0,
-                    ), // Padding général pour la grille
-                    child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // 2 colonnes pour la grille
-                        crossAxisSpacing: 8.0, // Espacement horizontal
-                        mainAxisSpacing: 8.0, // Espacement vertical
-                        childAspectRatio:
-                            .72, // Ajustez si nécessaire pour que les cartes s'affichent bien
-                      ),
-                      itemCount: logements.length,
-                      itemBuilder: (context, index) {
-                        final l = logements[index];
-
-                        // Utilise le helper formatLogementData du provider
-                        final formattedData = logementProvider
-                            .formatLogementData(l);
-
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        PropertyDetail(logementData: l),
-                              ),
-                            );
-                          },
-                          child: WidgetHouseInfos2Bis(
-                            imgHouse: formattedData['imgUrl']!,
-                            houseName: formattedData['houseName']!,
-                            price: formattedData['price']!,
-                            locate: formattedData['locate']!,
-                            ownerName: formattedData['ownerName']!,
-                            time: formattedData['time']!,
-                            logementData:
-                                l, // Passez les données complètes du logement
-                          ),
-                        );
-                      },
+          body: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: Colors.blue),
+                ) // Indicateur de chargement
+              : errorMessage != null
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      errorMessage,
+                      style: const TextStyle(color: Colors.red, fontSize: 16),
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                )
+              : logements.isEmpty
+              ? const Center(
+                  child: Text('Aucun logement disponible pour le moment.'),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(
+                    8.0,
+                  ), // Padding général pour la grille
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // 2 colonnes pour la grille
+                      crossAxisSpacing: 8.0, // Espacement horizontal
+                      mainAxisSpacing: 8.0, // Espacement vertical
+                      childAspectRatio:
+                          .72, // Ajustez si nécessaire pour que les cartes s'affichent bien
+                    ),
+                    itemCount: logements.length,
+                    itemBuilder: (context, index) {
+                      final l = logements[index];
+
+                      // Utilise le helper formatLogementData du provider
+                      final formattedData = logementProvider.formatLogementData(
+                        l,
+                      );
+
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PropertyDetail(logementData: l),
+                            ),
+                          );
+                        },
+                        child: WidgetHouseInfos2Bis(
+                          imgHouse: formattedData['imgUrl']!,
+                          houseName: formattedData['houseName']!,
+                          price: formattedData['price']!,
+                          locate: formattedData['locate']!,
+                          ownerName: formattedData['ownerName']!,
+                          time: formattedData['time']!,
+                          logementData:
+                              l, // Passez les données complètes du logement
+                        ),
+                      );
+                    },
+                  ),
+                ),
         );
       },
     );

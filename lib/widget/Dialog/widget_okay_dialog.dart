@@ -81,7 +81,7 @@ class WidgetOkayDialog extends StatelessWidget {
                     Navigator.pop(context); // Action à personnaliser
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF007AFF),
+                    backgroundColor: const Color(0xFF007AFF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -106,7 +106,7 @@ class WidgetOkayDialog extends StatelessWidget {
                     Navigator.pop(context); // Ferme le dialogue
                   },
                   style: TextButton.styleFrom(
-                    backgroundColor: Color(0xFFF0F4FF),
+                    backgroundColor: const Color(0xFFF0F4FF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
