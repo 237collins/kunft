@@ -1,9 +1,9 @@
 // Nouveau code de connexion avec Telephone
 
-import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart'; // Remplacé 'package:http/http.dart' par 'package:dio/dio.dart'
+import 'package:kunft/pages/auth/forgot_password/reset_password.dart';
 import 'package:kunft/provider/ReservationProvider.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
   bool _isLoading = false;
   bool _rememberMe = true;
+  final Dio _dio = Dio(); // Instanciation de Dio
 
   @override
   void dispose() {
@@ -55,19 +56,22 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     try {
-      final response = await http.post(
-        Uri.parse('$API_BASE_URL/api/login'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: jsonEncode({
+      final response = await _dio.post(
+        '$API_BASE_URL/api/login',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+        data: {
           'phone': _phoneController.text.trim(),
           'password': _passwordController.text.trim(),
-        }),
+        },
       );
 
-      final data = json.decode(response.body);
+      final data =
+          response.data; // Avec Dio, les données sont dans response.data
 
       if (response.statusCode == 200) {
         if (data.containsKey('token') && data.containsKey('user')) {
@@ -85,13 +89,11 @@ class _LoginPageState extends State<LoginPage> {
             userProvider.setTokenAndUser(laravelToken, userData);
           }
 
-          // ✅ NOUVEAU: Récupérer le ReservationProvider
           final reservationProvider = Provider.of<ReservationProvider>(
             context,
             listen: false,
           );
 
-          // ✅ NOUVEAU: Lancer la récupération des réservations de l'utilisateur
           await reservationProvider.fetchUserReservations(
             authToken: laravelToken,
           );
@@ -118,11 +120,23 @@ class _LoginPageState extends State<LoginPage> {
         }
         _showSnackBar(errorMessage, color: Colors.red);
       }
-    } catch (e) {
-      _showSnackBar(
-        'Une erreur inattendue est survenue: ${e.toString()}',
-        color: Colors.red,
-      );
+    } on DioException catch (e) {
+      // Remplacer 'catch (e)' par 'on DioException catch (e)'
+      String errorMessage = 'Erreur lors de la connexion.';
+      if (e.response != null) {
+        final responseData = e.response!.data;
+        if (responseData.containsKey('message')) {
+          errorMessage = responseData['message'];
+        } else if (responseData.containsKey('errors')) {
+          final errors = responseData['errors'] as Map<String, dynamic>;
+          errorMessage +=
+              '\n' +
+              errors.values.map((errorList) => '- ${errorList[0]}').join('\n');
+        }
+      } else {
+        errorMessage = 'Une erreur inattendue est survenue: ${e.message}';
+      }
+      _showSnackBar(errorMessage, color: Colors.red);
     } finally {
       setState(() {
         _isLoading = false;
@@ -148,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                   bottomRight: Radius.circular(30),
                 ),
               ),
-              height: screenHeight * .3,
+              height: screenHeight * .30,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(50),
@@ -182,6 +196,9 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: 'Téléphone',
                       labelStyle: const TextStyle(fontSize: 12),
+                      floatingLabelStyle: const TextStyle(
+                        color: Colors.black87,
+                      ),
                       filled: true,
                       fillColor: const Color(0xfff7f7f7),
                       enabledBorder: OutlineInputBorder(
@@ -210,6 +227,9 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: 'Mot de passe',
                       labelStyle: const TextStyle(fontSize: 12),
+                      floatingLabelStyle: const TextStyle(
+                        color: Colors.black87,
+                      ),
                       filled: true,
                       fillColor: const Color(0xfff7f7f7),
                       enabledBorder: OutlineInputBorder(
@@ -265,8 +285,8 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Icon(
                         _rememberMe
-                            ? LucideIcons.checkSquare
-                            : LucideIcons.square,
+                            ? LucideIcons.checkCircle
+                            : LucideIcons.circle,
                         color: _rememberMe
                             ? Colors.yellow.shade700
                             : Colors.grey,
@@ -276,6 +296,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
+                // Option reinitialisation du mot de passe
                 Text.rich(
                   TextSpan(
                     text: 'Mot de passe oublié ?',
@@ -285,7 +306,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        // Votre logique pour la réinitialisation du mot de passe
+                        // Logique pour la réinitialisation du mot de passe
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPassword(),
+                          ),
+                        );
                       },
                   ),
                 ),

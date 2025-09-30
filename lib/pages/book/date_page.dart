@@ -123,13 +123,12 @@ class _DatePageState extends State<DatePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder:
-                          (context) => PaymentPage(
-                            logementData: widget.logementData,
-                            dureeDuSejour: dureeDuSejourEnNuits,
-                            dateDebut: _checkInDate,
-                            dateFin: _checkOutDate,
-                          ),
+                      builder: (context) => PaymentPage(
+                        logementData: widget.logementData,
+                        dureeDuSejour: dureeDuSejourEnNuits,
+                        dateDebut: _checkInDate,
+                        dateFin: _checkOutDate,
+                      ),
                     ),
                   );
                 } else {
@@ -150,7 +149,7 @@ class _DatePageState extends State<DatePage> {
                 ),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Color(0xFF256AFD),
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: const Text(
@@ -325,7 +324,7 @@ class _DatePageState extends State<DatePage> {
 //                 ),
 //                 width: double.infinity,
 //                 decoration: BoxDecoration(
-//                   color: Colors.blue,
+//                   color: Color(0xFF256AFD),
 //                   borderRadius: BorderRadius.circular(100),
 //                 ),
 //                 child: const Text(
@@ -488,7 +487,7 @@ class _DatePageState extends State<DatePage> {
 //                 ),
 //                 width: double.infinity,
 //                 decoration: BoxDecoration(
-//                   color: Colors.blue,
+//                   color: Color(0xFF256AFD),
 //                   borderRadius: BorderRadius.circular(100),
 //                 ),
 //                 child: const Text(
@@ -642,7 +641,7 @@ class _DatePageState extends State<DatePage> {
 //                 ),
 //                 width: double.infinity,
 //                 decoration: BoxDecoration(
-//                   color: Colors.blue,
+//                   color: Color(0xFF256AFD),
 //                   borderRadius: BorderRadius.circular(100),
 //                 ),
 //                 child: const Text(
@@ -770,7 +769,7 @@ class _DatePageState extends State<DatePage> {
 //                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
 //                 width: double.infinity,
 //                 decoration: BoxDecoration(
-//                   color: Colors.blue,
+//                   color: Color(0xFF256AFD),
 //                   borderRadius: BorderRadius.circular(100),
 //                 ),
 //                 child: Text(

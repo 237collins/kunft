@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:kunft/pages/SplashScreen.dart';
 import 'package:kunft/pages/auth/login_page.dart';
 import 'package:kunft/pages/profile_screen/elements/my_booking.dart';
+import 'package:kunft/pages/profile_screen/elements/notifications_page.dart';
 import 'package:kunft/pages/profile_screen/elements/notifications_settings.dart';
 import 'package:kunft/provider/UserProvider.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -222,11 +223,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Liste des widgets principaux à afficher dans ListView.separated
     final List<Widget> items = [
       // ⬅️ Retour et titre
-      Padding(
-        padding: const EdgeInsets.only(left: 15, right: 12),
+      const Padding(
+        padding: EdgeInsets.only(left: 15, right: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
+          children: [
             Icon(Icons.logo_dev_outlined),
             SizedBox(width: 20),
             Text(
@@ -238,8 +239,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       const SizedBox(height: 10),
       // 👤 Avatar et nom d'utilisateur
-      Column(
-        children: const [
+      const Column(
+        children: [
           CircleAvatar(
             radius: 65,
             backgroundImage: AssetImage('assets/images/img07.png'),
@@ -252,9 +253,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
       const SizedBox(height: 10),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: const Divider(
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Divider(
           color: Colors.grey,
           thickness: 0.3, // épaisseur de la ligne
         ),
@@ -282,9 +283,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         },
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: const Divider(
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Divider(
           color: Colors.grey,
           thickness: 0.3, // épaisseur de la ligne
         ),
@@ -306,9 +307,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => const NotificationSettingsPage(),
-            ),
+            MaterialPageRoute(builder: (context) => const Notifications()),
           );
         },
       ),
@@ -361,16 +360,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         },
       ),
-      _buildTile(
-        LucideIcons.users,
-        'Inviter vos Amis',
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const InviteFriendsPage()),
-          );
-        },
-      ),
+      // ------------ Page inviter un amis ----------
+      // _buildTile(
+      //   LucideIcons.users,
+      //   'Inviter vos Amis',
+      //   onTap: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => const InviteFriendsPage()),
+      //     );
+      //   },
+      // ),
       // 🚪 Bouton de déconnexion
       ElevatedButton(
         onPressed: () {
@@ -381,7 +381,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -462,7 +462,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         value: value,
         onChanged: onChanged,
         activeThumbColor: Colors.white, // Couleur du "bouton" actif
-        activeTrackColor: Colors.blue, // Couleur de la piste active
+        activeTrackColor: const Color(0xFF256AFD), // Couleur de la piste active
         inactiveThumbColor: Colors.white, // Bouton inactif
         inactiveTrackColor: const Color(0x40009fe3), // Piste inactive
       ),
@@ -662,7 +662,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //         value: value,
 //         onChanged: onChanged,
 //         activeColor: Colors.white, // Couleur du "bouton" actif
-//         activeTrackColor: Colors.blue, // Couleur de la piste active
+//         activeTrackColor: Color(0xFF256AFD), // Couleur de la piste active
 //         inactiveThumbColor: Colors.white, // Bouton inactif
 //         inactiveTrackColor: Color(0x40009fe3), // Piste inactive
 //       ),

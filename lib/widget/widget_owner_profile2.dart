@@ -108,7 +108,7 @@ class _WidgetOwnerProfile2State extends State<WidgetOwnerProfile2> {
                 //   child: Container(
                 //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 //     decoration: BoxDecoration(
-                //       color: Colors.blue,
+                //       color: Color(0xFF256AFD),
                 //       borderRadius: BorderRadius.only(
                 //         bottomRight: Radius.circular(50),
                 //         bottomLeft: Radius.circular(50),

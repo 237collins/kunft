@@ -24,7 +24,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR Code Scanner'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF256AFD),
       ),
       body: Column(
         children: <Widget>[
@@ -50,9 +50,9 @@ class _QrScannerPageState extends State<QrScannerPage> {
   Widget _buildQrView(BuildContext context) {
     var scanArea =
         (MediaQuery.of(context).size.width < 400 ||
-                MediaQuery.of(context).size.height < 400)
-            ? 200.0
-            : 300.0;
+            MediaQuery.of(context).size.height < 400)
+        ? 200.0
+        : 300.0;
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,

@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
   // Thème de l'application
   static final ThemeData _appTheme = ThemeData(
     primarySwatch: Colors.deepOrange,
-    fontFamily: 'Poppins',
+    fontFamily: 'Onest',
     textTheme: const TextTheme(
       displayLarge: TextStyle(fontFamily: 'BebasNeue', fontSize: 96.0),
     ),
@@ -166,105 +166,3 @@ class MyApp extends StatelessWidget {
 //     scaffoldBackgroundColor: const Color(0xfff7f7f7),
 //   );
 // }
-
-
-// import 'package:flutter/material.dart';
-// import 'package:intl/date_symbol_data_local.dart';
-// import 'package:provider/provider.dart';
-// import 'package:kunft/provider/UserProvider.dart';
-// import 'package:kunft/provider/logement_provider.dart';
-// import 'package:kunft/pages/SplashScreen.dart';
-
-// void main() async {
-//   // Assure que les bindings de Flutter sont initialisés
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   // Initialise les données de locale
-//   await initializeDateFormatting('fr_FR', null);
-
-//   runApp(
-//     MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider(create: (context) => UserProvider()),
-//         ChangeNotifierProvider(create: (context) => LogementProvider()),
-//       ],
-//       child: const MyApp(),
-//     ),
-//   );
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'KUNFT App',
-//       theme: ThemeData(
-//         primarySwatch: Colors.deepOrange,
-//         fontFamily: 'Poppins',
-//         textTheme: const TextTheme(
-//           displayLarge: TextStyle(fontFamily: 'BebasNeue', fontSize: 96.0),
-//         ),
-//         scaffoldBackgroundColor: const Color(0xfff7f7f7),
-//       ),
-//       // Le SplashScreen devient le point de départ de la logique de chargement
-//       home: const SplashScreen(),
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-// import 'package:intl/date_symbol_data_local.dart';
-// import 'package:provider/provider.dart';
-// import 'package:kunft/provider/UserProvider.dart';
-// import 'package:kunft/provider/logement_provider.dart';
-// import 'package:kunft/pages/SplashScreen.dart';
-
-// void main() async {
-//   // Assure que les bindings de Flutter sont initialisés avant toute action asynchrone
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   // Initialise les données de locale pour 'fr_FR' pour le package intl
-//   await initializeDateFormatting('fr_FR', null);
-
-//   // Crée une instance du UserProvider pour le chargement initial
-//   final userProvider = UserProvider();
-
-//   // Charge l'ID et le token depuis le stockage local
-//   await userProvider.loadUserFromStorage();
-
-//   runApp(
-//     MultiProvider(
-//       providers: [
-//         // Utilise l'instance pré-initialisée de UserProvider
-//         ChangeNotifierProvider.value(value: userProvider),
-//         ChangeNotifierProvider(create: (context) => LogementProvider()),
-//       ],
-//       child: const MyApp(),
-//     ),
-//   );
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'KUNFT App',
-//       theme: ThemeData(
-//         primarySwatch: Colors.deepOrange,
-//         fontFamily: 'Poppins',
-//         textTheme: const TextTheme(
-//           displayLarge: TextStyle(fontFamily: 'BebasNeue', fontSize: 96.0),
-//         ),
-//         scaffoldBackgroundColor: const Color(0xfff7f7f7),
-//       ),
-//       home: const SplashScreen(),
-//     );
-//   }
-// }
-

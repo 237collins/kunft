@@ -29,26 +29,23 @@ class BrokerDetails extends StatelessWidget {
 
     // Premiere lettre en majuscule
     String rawName = ownerData['name'] ?? 'Inconnu';
-    final String name =
-        rawName.isNotEmpty
-            ? rawName[0].toUpperCase() + rawName.substring(1).toLowerCase()
-            : 'Inconnu';
+    final String name = rawName.isNotEmpty
+        ? rawName[0].toUpperCase() + rawName.substring(1).toLowerCase()
+        : 'Inconnu';
     //
     final String profileImage = ownerData['profile_image'] ?? '';
-    final String logementsCount =
-        (ownerData['logements_count'] ?? 0).toString();
+    final String logementsCount = (ownerData['logements_count'] ?? 0)
+        .toString();
 
     // Construire l'URL complète de l'image de profil
-    final String fullProfileImageUrl =
-        profileImage.isNotEmpty
-            ? '$API_BASE_URL/storage/$profileImage'
-            : 'https://placehold.co/600x400/png';
+    final String fullProfileImageUrl = profileImage.isNotEmpty
+        ? '$API_BASE_URL/storage/$profileImage'
+        : 'https://placehold.co/600x400/png';
 
     // Image de couverture
-    final String fullCoverImageUrl =
-        profileImage.isNotEmpty
-            ? '$API_BASE_URL/storage/$profileImage'
-            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhsXUFt7Wnbe4xWz1ccciA8eIj40IBXeVYg6zsaMIMnPVb_tWRBgOxPpm3hoXDgqQKJZ4&usqp=CAU';
+    final String fullCoverImageUrl = profileImage.isNotEmpty
+        ? '$API_BASE_URL/storage/$profileImage'
+        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhsXUFt7Wnbe4xWz1ccciA8eIj40IBXeVYg6zsaMIMnPVb_tWRBgOxPpm3hoXDgqQKJZ4&usqp=CAU';
 
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -88,14 +85,14 @@ class BrokerDetails extends StatelessWidget {
                       bottom: -45,
                       right: 0,
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MessagingPage2(),
-                            ),
-                          );
-                        },
+                        // onTap: () {
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const MessagingPage2(),
+                        //     ),
+                        //   );
+                        // },
                         child: Container(
                           padding: const EdgeInsets.all(4), // Ajout de const
                           decoration: const BoxDecoration(
@@ -158,22 +155,22 @@ class BrokerDetails extends StatelessWidget {
               ],
             ),
             // Partie Scrollable
-            Expanded(
+            const Expanded(
               // ✅ AJOUTÉ : Expanded pour que SingleChildScrollView prenne l'espace restant
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(
+                  padding: EdgeInsets.only(
                     left: 10,
                     right: 10,
                   ), // Ajout de const
                   child: Column(
                     children: [
                       //
-                      const SizedBox(height: 10), // Ajout de const
+                      SizedBox(height: 10), // Ajout de const
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             // Ajout de const
                             'Autres Propriétaires',
                             style: TextStyle(
@@ -181,7 +178,7 @@ class BrokerDetails extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const Padding(
+                          Padding(
                             // Ajout de const
                             padding: EdgeInsets.all(4.0),
                             child: Icon(
@@ -192,12 +189,12 @@ class BrokerDetails extends StatelessWidget {
                         ],
                       ),
                       //
-                      const SizedBox(height: 10), // Ajout de const
+                      SizedBox(height: 10), // Ajout de const
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             // Ajout de const
                             // Appel de Widget ici (ces données sont statiques pour l'instant)
                             WidgetBrokerList(
@@ -220,10 +217,10 @@ class BrokerDetails extends StatelessWidget {
                         ),
                       ),
                       //
-                      const SizedBox(height: 15), // Ajout de const
+                      SizedBox(height: 15), // Ajout de const
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           // Ajout de const
                           Text(
                             'Logement les plus visités',
@@ -243,7 +240,7 @@ class BrokerDetails extends StatelessWidget {
                       ),
                       // Afichage du Listview Widget_House_Infos 2 et 3
                       // Text('Afichage du Listview Widget_House_Infos2_Bis'),
-                      const SizedBox(height: 20), // Ajout d'un espace en bas
+                      SizedBox(height: 20), // Ajout d'un espace en bas
                     ],
                   ),
                 ),

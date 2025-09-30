@@ -35,21 +35,21 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 15),
-      padding: EdgeInsets.all(5),
+      margin: const EdgeInsets.only(right: 15),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Color(0x1a000000),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: const Offset(4, 5),
+            offset: Offset(4, 5),
           ),
         ],
       ),
-      constraints: BoxConstraints(
+      constraints: const BoxConstraints(
         // minHeight: 100,
         // minWidth: 130,
         maxWidth: 300,
@@ -100,12 +100,12 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                         Padding(
                           padding: const EdgeInsets.all(5),
                           child: Container(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              color: Color(0x1affffff),
+                              color: const Color(0x1affffff),
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.share,
                               color: Colors.white,
                               size: 18,
@@ -125,9 +125,9 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                     child: Padding(
                       padding: const EdgeInsets.all(5),
                       child: Container(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: Color(0x1affffff),
+                          color: const Color(0x1affffff),
                           borderRadius: BorderRadius.circular(50),
                         ),
                         child: Icon(
@@ -150,7 +150,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
           Container(
             width: 130,
             height: 100,
-            padding: EdgeInsets.only(left: 5, right: 8, bottom: 5),
+            padding: const EdgeInsets.only(left: 5, right: 8, bottom: 5),
             child: Column(
               children: [
                 Column(
@@ -161,7 +161,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                       child: Text(
                         // nom du mobilier
                         widget.houseName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           // fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -175,40 +175,40 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                         Text(
                           // Prix
                           widget.price,
-                          style: TextStyle(
-                            color: Colors.blue,
+                          style: const TextStyle(
+                            color: Color(0xFF256AFD),
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'BebasNeue',
                           ),
                         ),
                         //
-                        Text(
+                        const Text(
                           // Duree
                           ' / Nuit',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Color(0xFF256AFD),
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     SizedBox(
                       // width: 150,
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.location_on_rounded,
-                            color: Colors.blue,
+                            color: Color(0xFF256AFD),
                             size: 15,
                           ),
-                          SizedBox(width: 3),
+                          const SizedBox(width: 3),
                           Text(
                             // nom du lieu
                             widget.locate,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
@@ -223,7 +223,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 //
                 SizedBox(
                   // width: 120,
@@ -232,7 +232,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                     children: [
                       Text(
                         widget.ownerName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           // color: Color(0xffffffff),
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
@@ -240,11 +240,15 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                       ),
                       Row(
                         children: [
-                          Icon(Icons.access_time, size: 12, color: Colors.grey),
-                          SizedBox(width: 3),
+                          const Icon(
+                            Icons.access_time,
+                            size: 12,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 3),
                           Text(
                             widget.time,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 9,
                               fontStyle: FontStyle.italic,

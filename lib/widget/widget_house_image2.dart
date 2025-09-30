@@ -33,10 +33,9 @@ class WidgetHouseImage2 extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(23.0),
           // ✅ Ajout d'une bordure si sélectionné
-          border:
-              isSelected
-                  ? Border.all(color: const Color(0xcc2196F3), width: 2.0)
-                  : null,
+          border: isSelected
+              ? Border.all(color: const Color(0xcc2196F3), width: 2.0)
+              : null,
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
@@ -136,7 +135,7 @@ class WidgetHouseImage2 extends StatelessWidget {
             //           Text(
             //             ownerName,
             //             style: const TextStyle(
-            //               color: Colors.blueAccent,
+            //               color: Color(0xFF256AFD)Accent,
             //               fontSize: 12.0,
             //             ),
             //           ),

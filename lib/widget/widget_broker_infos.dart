@@ -44,7 +44,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.person_pin, size: 36, color: Colors.blue),
+              Icon(Icons.person_pin, size: 36, color: Color(0xFF256AFD)),
               Text(
                 'Following',
                 style: TextStyle(
@@ -63,7 +63,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                     style: TextStyle(
                       // fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: Color(0xFF256AFD),
                     ),
                   ),
                   // Text(
@@ -71,7 +71,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                   //   style: TextStyle(
                   //     fontSize: 12,
                   //     fontWeight: FontWeight.bold,
-                  //     color: Colors.blue,
+                  //     color: Color(0xFF256AFD),
                   //   ),
                   // ),
                 ],
@@ -102,7 +102,11 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.people_alt_outlined, size: 36, color: Colors.blue),
+              Icon(
+                Icons.people_alt_outlined,
+                size: 36,
+                color: Color(0xFF256AFD),
+              ),
               Text(
                 'Followers',
                 style: TextStyle(
@@ -121,7 +125,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                     style: TextStyle(
                       // fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: Color(0xFF256AFD),
                     ),
                   ),
                   // Text(
@@ -129,7 +133,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                   //   style: TextStyle(
                   //     fontSize: 12,
                   //     fontWeight: FontWeight.bold,
-                  //     color: Colors.blue,
+                  //     color: Color(0xFF256AFD),
                   //   ),
                   // ),
                 ],
@@ -160,7 +164,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.other_houses, size: 36, color: Colors.blue),
+              Icon(Icons.other_houses, size: 36, color: Color(0xFF256AFD)),
               Text(
                 'Logements',
                 style: TextStyle(
@@ -179,7 +183,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                     style: TextStyle(
                       // fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: Color(0xFF256AFD),
                     ),
                   ),
                   // Text(
@@ -187,7 +191,7 @@ class _WidgetBrokerInfosState extends State<WidgetBrokerInfos> {
                   //   style: TextStyle(
                   //     fontSize: 12,
                   //     fontWeight: FontWeight.bold,
-                  //     color: Colors.blue,
+                  //     color: Color(0xFF256AFD),
                   //   ),
                   // ),
                 ],

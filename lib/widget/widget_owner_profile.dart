@@ -41,7 +41,7 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
                   height: 55,
                   width: 55,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: const Color(0xFF256AFD),
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: CircleAvatar(
@@ -63,7 +63,7 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: Colors.blue,
+                        color: Color(0xFF256AFD),
                       ),
                     ),
                   ],
@@ -123,7 +123,7 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
 //                   height: 56,
 //                   width: 56,
 //                   decoration: BoxDecoration(
-//                     color: Colors.blue,
+//                     color: Color(0xFF256AFD),
 //                     borderRadius: BorderRadius.circular(100),
 //                   ),
 //                   child: CircleAvatar(
@@ -162,7 +162,7 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
 //                       style: TextStyle(
 //                         fontSize: 18,
 //                         fontWeight: FontWeight.w700,
-//                         color: Colors.blue,
+//                         color: Color(0xFF256AFD),
 //                       ),
 //                     ),
 //                     // Text(
@@ -201,7 +201,7 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
 //                         vertical: 10,
 //                       ),
 //                       decoration: BoxDecoration(
-//                         color: Colors.blue,
+//                         color: Color(0xFF256AFD),
 //                         borderRadius: BorderRadius.only(
 //                           bottomRight: Radius.circular(30),
 //                           bottomLeft: Radius.circular(30),
@@ -247,7 +247,7 @@ class _WidgetOwnerProfileState extends State<WidgetOwnerProfile> {
 //                         vertical: 10,
 //                       ),
 //                       decoration: const BoxDecoration(
-//                         color: Colors.blue,
+//                         color: Color(0xFF256AFD),
 //                         borderRadius: BorderRadius.only(
 //                           bottomRight: Radius.circular(30),
 //                           bottomLeft: Radius.circular(30),

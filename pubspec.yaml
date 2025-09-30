@@ -78,14 +78,16 @@ flutter:
 
   # ✅ Corrected font family structure.
   fonts:
-    - family: Raleway
+    - family: Onest
       fonts:
-        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Onest-Regular.ttf
           weight: 500
-        - asset: assets/fonts/Raleway-SemiBold.ttf
+        - asset: assets/fonts/Onest-Thin.ttf
+          weight: 300
+        - asset: assets/fonts/Onest-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Raleway-Bold.ttf
-          weight: 700
+        - asset: assets/fonts/Onest-ExtraBold.ttf
+          weight: 800
 
     - family: BebasNeue
       fonts:

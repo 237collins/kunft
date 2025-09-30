@@ -38,11 +38,9 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder:
-              (context) => PropertyDetail(
-                logementData:
-                    widget.logementData!, // Passe les données complètes
-              ),
+          builder: (context) => PropertyDetail(
+            logementData: widget.logementData!, // Passe les données complètes
+          ),
         ),
       );
     } else {
@@ -69,16 +67,16 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
         // width: double.infinity,
         // height: 200,
         margin: const EdgeInsets.only(bottom: 10.0),
-        padding: EdgeInsets.all(3),
+        padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color(0x80d9d9d9),
               spreadRadius: 4,
               blurRadius: 5,
-              offset: const Offset(0, 1),
+              offset: Offset(0, 1),
             ),
           ],
         ),
@@ -211,20 +209,23 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 3),
+                  const SizedBox(height: 3),
                   //
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 140,
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          minWidth: 120,
+                          maxWidth: 200,
+                        ),
                         child: Text(
                           widget.houseName,
                           style: const TextStyle(
-                            color: Colors.blue,
+                            color: Color(0xFF256AFD),
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            height: 1.2,
+                            // height: 1.5,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -236,17 +237,17 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                           Text(
                             widget.price,
                             style: const TextStyle(
-                              color: Colors.blue,
+                              color: Color(0xFF256AFD),
                               fontSize: 25,
                               fontFamily: 'BebasNeue',
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           //
-                          Text(
+                          const Text(
                             ' | Nuit',
-                            style: const TextStyle(
-                              color: Colors.blue,
+                            style: TextStyle(
+                              color: Color(0xFF256AFD),
                               fontSize: 10,
                               // fontFamily: 'BebasNeue',
                               fontWeight: FontWeight.w600,
@@ -259,7 +260,7 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                         children: [
                           const Icon(
                             Icons.location_on_rounded,
-                            color: Colors.blue,
+                            color: Color(0xFF256AFD),
                             size: 17,
                           ),
                           const SizedBox(width: 3),

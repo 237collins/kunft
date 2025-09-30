@@ -34,10 +34,9 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
         false, // ✅ Nouveau paramètre pour la disponibilité (booléen)
   }) {
     // Détermine la couleur de l'icône de valeur si c'est une commodité
-    Color valueIconColor =
-        isAvailable
-            ? Colors.blue
-            : Colors.grey; // Vert si disponible, gris sinon
+    Color valueIconColor = isAvailable
+        ? Color(0xFF256AFD)
+        : Colors.grey; // Vert si disponible, gris sinon
 
     return Container(
       margin: const EdgeInsets.only(right: 10),
@@ -70,11 +69,11 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
           // Sinon, affiche le valueWidget fourni (pour les nombres de lits/douches)
           isAvailable
               ? Icon(
-                Icons
-                    .radio_button_checked_sharp, // Icône de coche pour "disponible"
-                color: valueIconColor, // Couleur basée sur la disponibilité
-                size: 15, // Ajustez la taille de cette icône si nécessaire
-              )
+                  Icons
+                      .radio_button_checked_sharp, // Icône de coche pour "disponible"
+                  color: valueIconColor, // Couleur basée sur la disponibilité
+                  size: 15, // Ajustez la taille de cette icône si nécessaire
+                )
               : valueWidget,
         ],
       ),
@@ -151,9 +150,8 @@ class _WidgetHouseSpecsState extends State<WidgetHouseSpecs> {
             // title: 'Clim / AC',
             valueWidget:
                 const SizedBox.shrink(), // Pas de valueWidget direct pour les booléens
-            isAvailable:
-                widget
-                    .climatisation, // Passe la valeur booléenne pour la couleur de l'icône
+            isAvailable: widget
+                .climatisation, // Passe la valeur booléenne pour la couleur de l'icône
           ),
 
           // ✅ Wi-Fi

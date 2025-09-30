@@ -179,21 +179,21 @@ class _CustomNavBarState extends State<CustomNavBar> {
 //           SalomonBottomBarItem(
 //             icon: const Icon(LucideIcons.search), // Ajout de const
 //             title: const Text("Explore"), // Ajout de const
-//             selectedColor: Colors.blue,
+//             selectedColor: Color(0xFF256AFD),
 //           ),
 
 //           /// Search
 //           SalomonBottomBarItem(
 //             icon: const Icon(LucideIcons.messageCircle), // Ajout de const
 //             title: const Text("Social"), // Ajout de const
-//             selectedColor: Colors.blue,
+//             selectedColor: Color(0xFF256AFD),
 //           ),
 
 //           /// Profile
 //           SalomonBottomBarItem(
 //             icon: const Icon(LucideIcons.userCircle), // Ajout de const
 //             title: const Text("Profile"), // Ajout de const
-//             selectedColor: Colors.blue,
+//             selectedColor: Color(0xFF256AFD),
 //           ),
 //         ],
 //       ),

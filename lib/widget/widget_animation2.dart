@@ -131,7 +131,7 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
                       _currentDisplayImageUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      height: screenHeight * .47,
+                      // height: screenHeight * .3,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: Colors.grey[300],
@@ -196,7 +196,7 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
                 Positioned(
                   bottom: 0,
                   child: Container(
-                    padding: EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(right: 10),
                     height: screenHeight * .17,
                     width: screenWidth * .95,
                     decoration: const BoxDecoration(
@@ -229,10 +229,9 @@ class _WidgetAnimation2State extends State<WidgetAnimation2> {
                               ),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color:
-                                    (_currentIndex == index)
-                                        ? Colors.white
-                                        : Color(0x66ffffff),
+                                color: (_currentIndex == index)
+                                    ? Colors.white
+                                    : const Color(0x66ffffff),
                               ),
                             );
                           }),

@@ -24,7 +24,7 @@ class _QrGeneratorPageState extends State<QrGeneratorPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR Code Generator'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF256AFD),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

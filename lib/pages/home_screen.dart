@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kunft/main.dart';
-import 'package:kunft/pages/auth/forgot_password/forgot_password.dart';
+import 'package:kunft/pages/explore_screen.dart';
 import 'package:kunft/pages/profile_screen/profile_screen.dart';
 import 'package:kunft/provider/UserProvider.dart';
 import 'package:provider/provider.dart'; // Import de Provider
@@ -170,7 +170,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Stack(
                         children: [
-                          WidgetAnimation(),
+                          // ----------------------------------------------
+                          // ------- Widget d'accueil
+                          // ----------------------------------------------
+                          const WidgetAnimation(),
                           SizedBox(
                             height: screenHeight * 0.45,
                             child: Column(
@@ -187,7 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       const SizedBox(height: 18),
-                      // Affichage des logements populaires
+                      // ----------------------------------------------
+                      // ------- Affichage des logements populaires : Doit afficher les logements les plus visités ----
+                      // ----------------------------------------------
                       Column(
                         children: [
                           Row(
@@ -217,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     vertical: 5,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.blue,
+                                    color: const Color(0xFF256AFD),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: const Text(
@@ -307,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 vertical: 5,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: const Color(0xFF256AFD),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Text(
@@ -325,32 +330,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Boutton de Nav temporaire
                       Row(
                         children: [
-                          // InkWell(
-                          //   onTap: () {
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => const PaymentPage(),
-                          //       ),
-                          //     );
-                          //   },
-                          //   child: const Text('review infos'),
-                          // ),
-                          // const SizedBox(width: 20),
-                          // const SizedBox(width: 30),
-                          // Exemple dans un bouton
-                          ElevatedButton(
-                            onPressed: () {
-                              // ✅ Passe le BuildContext
+                          InkWell(
+                            onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ForgotPassword(),
+                                  builder: (context) => const ExploreScreen(),
                                 ),
                               );
                             },
-                            child: const Text('Password test'),
+                            child: const Text('Recherche'),
                           ),
+                          // const SizedBox(width: 20),
+                          // const SizedBox(width: 30),
+                          // Exemple dans un bouton
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     // ✅ Passe le BuildContext
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => const ForgotPassword(),
+                          //       ),
+                          //     );
+                          //   },
+                          //   child: const Text('Password test'),
+                          // ),
 
                           // InkWell(
                           //   onTap: () {
@@ -388,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       isLoadingLogements
                           ? const Center(
                               child: CircularProgressIndicator(
-                                color: Colors.blue,
+                                color: Color(0xFF256AFD),
                               ),
                             )
                           : errorLogements != null

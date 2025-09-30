@@ -66,7 +66,7 @@ class WidgetAmount extends StatelessWidget {
                 style: const TextStyle(
                   fontFamily: 'BebasNeue',
                   fontSize: 20,
-                  // color: Colors.blue,
+                  // color: Color(0xFF256AFD),
                   fontWeight: FontWeight.bold,
                 ),
               ),

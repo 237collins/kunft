@@ -57,7 +57,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.blue,
+            color: Color(0xFF256AFD),
           ),
         ),
         //
@@ -66,7 +66,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
-            // color: Colors.blue,
+            // color: Color(0xFF256AFD),
           ),
         ),
       ],

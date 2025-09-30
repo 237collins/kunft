@@ -14,25 +14,24 @@ class WidgetBoutonCommander extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder:
-                (context) => MessagingPage2(
-                  // ✅ MODIFIÉ : On envoie le widget d'informations du logement
-                  initialMessageWidget: WidgetHouseInfos3Bis(
-                    logementData: logementData,
-                  ),
-                ),
-          ),
-        );
-      },
+      // onTap: () {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => MessagingPage2(
+      //         // ✅ MODIFIÉ : On envoie le widget d'informations du logement
+      //         initialMessageWidget: WidgetHouseInfos3Bis(
+      //           logementData: logementData,
+      //         ),
+      //       ),
+      //     ),
+      //   );
+      // },
       child: Container(
         height: 56,
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: const BoxDecoration(
-          color: Colors.blue,
+          color: Color(0xFF256AFD),
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(50),
             bottomLeft: Radius.circular(50),
@@ -85,7 +84,7 @@ class WidgetBoutonCommander extends StatelessWidget {
 //         height: 62,
 //         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
 //         decoration: const BoxDecoration(
-//           color: Colors.blue,
+//           color: Color(0xFF256AFD),
 //           borderRadius: BorderRadius.only(
 //             bottomRight: Radius.circular(50),
 //             bottomLeft: Radius.circular(50),

@@ -23,11 +23,10 @@ class _WidgetBoutonReservationState extends State<WidgetBoutonReservation> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder:
-                (context) => DatePage(
-                  // ✅ MODIFIÉ : Passez les données du logement à la prochaine page
-                  logementData: widget.logementData,
-                ),
+            builder: (context) => DatePage(
+              // ✅ MODIFIÉ : Passez les données du logement à la prochaine page
+              logementData: widget.logementData,
+            ),
           ),
         );
       },
@@ -35,7 +34,7 @@ class _WidgetBoutonReservationState extends State<WidgetBoutonReservation> {
         height: 56,
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: const BoxDecoration(
-          color: Colors.blue,
+          color: Color(0xFF256AFD),
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(50),
             bottomLeft: Radius.circular(50),
@@ -88,7 +87,7 @@ class _WidgetBoutonReservationState extends State<WidgetBoutonReservation> {
 //         height: 56,
 //         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
 //         decoration: const BoxDecoration(
-//           color: Colors.blue,
+//           color: Color(0xFF256AFD),
 //           borderRadius: BorderRadius.only(
 //             bottomRight: Radius.circular(50),
 //             bottomLeft: Radius.circular(50),

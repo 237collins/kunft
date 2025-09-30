@@ -149,7 +149,7 @@ class _PinCodePageState extends State<PinCodePage> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: _currentIndex == index
-                            ? Colors.blue
+                            ? Color(0xFF256AFD)
                             : Colors.grey.shade300,
                         width: 1,
                       ),
@@ -173,7 +173,7 @@ class _PinCodePageState extends State<PinCodePage> {
               ElevatedButton(
                 onPressed: _isLoading ? null : _onContinue,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Color(0xFF256AFD),
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -342,7 +342,7 @@ class _PinCodePageState extends State<PinCodePage> {
 //                       style: TextStyle(
 //                         // fontSize: 16,
 //                         fontWeight: FontWeight.w700,
-//                         color: Colors.blue.shade700,
+//                         color: Color(0xFF256AFD).shade700,
 //                       ),
 //                     ),
 //                   ),
@@ -366,7 +366,7 @@ class _PinCodePageState extends State<PinCodePage> {
 //                     decoration: BoxDecoration(
 //                       border: Border.all(
 //                         color: _currentIndex == index
-//                             ? Colors.blue
+//                             ? Color(0xFF256AFD)
 //                             : Colors.grey.shade300,
 //                         width: 1,
 //                       ),
@@ -390,7 +390,7 @@ class _PinCodePageState extends State<PinCodePage> {
 //               ElevatedButton(
 //                 onPressed: _onContinue,
 //                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.blue,
+//                   backgroundColor: Color(0xFF256AFD),
 //                   minimumSize: const Size(double.infinity, 50),
 //                   shape: RoundedRectangleBorder(
 //                     borderRadius: BorderRadius.circular(30),

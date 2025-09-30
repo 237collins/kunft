@@ -139,109 +139,106 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       Stack(
                         children: [
                           // Animation (si elle n'a pas besoin de données spécifiques de logement ici)
-                          WidgetAnimation2(
+                          const WidgetAnimation2(
                             imageUrls:
-                                const [], // Remplacez par les vraies URLs si Animation2 en a besoin
+                                [], // Remplacez par les vraies URLs si Animation2 en a besoin
                             initialImageUrl:
                                 'https://www.freepik.com/free-photo/swimming-pool_1037896.htm#fromView=search&page=1&position=49&uuid=cb31a530-6c15-4a84-a79a-0ada78578303&query=maison+de+luxe',
                           ),
                           // Contenu superposé sur l'animation
                           SizedBox(
-                            height: screenHeight * .47,
-                            child: Column(
+                            height: screenHeight * .3,
+                            child: const Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const WidgetProfileInfos(), // Ajout de const
-                                const Spacer(),
+                                WidgetProfileInfos(),
+                                Spacer(),
                                 Column(
                                   children: [
-                                    const WidgetMessageAleatoire(), // Ajout de const
+                                    WidgetMessageAleatoire(),
                                     //
-                                    const SizedBox(
-                                      height: 15,
-                                    ), // Ajout de const
+                                    SizedBox(height: 15),
                                     //
                                     // WidgetHouseInfosExplore: Affiche les 10 derniers logements
-                                    isLoadingLatest
-                                        ? const SizedBox(
-                                            height:
-                                                150, // Hauteur fixe pour le CircularProgressIndicator
-                                            child: Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ),
-                                          )
-                                        : errorLatest != null
-                                        ? SizedBox(
-                                            height:
-                                                150, // Hauteur fixe pour le message d'erreur
-                                            child: Center(
-                                              child: Text(
-                                                'Erreur: $errorLatest',
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                          )
-                                        : latestLogements.isEmpty
-                                        ? const SizedBox(
-                                            height:
-                                                150, // Hauteur fixe pour le message 'aucun logement'
-                                            child: Center(
-                                              child: Text(
-                                                'Aucun logement récent disponible',
-                                              ),
-                                            ),
-                                          )
-                                        : SizedBox(
-                                            // height:
-                                            //     130, // Hauteur fixe pour les cartes
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                  ),
-                                              child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: Row(
-                                                  children: latestLogements.map((
-                                                    l,
-                                                  ) {
-                                                    final formattedData =
-                                                        logementProvider
-                                                            .formatLogementData(
-                                                              l,
-                                                            );
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                            right: 10.0,
-                                                          ),
-                                                      child: WidgetHouseInfosExplore(
-                                                        imgHouse:
-                                                            formattedData['imgUrl']!,
-                                                        houseName:
-                                                            formattedData['houseName']!,
-                                                        price:
-                                                            formattedData['price']!,
-                                                        locate:
-                                                            formattedData['locate']!,
-                                                        ownerName:
-                                                            formattedData['ownerName']!,
-                                                        time:
-                                                            formattedData['time']!,
-                                                        logementData: l,
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                    //
-                                    const SizedBox(
-                                      height: 10,
-                                    ), // Ajout de const
+                                    // Non utile pour le moment
+                                    // isLoadingLatest
+                                    //     ? const SizedBox(
+                                    //         height:
+                                    //             150, // Hauteur fixe pour le CircularProgressIndicator
+                                    //         child: Center(
+                                    //           child:
+                                    //               CircularProgressIndicator(),
+                                    //         ),
+                                    //       )
+                                    //     : errorLatest != null
+                                    //     ? SizedBox(
+                                    //         height:
+                                    //             150, // Hauteur fixe pour le message d'erreur
+                                    //         child: Center(
+                                    //           child: Text(
+                                    //             'Erreur: $errorLatest',
+                                    //             textAlign: TextAlign.center,
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     : latestLogements.isEmpty
+                                    //     ? const SizedBox(
+                                    //         height:
+                                    //             150, // Hauteur fixe pour le message 'aucun logement'
+                                    //         child: Center(
+                                    //           child: Text(
+                                    //             'Aucun logement récent disponible',
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox(
+                                    //         // height:
+                                    //         //     130, // Hauteur fixe pour les cartes
+                                    //         child: Padding(
+                                    //           padding:
+                                    //               const EdgeInsets.symmetric(
+                                    //                 horizontal: 10,
+                                    //               ),
+                                    //           child: SingleChildScrollView(
+                                    //             scrollDirection:
+                                    //                 Axis.horizontal,
+                                    //             child: Row(
+                                    //               children: latestLogements.map((
+                                    //                 l,
+                                    //               ) {
+                                    //                 final formattedData =
+                                    //                     logementProvider
+                                    //                         .formatLogementData(
+                                    //                           l,
+                                    //                         );
+                                    //                 return Padding(
+                                    //                   padding:
+                                    //                       const EdgeInsets.only(
+                                    //                         right: 10.0,
+                                    //                       ),
+                                    //                   child: WidgetHouseInfosExplore(
+                                    //                     imgHouse:
+                                    //                         formattedData['imgUrl']!,
+                                    //                     houseName:
+                                    //                         formattedData['houseName']!,
+                                    //                     price:
+                                    //                         formattedData['price']!,
+                                    //                     locate:
+                                    //                         formattedData['locate']!,
+                                    //                     ownerName:
+                                    //                         formattedData['ownerName']!,
+                                    //                     time:
+                                    //                         formattedData['time']!,
+                                    //                     logementData: l,
+                                    //                   ),
+                                    //                 );
+                                    //               }).toList(),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    // //
+                                    SizedBox(height: 10),
                                   ],
                                 ),
                               ],
@@ -249,7 +246,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 18), // Ajout de const
+                      const SizedBox(height: 18),
                       Column(
                         children: [
                           Row(
@@ -260,7 +257,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                    // Ajout de const
                                     horizontal: 14,
                                   ),
                                   decoration: BoxDecoration(
@@ -268,7 +264,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: const Row(
-                                    // Ajout de const
                                     children: [
                                       Icon(Icons.search, color: Colors.grey),
                                       SizedBox(width: 5),
@@ -291,29 +286,22 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 10), // Ajout de const
+                              const SizedBox(width: 10),
                               Expanded(
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                    // Ajout de const
                                     horizontal: 14,
                                     vertical: 12,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: const Color(
-                                      0xffffd055,
-                                    ), // Ajout de const
+                                    color: const Color(0xffffd055),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Icon(
-                                        Icons.map_outlined,
-                                      ), // Ajout de const
-                                      const SizedBox(
-                                        width: 10,
-                                      ), // Ajout de const
+                                      Icon(Icons.map_outlined),
+                                      SizedBox(width: 10),
                                       InkWell(
                                         // onTap: () {
                                         //   Navigator.push(
@@ -325,8 +313,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                         //     ),
                                         //   );
                                         // },
-                                        child: const Text(
-                                          // Ajout de const
+                                        child: Text(
                                           'Google Map',
                                           style: TextStyle(
                                             fontSize: 12,
@@ -340,13 +327,20 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 18), // Ajout de const
+                          const SizedBox(height: 18),
+                          const Text(
+                            'Ici tu dois d\'abord afficher selon la position et faire le filtre selon un rayon en km',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           const Row(
-                            // Ajout de const
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Propriétaires disponibles',
+                                'Hôte disponibles',
                                 style: TextStyle(
                                   color: Color(0xff010101),
                                   fontSize: 18,
@@ -364,7 +358,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 15), // Ajout de const
+                          const SizedBox(height: 15),
                           // WidgetOwnerList: Affiche les propriétaires tendance
                           isLoadingOwners
                               ? const Center(child: CircularProgressIndicator())
@@ -395,9 +389,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     }).toList(),
                                   ),
                                 ),
-                          const SizedBox(height: 18), // Ajout de const
+                          const SizedBox(height: 18),
                           const Row(
-                            // Ajout de const
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -423,7 +416,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ),
 
                       // WidgetHouseInfos2Bis: Affiche les logements récemment recherchés
-                      const SizedBox(height: 16), // Ajout de const
+                      const SizedBox(height: 16),
                       isLoadingRecent
                           ? const Center(child: CircularProgressIndicator())
                           : errorRecent != null
@@ -491,7 +484,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    // Ajout de const
                                     width: 10,
                                   ), // Espace entre les Colonnes
                                   Expanded(

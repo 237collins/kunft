@@ -94,20 +94,18 @@ class _PropertyDetailState extends State<PropertyDetail> {
                     );
                   },
                   itemCount: imageUrls.length,
-                  loadingBuilder:
-                      (context, event) => Center(
-                        child: SizedBox(
-                          width: 20.0,
-                          height: 20.0,
-                          child: CircularProgressIndicator(
-                            value:
-                                event == null
-                                    ? 0
-                                    : event.cumulativeBytesLoaded /
-                                        (event.expectedTotalBytes ?? 1),
-                          ),
-                        ),
+                  loadingBuilder: (context, event) => Center(
+                    child: SizedBox(
+                      width: 20.0,
+                      height: 20.0,
+                      child: CircularProgressIndicator(
+                        value: event == null
+                            ? 0
+                            : event.cumulativeBytesLoaded /
+                                  (event.expectedTotalBytes ?? 1),
                       ),
+                    ),
+                  ),
                   backgroundDecoration: const BoxDecoration(
                     color: Colors.black,
                   ),
@@ -175,28 +173,27 @@ class _PropertyDetailState extends State<PropertyDetail> {
             final image = images[i];
             final imgUrl = '$API_BASE_URL/storage/${image['image_path'] ?? ''}';
             final bool isSelected = (_currentlySelectedImageUrl == imgUrl);
-            final imageWidget =
-                i.isEven
-                    ? WidgetHouseImage1(
-                      imgHouse: imgUrl,
-                      houseName: formattedLogementData['houseName']!,
-                      price: formattedLogementData['price']!,
-                      locate: formattedLogementData['locate']!,
-                      ownerName: formattedLogementData['ownerName']!,
-                      time: formattedLogementData['time']!,
-                      onTapImage: _updateMainImageCallback,
-                      isSelected: isSelected,
-                    )
-                    : WidgetHouseImage2(
-                      imgHouse: imgUrl,
-                      houseName: formattedLogementData['houseName']!,
-                      price: formattedLogementData['price']!,
-                      locate: formattedLogementData['locate']!,
-                      ownerName: formattedLogementData['ownerName']!,
-                      time: formattedLogementData['time']!,
-                      onTapImage: _updateMainImageCallback,
-                      isSelected: isSelected,
-                    );
+            final imageWidget = i.isEven
+                ? WidgetHouseImage1(
+                    imgHouse: imgUrl,
+                    houseName: formattedLogementData['houseName']!,
+                    price: formattedLogementData['price']!,
+                    locate: formattedLogementData['locate']!,
+                    ownerName: formattedLogementData['ownerName']!,
+                    time: formattedLogementData['time']!,
+                    onTapImage: _updateMainImageCallback,
+                    isSelected: isSelected,
+                  )
+                : WidgetHouseImage2(
+                    imgHouse: imgUrl,
+                    houseName: formattedLogementData['houseName']!,
+                    price: formattedLogementData['price']!,
+                    locate: formattedLogementData['locate']!,
+                    ownerName: formattedLogementData['ownerName']!,
+                    time: formattedLogementData['time']!,
+                    onTapImage: _updateMainImageCallback,
+                    isSelected: isSelected,
+                  );
             if (i.isEven) {
               colonneGWidgets.add(imageWidget);
             } else {
@@ -375,7 +372,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                                         vertical: 5,
                                                       ),
                                                   decoration: BoxDecoration(
-                                                    color: Colors.blue,
+                                                    color: Color(0xFF256AFD),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                           9,
@@ -405,12 +402,12 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                           fontWeight: FontWeight.w400,
                                           color: Color(0xff404040),
                                         ),
-                                        maxLines:
-                                            _isDescriptionExpanded ? null : 2,
-                                        overflow:
-                                            _isDescriptionExpanded
-                                                ? TextOverflow.visible
-                                                : TextOverflow.ellipsis,
+                                        maxLines: _isDescriptionExpanded
+                                            ? null
+                                            : 2,
+                                        overflow: _isDescriptionExpanded
+                                            ? TextOverflow.visible
+                                            : TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
@@ -461,9 +458,9 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                         (colonneGWidgets.length >
                                                     colonneDWidgets.length
                                                 ? colonneGWidgets.length *
-                                                    (220.0 + 8.0)
+                                                      (220.0 + 8.0)
                                                 : colonneDWidgets.length *
-                                                    (305.0 + 8.0))
+                                                      (305.0 + 8.0))
                                             .toDouble(),
                                     child: Row(
                                       crossAxisAlignment:
@@ -473,9 +470,8 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                           child: ListView.builder(
                                             padding: EdgeInsets.zero,
                                             itemCount: colonneGWidgets.length,
-                                            itemBuilder:
-                                                (context, index) =>
-                                                    colonneGWidgets[index],
+                                            itemBuilder: (context, index) =>
+                                                colonneGWidgets[index],
                                             shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
@@ -486,9 +482,8 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                           child: ListView.builder(
                                             padding: EdgeInsets.zero,
                                             itemCount: colonneDWidgets.length,
-                                            itemBuilder:
-                                                (context, index) =>
-                                                    colonneDWidgets[index],
+                                            itemBuilder: (context, index) =>
+                                                colonneDWidgets[index],
                                             shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
@@ -540,14 +535,14 @@ class _PropertyDetailState extends State<PropertyDetail> {
                       WidgetOwnerProfile(
                         imgOwner:
                             (logement['user'] != null &&
-                                    logement['user']['profile_image'] != null)
-                                ? '$API_BASE_URL/storage/${logement['user']['profile_image']}'
-                                : 'https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?t=st=1752401142~exp=1752404742~hmac=6b43b692930935ffccf1b7b5d664b102f36c&w=1380',
+                                logement['user']['profile_image'] != null)
+                            ? '$API_BASE_URL/storage/${logement['user']['profile_image']}'
+                            : 'https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?t=st=1752401142~exp=1752404742~hmac=6b43b692930935ffccf1b7b5d664b102f36c&w=1380',
                         ownerName:
                             (logement['user'] != null &&
-                                    logement['user']['name'] != null)
-                                ? logement['user']['name']
-                                : 'Inconnu',
+                                logement['user']['name'] != null)
+                            ? logement['user']['name']
+                            : 'Inconnu',
                         // ✅ MODIFIÉ : Passez la variable logement ici
                         houseInfosWidget: WidgetHouseInfos3Bis(
                           logementData: logement,
@@ -562,9 +557,8 @@ class _PropertyDetailState extends State<PropertyDetail> {
                           ),
                           const SizedBox(width: 15),
                           WidgetBoutonReservation(
-                            logementData:
-                                widget
-                                    .logementData, // ✅ Ici, vous passez les données du logement
+                            logementData: widget
+                                .logementData, // ✅ Ici, vous passez les données du logement
                           ),
                         ],
                       ),
@@ -888,7 +882,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
 //                                                         vertical: 5,
 //                                                       ),
 //                                                   decoration: BoxDecoration(
-//                                                     color: Colors.blue,
+//                                                     color: Color(0xFF256AFD),
 //                                                     borderRadius:
 //                                                         BorderRadius.circular(
 //                                                           15,
@@ -1359,7 +1353,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
 //                                                 vertical: 5,
 //                                               ),
 //                                               decoration: BoxDecoration(
-//                                                 color: Colors.blue,
+//                                                 color: Color(0xFF256AFD),
 //                                                 borderRadius:
 //                                                     BorderRadius.circular(9),
 //                                               ),

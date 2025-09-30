@@ -31,7 +31,7 @@ class MapTestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Test de Carte OpenStreetMap'),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: const Color(0xFF256AFD),
       ),
       body: FlutterMap(
         options: const MapOptions(

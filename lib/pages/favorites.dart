@@ -16,7 +16,7 @@ class _FavoritesState extends State<Favorites> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-            decoration: BoxDecoration(color: Colors.blue),
+            decoration: BoxDecoration(color: Color(0xFF256AFD)),
             child: Text('Best Home'),
           ),
         ],

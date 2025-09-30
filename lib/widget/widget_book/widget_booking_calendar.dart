@@ -53,10 +53,12 @@ class _WidgetBookingCalendarState extends State<WidgetBookingCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime? checkIn =
-        _selectedDates.isNotEmpty ? _selectedDates[0] : null;
-    final DateTime? checkOut =
-        _selectedDates.length > 1 ? _selectedDates[1] : null;
+    final DateTime? checkIn = _selectedDates.isNotEmpty
+        ? _selectedDates[0]
+        : null;
+    final DateTime? checkOut = _selectedDates.length > 1
+        ? _selectedDates[1]
+        : null;
 
     return Column(
       children: [
@@ -64,7 +66,7 @@ class _WidgetBookingCalendarState extends State<WidgetBookingCalendar> {
           width: double.infinity,
           height: 290,
           decoration: BoxDecoration(
-            color: Colors.blue.shade100,
+            color: const Color(0x1a256AFD),
             borderRadius: BorderRadius.circular(25),
           ),
           child: CalendarDatePicker2(
@@ -76,10 +78,12 @@ class _WidgetBookingCalendarState extends State<WidgetBookingCalendar> {
               });
 
               // Appelez la fonction de callback ici
-              final DateTime? startDate =
-                  _selectedDates.isNotEmpty ? _selectedDates[0] : null;
-              final DateTime? endDate =
-                  _selectedDates.length > 1 ? _selectedDates[1] : null;
+              final DateTime? startDate = _selectedDates.isNotEmpty
+                  ? _selectedDates[0]
+                  : null;
+              final DateTime? endDate = _selectedDates.length > 1
+                  ? _selectedDates[1]
+                  : null;
               widget.onDatesSelected(startDate, endDate);
             },
           ),
@@ -201,7 +205,7 @@ class _WidgetBookingCalendarState extends State<WidgetBookingCalendar> {
 //           width: double.infinity,
 //           height: 300,
 //           decoration: BoxDecoration(
-//             color: Colors.blue.shade100,
+//             color: Color(0xFF256AFD).shade100,
 //             borderRadius: BorderRadius.circular(25),
 //           ),
 //           child: CalendarDatePicker2(
@@ -322,7 +326,7 @@ class _WidgetBookingCalendarState extends State<WidgetBookingCalendar> {
 //         ),
 //       ),
 //       selectedPeriodMiddleDecoration: BoxDecoration(
-//         color: Colors.blueGrey.shade300,
+//         color: Color(0xFF256AFD)Grey.shade300,
 //         shape: BoxShape.rectangle,
 //       ),
 //       selectedDateStyle: const TextStyle(
@@ -347,7 +351,7 @@ class _WidgetBookingCalendarState extends State<WidgetBookingCalendar> {
 //           height: 350,
 //           decoration: BoxDecoration(
 //             // color: const Color(0xFFF0F4FF), // Fond de Calendrier
-//             color: Colors.blue.shade100,
+//             color: Color(0xFF256AFD).shade100,
 //             borderRadius: BorderRadius.circular(20),
 //           ),
 //           child: dp.RangePicker(

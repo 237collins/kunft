@@ -180,7 +180,7 @@ class _WidgetPopularHouseInfos2State extends State<WidgetPopularHouseInfos2> {
                           // Prix
                           widget.price,
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Color(0xFF256AFD),
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -190,7 +190,7 @@ class _WidgetPopularHouseInfos2State extends State<WidgetPopularHouseInfos2> {
                           // Duree
                           ' / Nuit',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Color(0xFF256AFD),
                             // fontSize: 20,
                             fontWeight: FontWeight.w600,
                           ),
@@ -204,7 +204,7 @@ class _WidgetPopularHouseInfos2State extends State<WidgetPopularHouseInfos2> {
                       children: [
                         Icon(
                           Icons.location_on_rounded,
-                          color: Colors.blue,
+                          color: Color(0xFF256AFD),
                           size: 15,
                         ),
                         SizedBox(width: 3),
@@ -239,7 +239,7 @@ class _WidgetPopularHouseInfos2State extends State<WidgetPopularHouseInfos2> {
                         widget.ownerName,
                         style: TextStyle(
                           // color: Color(0xffffffff),
-                          // color: Colors.blue,
+                          // color: Color(0xFF256AFD),
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
                         ),

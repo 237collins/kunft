@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kunft/pages/auth/forgot_password/OTP_Code.dart';
-import 'package:kunft/widget/simple_navigation/top_navigation.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 // Définissez une énumération pour vos options de réinitialisation
@@ -21,6 +20,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -33,16 +33,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: Column(
             children: [
               // const TopNavigation(pageName: 'Forgot Password'),
-              ClipRRect(
-                child: SvgPicture.asset(
-                  'assets/svg/Forgot_password.svg',
-                  fit: BoxFit.cover,
-                  height: 350, // Définir une hauteur
+              Transform.translate(
+                offset: const Offset(0, -20),
+                child: ClipRRect(
+                  child: SvgPicture.asset(
+                    'assets/svg/Forgot_password.svg',
+                    fit: BoxFit.cover,
+                    height: screenHeight * .39, // Définir une hauteur
+                  ),
                 ),
               ),
               //
               Transform.translate(
-                offset: const Offset(0, -30),
+                offset: const Offset(0, -50),
                 child: Column(
                   children: [
                     SizedBox(
@@ -89,10 +92,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: GestureDetector(
           onTap: () {
             if (_selectedOption != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const OtpCode()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const OtpCode()),
+              // ); // Annulation temporaire
             } else {
               // Affichez un message d'erreur ou une notification si rien n'est sélectionné\
               ScaffoldMessenger.of(context).showSnackBar(
@@ -111,7 +114,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Color(0xFF256AFD),
               borderRadius: BorderRadius.circular(30),
             ),
             child: const Text(
@@ -153,14 +156,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
             width: isSelected ? 2 : 0.5,
-            color: isSelected ? Colors.blue : Colors.grey.shade300,
+            color: isSelected ? Color(0xFF256AFD) : Colors.grey.shade300,
           ),
         ),
         child: Row(
           children: [
             CircleAvatar(
               backgroundColor: const Color(0x1a2196F3),
-              child: Icon(icon, color: Colors.blue),
+              child: Icon(icon, color: Color(0xFF256AFD)),
             ),
             const SizedBox(width: 20),
             Column(
@@ -255,7 +258,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 //                               ? 2
 //                               : 0.5, // La largeur change pour un effet de focus
 //                           color: _isSelected
-//                               ? Colors.blue
+//                               ? Color(0xFF256AFD)
 //                               : Colors.grey.shade300, // La couleur change
 //                         ),
 //                       ),
@@ -265,7 +268,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 //                             backgroundColor: Color(0x1a2196F3),
 //                             child: Icon(
 //                               LucideIcons.messagesSquare,
-//                               color: Colors.blue,
+//                               color: Color(0xFF256AFD),
 //                             ),
 //                           ),
 //                           SizedBox(width: 20),
@@ -317,7 +320,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 //                               ? 2
 //                               : 0.5, // La largeur change pour un effet de focus
 //                           color: _isSelected2
-//                               ? Colors.blue
+//                               ? Color(0xFF256AFD)
 //                               : Colors.grey.shade300, // La couleur change
 //                         ),
 //                       ),
@@ -327,7 +330,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 //                             backgroundColor: Color(0x1a2196F3),
 //                             child: Icon(
 //                               LucideIcons.messagesSquare,
-//                               color: Colors.blue,
+//                               color: Color(0xFF256AFD),
 //                             ),
 //                           ),
 //                           SizedBox(width: 20),
@@ -371,14 +374,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 //                         vertical: 16,
 //                       ),
 //                       decoration: BoxDecoration(
-//                         color: Colors.blue,
+//                         color: Color(0xFF256AFD),
 //                         borderRadius: BorderRadius.circular(30),
 //                         // boxShadow: const [
 //                         //   BoxShadow(
 //                         //     offset: Offset(0, 0),
 //                         //     blurRadius: 6,
 //                         //     spreadRadius: 5,
-//                         //     color: Colors.blue,
+//                         //     color: Color(0xFF256AFD),
 //                         //   ),
 //                         // ],
 //                       ),

@@ -31,7 +31,7 @@ class WidgetPaymentMode extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             // ✅ MODIFIÉ : Le bord s'illumine si le mode de paiement est sélectionné
-            color: isSelected ? Colors.blue : Colors.transparent,
+            color: isSelected ? Color(0xFF256AFD) : Colors.transparent,
             width: 2,
           ),
           boxShadow: const [

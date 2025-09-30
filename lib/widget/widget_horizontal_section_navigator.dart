@@ -89,7 +89,7 @@ class _HorizontalSectionNavigatorState
                     horizontal: 20,
                   ),
                   decoration: BoxDecoration(
-                    color: isSelected ? Colors.blue : Colors.white,
+                    color: isSelected ? Color(0xFF256AFD) : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   alignment: Alignment.center,
@@ -97,16 +97,16 @@ class _HorizontalSectionNavigatorState
                     // ✅ MODIFIÉ : Affiche le titre et le compte
                     count != null ? '$title ($count)' : title,
                     textAlign: TextAlign.center,
-                    style: (widget.navigationTitleStyle ??
-                            const TextStyle(fontSize: 11))
-                        .copyWith(
-                          color:
-                              isSelected
+                    style:
+                        (widget.navigationTitleStyle ??
+                                const TextStyle(fontSize: 11))
+                            .copyWith(
+                              color: isSelected
                                   ? (widget.selectedTitleColor ?? Colors.white)
                                   : (widget.unselectedTitleColor ??
-                                      Colors.blue),
-                          fontWeight: FontWeight.w600,
-                        ),
+                                        Color(0xFF256AFD)),
+                              fontWeight: FontWeight.w600,
+                            ),
                     maxLines: 1,
                   ),
                 ),
@@ -224,7 +224,7 @@ class _HorizontalSectionNavigatorState
 //                     horizontal: 20,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: isSelected ? Colors.blue : Colors.white,
+//                     color: isSelected ? Color(0xFF256AFD) : Colors.white,
 //                     borderRadius: BorderRadius.circular(10),
 //                   ),
 //                   alignment: Alignment.center,
@@ -239,7 +239,7 @@ class _HorizontalSectionNavigatorState
 //                               isSelected
 //                                   ? (widget.selectedTitleColor ?? Colors.white)
 //                                   : (widget.unselectedTitleColor ??
-//                                       Colors.blue),
+//                                       Color(0xFF256AFD)),
 //                           fontWeight: FontWeight.w600,
 //                         ),
 //                     maxLines: 1,
@@ -371,7 +371,7 @@ class _HorizontalSectionNavigatorState
 //                     horizontal: 20,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: isSelected ? Colors.blue : Colors.white,
+//                     color: isSelected ? Color(0xFF256AFD) : Colors.white,
 //                     borderRadius: BorderRadius.circular(10),
 //                   ),
 //                   alignment: Alignment.center, // Centre le contenu du Container
@@ -387,7 +387,7 @@ class _HorizontalSectionNavigatorState
 //                               isSelected
 //                                   ? (widget.selectedTitleColor ?? Colors.white)
 //                                   : (widget.unselectedTitleColor ??
-//                                       Colors.blue),
+//                                       Color(0xFF256AFD)),
 //                           fontWeight: FontWeight.w600,
 //                         ),
 //                     maxLines: 1,

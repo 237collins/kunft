@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:kunft/pages/book/review_page.dart';
 
 class WidgetBookingCard extends StatefulWidget {
   // ✅ Variables for dynamic data - These become immutable properties of the widget
+  final Map<String, dynamic> reservationData; // ✅  Passe toutes les données
   final String imageUrl;
   final String title;
   final String location;
-  final num price;
+  final String price;
   final String reservationStatuts;
   final DateTime dateDebut;
   final DateTime dateFin;
 
   const WidgetBookingCard({
     Key? superkey,
+    required this.reservationData,
     required this.imageUrl,
     required this.title,
     required this.location,
@@ -33,7 +37,7 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
     }
     if (statuts.toLowerCase() == 'en_cours' ||
         statuts.toLowerCase() == 'en_attente') {
-      return Colors.blue.shade700;
+      return const Color(0xFF256AFD);
     }
     return Colors.grey;
   }
@@ -59,10 +63,10 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            offset: Offset(0, 0),
-            spreadRadius: 2,
+            offset: Offset(0, 5),
+            spreadRadius: 3,
             blurRadius: 3,
-            color: Color(0x26d9d9d9),
+            color: Color(0x66d9d9d9),
           ),
         ],
       ),
@@ -111,7 +115,7 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                   Row(
                     children: [
                       Text(
-                        '${widget.dateDebut.day}/${widget.dateDebut.month} - ${widget.dateFin.day}/${widget.dateFin.month}',
+                        '${DateFormat('d MMM yyyy', 'fr_FR').format(widget.dateDebut)} - ${DateFormat('d MMM yyyy', 'fr_FR').format(widget.dateFin)}',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.black87,
@@ -132,24 +136,24 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                       Row(
                         children: [
                           Text(
-                            '${(widget.price * dureeDuSejour).toStringAsFixed(0)}',
+                            widget.price,
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w800,
                               fontFamily: 'BebasNeue',
-                              color: Colors.blue,
+                              color: Color(0xFF256AFD),
                             ),
                           ),
                           const Text(
                             ' xaf',
                             style: TextStyle(
                               fontFamily: 'BebasNeue',
-                              color: Colors.blue,
+                              color: Color(0xFF256AFD),
                             ),
                           ),
                           Text(
-                            ' / $dureeDuSejour jours',
-                            style: const TextStyle(fontSize: 9),
+                            ' pour $dureeDuSejour jours',
+                            style: const TextStyle(fontSize: 11),
                           ),
                         ],
                       ),
@@ -188,20 +192,59 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
           Row(
             children: [
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: const Text(
-                    'Détails',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
+                child: GestureDetector(
+                  // ---------- Nouvelle methode de calcule -------
+                  onTap: () {
+                    // Calcul de la durée du séjour
+                    final DateTime dateDebut = widget.dateDebut;
+                    final DateTime dateFin = widget.dateFin;
+                    final int dureeDuSejour = dateFin
+                        .difference(dateDebut)
+                        .inDays;
+
+                    // Récupération du prix total
+                    final double totalPrice =
+                        double.tryParse(
+                          widget.reservationData['prix_total'].toString(),
+                        ) ??
+                        0.0;
+
+                    // Récupération du mode de paiement (si stocké dans la réservation)
+                    final String modeDePaiement =
+                        widget.reservationData['payment_mode'] ??
+                        'Non spécifié';
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReviewPageInfos(
+                          logementData: widget.reservationData['logement'],
+                          // ✅ Passez les valeurs calculées et récupérées
+                          dureeDuSejour: dureeDuSejour,
+                          totalPrice: totalPrice,
+                          modeDePaiement: modeDePaiement,
+                          dateDebut: dateDebut,
+                          dateFin: dateFin,
+                          isReadOnly: true,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF256AFD),
+                      borderRadius: BorderRadius.circular(50),
                     ),
-                    textAlign: TextAlign.center,
+                    child: const Text(
+                      'Détails',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
@@ -211,14 +254,17 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                   padding: const EdgeInsets.symmetric(vertical: 6.5),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(width: 2.5, color: Colors.blue),
+                    border: Border.all(
+                      width: 2.5,
+                      color: const Color(0xFF256AFD),
+                    ),
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: const Text(
                     'Confirmez',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.blue,
+                      color: Color(0xFF256AFD),
                       fontWeight: FontWeight.w700,
                     ),
                     textAlign: TextAlign.center,
@@ -233,225 +279,6 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
   }
 }
 
-
-// ---------- Code okay mais bugs de plantage
-
-
-// import 'package:flutter/material.dart';
-
-// class WidgetBookingCard extends StatelessWidget {
-//   // ✅ Variables pour les données dynamiques
-//   final String imageUrl;
-//   final String title;
-//   final String location;
-//   final num price;
-//   final String reservationStatuts;
-//   final DateTime dateDebut;
-//   final DateTime dateFin;
-
-//   const WidgetBookingCard({
-//     Key? superkey,
-//     required this.imageUrl,
-//     required this.title,
-//     required this.location,
-//     required this.price,
-//     required this.reservationStatuts,
-//     required this.dateDebut,
-//     required this.dateFin,
-//   }) : super(key: superkey);
-
-//   // Méthode pour afficher le statut avec la bonne couleur
-//   Color _getStatutsColor(String statuts) {
-//     if (statuts.toLowerCase() == 'confirmée') {
-//       return Colors.green.shade700;
-//     }
-//     if (statuts.toLowerCase() == 'en_cours') {
-//       return Colors.blue.shade700;
-//     }
-//     return Colors.grey;
-//   }
-
-//   // Calcul de la durée du séjour
-//   int getDureeDuSejour(DateTime start, DateTime end) {
-//     return end.difference(start).inDays;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final int dureeDuSejour = getDureeDuSejour(dateDebut, dateFin);
-
-//     return Container(
-//       margin: const EdgeInsets.only(bottom: 15),
-//       padding: const EdgeInsets.all(10),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(20),
-//         boxShadow: const [
-//           BoxShadow(
-//             offset: Offset(0, 0),
-//             spreadRadius: 2,
-//             blurRadius: 3,
-//             color: Color(0x26d9d9d9),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         children: [
-//           Row(
-//             children: [
-//               ClipRRect(
-//                 borderRadius: BorderRadius.circular(15),
-//                 child: Image.network(
-//                   imageUrl,
-//                   fit: BoxFit.cover,
-//                   height: 90,
-//                   width: 90,
-//                   errorBuilder: (context, error, stackTrace) => Image.network(
-//                     'https://png.pngtree.com/png-vector/20230831/ourmid/pngtree-house-with-no-background-png-image_9197435.png',
-//                     fit: BoxFit.cover,
-//                     height: 90,
-//                     width: 90,
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(width: 12),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   SizedBox(
-//                     width: 230,
-//                     child: Text(
-//                       title,
-//                       style: const TextStyle(
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.w700,
-//                       ),
-//                       maxLines: 1,
-//                       softWrap: true,
-//                       overflow: TextOverflow.ellipsis,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 5),
-//                   Row(
-//                     children: [
-//                       Text(
-//                         '${dateDebut.day}/${dateDebut.month} - ${dateFin.day}/${dateFin.month}',
-//                         style: const TextStyle(
-//                           fontSize: 12,
-//                           color: Colors.black87,
-//                         ),
-//                       ),
-//                       Text(
-//                         ' ($dureeDuSejour jours)',
-//                         style: const TextStyle(
-//                           fontSize: 12,
-//                           color: Colors.black87,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   const SizedBox(height: 10),
-//                   Row(
-//                     children: [
-//                       Row(
-//                         children: [
-//                           Text(
-//                             '${(price * dureeDuSejour).toStringAsFixed(0)}',
-//                             style: const TextStyle(
-//                               fontSize: 25,
-//                               fontWeight: FontWeight.w800,
-//                               fontFamily: 'BebasNeue',
-//                               color: Colors.blue,
-//                             ),
-//                           ),
-//                           const Text(
-//                             ' xaf',
-//                             style: TextStyle(
-//                               fontFamily: 'BebasNeue',
-//                               color: Colors.blue,
-//                             ),
-//                           ),
-//                           Text(
-//                             ' / $dureeDuSejour jours',
-//                             style: const TextStyle(fontSize: 9),
-//                           ),
-//                         ],
-//                       ),
-//                       const SizedBox(width: 20),
-//                       Container(
-//                         padding: const EdgeInsets.symmetric(
-//                           horizontal: 5,
-//                           vertical: 2,
-//                         ),
-//                         decoration: BoxDecoration(
-//                           borderRadius: BorderRadius.circular(7),
-//                           border: Border.all(
-//                             width: 1,
-//                             color: _getStatutsColor(reservationStatuts),
-//                           ),
-//                         ),
-//                         child: Text(
-//                           reservationStatuts,
-//                           style: TextStyle(
-//                             fontWeight: FontWeight.w600,
-//                             color: _getStatutsColor(reservationStatuts),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//           const SizedBox(height: 6),
-//           const Divider(color: Colors.black12),
-//           const SizedBox(height: 5),
-//           Row(
-//             children: [
-//               Expanded(
-//                 child: Container(
-//                   padding: const EdgeInsets.symmetric(vertical: 8),
-//                   decoration: BoxDecoration(
-//                     color: Colors.blue,
-//                     borderRadius: BorderRadius.circular(50),
-//                   ),
-//                   child: const Text(
-//                     'Détails',
-//                     style: TextStyle(
-//                       color: Colors.white,
-//                       fontWeight: FontWeight.w700,
-//                     ),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(width: 20),
-//               Expanded(
-//                 child: Container(
-//                   padding: const EdgeInsets.symmetric(vertical: 6.5),
-//                   decoration: BoxDecoration(
-//                     color: Colors.white,
-//                     border: Border.all(width: 2.5, color: Colors.blue),
-//                     borderRadius: BorderRadius.circular(50),
-//                   ),
-//                   child: const Text(
-//                     'Confirmez',
-//                     style: TextStyle(
-//                       color: Colors.blue,
-//                       fontWeight: FontWeight.w700,
-//                     ),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 
 // -------- Code Statique
@@ -546,14 +373,14 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
 //                               fontSize: 25,
 //                               fontWeight: FontWeight.w800,
 //                               fontFamily: 'BebasNeue',
-//                               color: Colors.blue,
+//                               color: Color(0xFF256AFD),
 //                             ),
 //                           ),
 //                           Text(
 //                             ' xaf',
 //                             style: TextStyle(
 //                               fontFamily: 'BebasNeue',
-//                               color: Colors.blue,
+//                               color: Color(0xFF256AFD),
 //                             ),
 //                           ),
 //                           Text(' / 5 days', style: TextStyle(fontSize: 9)),
@@ -570,14 +397,14 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
 //                           borderRadius: BorderRadius.circular(7),
 //                           border: Border.all(
 //                             width: 1,
-//                             color: Colors.blue.shade700,
+//                             color: Color(0xFF256AFD).shade700,
 //                           ),
 //                         ),
 //                         child: Text(
 //                           'En attente',
 //                           style: TextStyle(
 //                             fontWeight: FontWeight.w600,
-//                             color: Colors.blue.shade700,
+//                             color: Color(0xFF256AFD).shade700,
 //                           ),
 //                         ),
 //                       ),
@@ -597,7 +424,7 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
 //                 child: Container(
 //                   padding: EdgeInsets.symmetric(vertical: 8),
 //                   decoration: BoxDecoration(
-//                     color: Colors.blue,
+//                     color: Color(0xFF256AFD),
 //                     borderRadius: BorderRadius.circular(50),
 //                   ),
 //                   child: Text(
@@ -617,13 +444,13 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
 //                   padding: EdgeInsets.symmetric(vertical: 6.5),
 //                   decoration: BoxDecoration(
 //                     color: Colors.white,
-//                     border: Border.all(width: 2.5, color: Colors.blue),
+//                     border: Border.all(width: 2.5, color: Color(0xFF256AFD)),
 //                     borderRadius: BorderRadius.circular(50),
 //                   ),
 //                   child: Text(
 //                     'Confirmez',
 //                     style: TextStyle(
-//                       color: Colors.blue,
+//                       color: Color(0xFF256AFD),
 //                       fontWeight: FontWeight.w700,
 //                     ),
 //                     textAlign: TextAlign.center,

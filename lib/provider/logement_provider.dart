@@ -124,12 +124,12 @@ class LogementProvider with ChangeNotifier {
   // Helper pour formater les données de logement (peut être réutilisé par les widgets)
   Map<String, String> formatLogementData(Map<String, dynamic> l) {
     final String imgUrl = (l['images'] != null && l['images'].isNotEmpty)
-        ? '$API_BASE_URL/storage/${l['images'][0]['image_path']}'
+        ? '${l['images'][0]['image_paths']}'
         : 'https://www.batiactu.com/images/auto/620-465-c/20210913_170834_immobilier-dossier-credit-istock.jpg';
 
     final String ownerName = (l['user'] != null && l['user']['name'] != null)
         ? '@${(l['user']['name'] as String).replaceAll(' ', '.').toLowerCase()}'
-        : '@proprietaire.inconnu';
+        : '@Hôte.inconnu';
 
     String formattedTime = 'Date inconnue';
     if (l['created_at'] != null) {

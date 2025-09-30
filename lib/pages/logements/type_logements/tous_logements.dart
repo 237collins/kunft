@@ -16,13 +16,6 @@ class TousLogements extends StatefulWidget {
 
 class _TousLogementsState extends State<TousLogements> {
   @override
-  // -------- Ancien code --------
-  // void initState() {
-  //   super.initState();
-  //   // ✅ MODIFIÉ : Appelle la fonction de fetch des logements principaux du provider
-  //   // listen: false car nous ne voulons pas reconstruire le widget ici, juste appeler la fonction
-  //   Provider.of<LogementProvider>(context, listen: false).fetchMainLogements();
-  // }
   // ------ Nouveau code ------------
   @override
   void initState() {
@@ -66,12 +59,12 @@ class _TousLogementsState extends State<TousLogements> {
         return Scaffold(
           body: isLoading
               ? const Center(
-                  child: CircularProgressIndicator(color: Colors.blue),
+                  child: CircularProgressIndicator(color: Color(0xFF256AFD)),
                 ) // Indicateur de chargement
               : errorMessage != null
               ? Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: .0),
                     child: Text(
                       errorMessage,
                       style: const TextStyle(color: Colors.red, fontSize: 16),
@@ -84,8 +77,8 @@ class _TousLogementsState extends State<TousLogements> {
                   child: Text('Aucun logement disponible pour le moment.'),
                 )
               : Padding(
-                  padding: const EdgeInsets.all(
-                    8.0,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 0,
                   ), // Padding général pour la grille
                   child: GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -93,7 +86,7 @@ class _TousLogementsState extends State<TousLogements> {
                       crossAxisSpacing: 8.0, // Espacement horizontal
                       mainAxisSpacing: 8.0, // Espacement vertical
                       childAspectRatio:
-                          .72, // Ajustez si nécessaire pour que les cartes s'affichent bien
+                          .8, // Ajustez si nécessaire pour que les cartes s'affichent bien
                     ),
                     itemCount: logements.length,
                     itemBuilder: (context, index) {

@@ -14,7 +14,7 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
         builder: (context) => PropertyDetail(logementData: logementData),
       ),
     );
-    }
+  }
 
   // Fonction utilitaire pour formater le prix
   String _formatPrice(dynamic price) {
@@ -66,10 +66,9 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
   Widget build(BuildContext context) {
     // Extraction des données de manière sécurisée et avec des valeurs par défaut robustes
     final List<dynamic>? images = logementData['images'];
-    final String imgHouse =
-        (images != null && images.isNotEmpty && images[0]['image_path'] != null)
-            ? 'http://127.0.0.1:8000/storage/${images[0]['image_path']}' // Lien de BD temporaire
-            : 'https://placehold.co/400x400/EFEFEF/grey?text=No+Image';
+    final String imgHouse = (images != null && images[0]['image_paths'] != null)
+        ? '${images[0]['image_paths']}' // Lien de BD temporaire
+        : 'https://placehold.co/400x400/EFEFEF/grey?text=No+Image';
 
     final String houseName = logementData['titre'] ?? 'Titre inconnu';
     final String price = _formatPrice(logementData['prix_par_nuit']);
@@ -95,8 +94,6 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
           ],
         ),
         child: SizedBox(
-          // height: 150,
-          // width: 380,
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -140,15 +137,15 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        Container(
                           // decoration: BoxDecoration(color: Colors.pink),
                           width: 150,
                           child: Text(
                             houseName,
                             style: const TextStyle(
-                              color: Colors.blue,
+                              color: Color(0xFF256AFD),
                               fontSize: 18,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w700,
                               // height: 1.2,
                             ),
                             maxLines: 3,
@@ -156,38 +153,50 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Row(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              price,
-                              style: const TextStyle(
-                                color: Colors.blue,
-                                fontSize: 18,
-                                fontFamily: 'BebasNeue',
-                                fontWeight: FontWeight.w600,
+                        const SizedBox(height: 4),
+                        Container(
+                          padding: const EdgeInsets.only(
+                            right: 7,
+                            left: 7,
+                            top: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF256AFD),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                price,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontFamily: 'BebasNeue',
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            const Text(
-                              ' | Nuit',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'BebasNeue',
+                              const Text(
+                                ' | Nuit',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'BebasNeue',
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       // mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SizedBox(
-                          width: 140,
+                          // width: 150,
                           child: Row(
                             children: [
                               Text(
@@ -221,18 +230,18 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
                           ),
                         ),
                         //
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         //
                         Row(
                           children: [
                             const Icon(
                               Icons.location_on_rounded,
-                              color: Colors.blue,
+                              color: Color(0xFF256AFD),
                               size: 17,
                             ),
                             const SizedBox(width: 3),
                             SizedBox(
-                              width: 132,
+                              width: 140,
                               child: Text(
                                 locate,
                                 style: const TextStyle(
@@ -451,7 +460,7 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
 //                                 child: Text(
 //                                   widget.houseName,
 //                                   style: const TextStyle(
-//                                     color: Colors.blue,
+//                                     color: Color(0xFF256AFD),
 //                                     fontSize: 20,
 //                                     fontWeight: FontWeight.w500,
 //                                     height: 1.2,
@@ -467,7 +476,7 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
 //                                   Text(
 //                                     widget.price,
 //                                     style: const TextStyle(
-//                                       color: Colors.blue,
+//                                       color: Color(0xFF256AFD),
 //                                       fontSize: 35,
 //                                       fontFamily: 'BebasNeue',
 //                                       fontWeight: FontWeight.w600,
@@ -477,7 +486,7 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
 //                                   Text(
 //                                     ' | Nuit',
 //                                     style: const TextStyle(
-//                                       color: Colors.blue,
+//                                       color: Color(0xFF256AFD),
 //                                       fontSize: 18,
 //                                       // fontFamily: 'BebasNeue',
 //                                       fontWeight: FontWeight.w600,
@@ -532,7 +541,7 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
 //                                 children: [
 //                                   const Icon(
 //                                     Icons.location_on_rounded,
-//                                     color: Colors.blue,
+//                                     color: Color(0xFF256AFD),
 //                                     size: 17,
 //                                   ),
 //                                   const SizedBox(width: 3),
