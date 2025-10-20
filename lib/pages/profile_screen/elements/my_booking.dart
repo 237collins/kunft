@@ -92,10 +92,10 @@ class _MyBookingState extends State<MyBooking> {
               }
 
               final ongoingReservations = reservationProvider.reservations
-                  .where((res) => res['statuts'] == 'en_attente')
+                  .where((res) => res['status'] == 'en_attente')
                   .toList();
               final confirmedReservations = reservationProvider.reservations
-                  .where((res) => res['statuts'] == 'confirmée')
+                  .where((res) => res['status'] == 'confirmée')
                   .toList();
 
               return TabBarView(
@@ -150,9 +150,9 @@ class _MyBookingState extends State<MyBooking> {
     );
   }
 
-  Widget _buildReservationList(List<dynamic> reservations, String statuts) {
+  Widget _buildReservationList(List<dynamic> reservations, String status) {
     if (reservations.isEmpty) {
-      String message = statuts == 'en_attente'
+      String message = status == 'en_attente'
           ? 'Aucune réservation en cours pour le moment.'
           : 'Aucune réservation confirmée pour le moment.';
       return Center(child: Text(message, textAlign: TextAlign.center));
@@ -196,7 +196,7 @@ class _MyBookingState extends State<MyBooking> {
           title: logement['titre'] ?? 'Nom du logement inconnu',
           location: logement['quartier'] ?? 'Adresse inconnue',
           price: price.toString(),
-          reservationStatuts: reservation['statuts'] ?? 'Statut inconnu',
+          reservationstatus: reservation['status'] ?? 'Statut inconnu',
           dateDebut: dateDebut,
           dateFin: dateFin,
         );
@@ -306,10 +306,10 @@ class _MyBookingState extends State<MyBooking> {
 //               }
 
 //               final ongoingReservations = reservationProvider.reservations
-//                   .where((res) => res['statuts'] == 'en_attente')
+//                   .where((res) => res['status'] == 'en_attente')
 //                   .toList();
 //               final confirmedReservations = reservationProvider.reservations
-//                   .where((res) => res['statuts'] == 'confirmée')
+//                   .where((res) => res['status'] == 'confirmée')
 //                   .toList();
 
 //               return TabBarView(
@@ -342,9 +342,9 @@ class _MyBookingState extends State<MyBooking> {
 //     );
 //   }
 
-//   Widget _buildReservationList(List<dynamic> reservations, String statuts) {
+//   Widget _buildReservationList(List<dynamic> reservations, String status) {
 //     if (reservations.isEmpty) {
-//       String message = statuts == 'en_attente'
+//       String message = status == 'en_attente'
 //           ? 'Aucune réservation en cours pour le moment.'
 //           : 'Aucune réservation confirmée pour le moment.';
 //       return Center(child: Text(message, textAlign: TextAlign.center));
@@ -384,7 +384,7 @@ class _MyBookingState extends State<MyBooking> {
 //           title: logement['titre'] ?? 'Nom du logement inconnu',
 //           location: logement['quartier'] ?? 'Adresse inconnue',
 //           price: price.toString(),
-//           reservationStatuts: reservation['statuts'] ?? 'Statut inconnu',
+//           reservationstatus: reservation['status'] ?? 'Statut inconnu',
 //           dateDebut: dateDebut,
 //           dateFin: dateFin,
 //         );

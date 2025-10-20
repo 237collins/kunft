@@ -86,7 +86,7 @@ class _TousLogementsState extends State<TousLogements> {
                       crossAxisSpacing: 8.0, // Espacement horizontal
                       mainAxisSpacing: 8.0, // Espacement vertical
                       childAspectRatio:
-                          .8, // Ajustez si nécessaire pour que les cartes s'affichent bien
+                          .78, // Ajustez si nécessaire pour que les cartes s'affichent bien
                     ),
                     itemCount: logements.length,
                     itemBuilder: (context, index) {

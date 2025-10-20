@@ -225,7 +225,7 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                             color: Color(0xFF256AFD),
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            // height: 1.5,
+                            height: 1.2,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -238,9 +238,10 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                             widget.price,
                             style: const TextStyle(
                               color: Color(0xFF256AFD),
-                              fontSize: 25,
+                              fontSize: 22,
                               fontFamily: 'BebasNeue',
                               fontWeight: FontWeight.w600,
+                              height: 1.2,
                             ),
                           ),
                           //
@@ -281,8 +282,8 @@ class _WidgetHouseInfos2BisState extends State<WidgetHouseInfos2Bis> {
                           ),
                         ],
                       ),
+
                       //
-                      const SizedBox(height: 5),
                     ],
                   ),
                 ],

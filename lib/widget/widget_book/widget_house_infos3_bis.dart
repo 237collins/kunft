@@ -78,192 +78,198 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => _navigateToPropertyDetail(context),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 25.0),
-        padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x80d9d9d9),
-              spreadRadius: 4,
-              blurRadius: 8,
-              offset: Offset(0, 1),
-            ),
-          ],
-        ),
-        child: SizedBox(
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Stack(
-                children: [
-                  Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                          imgHouse,
-                          fit: BoxFit.cover,
-                          width: 200,
-                          height: 140,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              height: 140,
-                              width: 200,
-                              color: Colors.grey[300],
-                              child: const Center(
-                                child: Icon(
-                                  Icons.broken_image,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: 200, maxWidth: 400),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 25.0),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x80d9d9d9),
+                spreadRadius: 4,
+                blurRadius: 8,
+                offset: Offset(0, 1),
               ),
-              const SizedBox(width: 10),
-              SizedBox(
-                height: 140,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisAlignment: MainAxisAlignment.start,
+            ],
+          ),
+          child: SizedBox(
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Stack(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        Container(
-                          // decoration: BoxDecoration(color: Colors.pink),
-                          width: 150,
-                          child: Text(
-                            houseName,
-                            style: const TextStyle(
-                              color: Color(0xFF256AFD),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              // height: 1.2,
-                            ),
-                            maxLines: 3,
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.only(
-                            right: 7,
-                            left: 7,
-                            top: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF256AFD),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            // crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                price,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontFamily: 'BebasNeue',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const Text(
-                                ' | Nuit',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'BebasNeue',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          // width: 150,
-                          child: Row(
-                            children: [
-                              Text(
-                                ownerName,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              const SizedBox(width: 30),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.access_time,
-                                    size: 12,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.network(
+                            imgHouse,
+                            fit: BoxFit.cover,
+                            width: 200,
+                            height: 140,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                height: 140,
+                                width: 200,
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.broken_image,
                                     color: Colors.grey,
                                   ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    time,
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 9,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                ),
+                              );
+                            },
                           ),
                         ),
-                        //
-                        const SizedBox(height: 5),
-                        //
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.location_on_rounded,
-                              color: Color(0xFF256AFD),
-                              size: 17,
-                            ),
-                            const SizedBox(width: 3),
-                            SizedBox(
-                              width: 140,
-                              child: Text(
-                                locate,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black54,
-                                ),
-                                softWrap: true,
-                                textAlign: TextAlign.left,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
                       ],
                     ),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(width: 10),
+                SizedBox(
+                  height: 140,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            // decoration: BoxDecoration(color: Colors.pink),
+                            width: 150,
+                            child: Text(
+                              houseName,
+                              style: const TextStyle(
+                                color: Color(0xFF256AFD),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                // height: 1.2,
+                              ),
+                              maxLines: 3,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            padding: const EdgeInsets.only(
+                              right: 7,
+                              left: 7,
+                              top: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF256AFD),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  price,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontFamily: 'BebasNeue',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const Text(
+                                  ' | Nuit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'BebasNeue',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            // width: 150,
+                            child: Row(
+                              children: [
+                                Text(
+                                  ownerName,
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black54,
+                                  ),
+                                  softWrap: true,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(width: 30),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.access_time,
+                                      size: 12,
+                                      color: Colors.grey,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      time,
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 9,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          //
+                          const SizedBox(height: 5),
+                          //
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on_rounded,
+                                color: Color(0xFF256AFD),
+                                size: 17,
+                              ),
+                              const SizedBox(width: 3),
+                              SizedBox(
+                                width: 130,
+                                child: Text(
+                                  locate,
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black54,
+                                  ),
+                                  softWrap: true,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
