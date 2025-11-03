@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kunft/pages/home_screen.dart';
+import 'package:kunft/pages/home_screen1/home_screen.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:kunft/provider/UserProvider.dart';
@@ -68,6 +68,8 @@ class _MyBookingState extends State<MyBooking> {
             ),
           ),
         ),
+        backgroundColor: const Color(0x1A898989),
+
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Consumer<ReservationProvider>(
@@ -92,10 +94,10 @@ class _MyBookingState extends State<MyBooking> {
               }
 
               final ongoingReservations = reservationProvider.reservations
-                  .where((res) => res['status'] == 'en_attente')
+                  .where((res) => res['status'] == 'En attente')
                   .toList();
               final confirmedReservations = reservationProvider.reservations
-                  .where((res) => res['status'] == 'confirmée')
+                  .where((res) => res['status'] == 'Confirmée')
                   .toList();
 
               return TabBarView(
@@ -111,7 +113,7 @@ class _MyBookingState extends State<MyBooking> {
                     onRefresh: _fetchReservations,
                     child: _buildReservationList(
                       ongoingReservations,
-                      'en_attente',
+                      'En attente',
                     ),
                   ),
                   // ✅ Ajout du RefreshIndicator pour la deuxième vue
@@ -152,7 +154,7 @@ class _MyBookingState extends State<MyBooking> {
 
   Widget _buildReservationList(List<dynamic> reservations, String status) {
     if (reservations.isEmpty) {
-      String message = status == 'en_attente'
+      String message = status == 'En attente'
           ? 'Aucune réservation en cours pour le moment.'
           : 'Aucune réservation confirmée pour le moment.';
       return Center(child: Text(message, textAlign: TextAlign.center));
@@ -306,7 +308,7 @@ class _MyBookingState extends State<MyBooking> {
 //               }
 
 //               final ongoingReservations = reservationProvider.reservations
-//                   .where((res) => res['status'] == 'en_attente')
+//                   .where((res) => res['status'] == 'En attente')
 //                   .toList();
 //               final confirmedReservations = reservationProvider.reservations
 //                   .where((res) => res['status'] == 'confirmée')
@@ -314,7 +316,7 @@ class _MyBookingState extends State<MyBooking> {
 
 //               return TabBarView(
 //                 children: [
-//                   _buildReservationList(ongoingReservations, 'en_attente'),
+//                   _buildReservationList(ongoingReservations, 'En attente'),
 //                   _buildReservationList(confirmedReservations, 'confirmée'),
 //                 ],
 //               );
@@ -344,7 +346,7 @@ class _MyBookingState extends State<MyBooking> {
 
 //   Widget _buildReservationList(List<dynamic> reservations, String status) {
 //     if (reservations.isEmpty) {
-//       String message = status == 'en_attente'
+//       String message = status == 'En attente'
 //           ? 'Aucune réservation en cours pour le moment.'
 //           : 'Aucune réservation confirmée pour le moment.';
 //       return Center(child: Text(message, textAlign: TextAlign.center));

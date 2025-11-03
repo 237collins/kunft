@@ -211,7 +211,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Row(
                           children: [
                             SizedBox(
-                              width: screenWidth * .49,
+                              width: screenWidth * .55,
                               child: TextFormField(
                                 controller: _nameController,
                                 style: const TextStyle(color: Colors.purple),
@@ -226,18 +226,24 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             const SizedBox(width: 15),
                             SizedBox(
-                              width: screenWidth * .42,
+                              width: screenWidth * .36,
                               child: DropdownButtonFormField<String>(
                                 value: _selectedRole,
                                 decoration: _inputDecoration('Type de compte'),
                                 items: const [
                                   DropdownMenuItem(
                                     value: 'client',
-                                    child: Text('Client'),
+                                    child: Text(
+                                      'Client',
+                                      style: TextStyle(fontSize: 12),
+                                    ),
                                   ),
                                   DropdownMenuItem(
-                                    value: 'hote',
-                                    child: Text('Hôte'),
+                                    value: 'hote-standard',
+                                    child: Text(
+                                      'Hôte standard',
+                                      style: TextStyle(fontSize: 12),
+                                    ),
                                   ),
                                 ],
                                 onChanged: (value) {

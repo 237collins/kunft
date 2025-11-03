@@ -117,7 +117,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 if (_modeDePaiement != null) {
                   // Récupère le prix par nuit du logement
                   final dynamic prixValue =
-                      widget.logementData['prix_par_nuit'];
+                      widget.logementData['price_per_night'];
                   double? prixParNuit;
 
                   // Tente de convertir la valeur en double
@@ -130,7 +130,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   // Vérifie si le prix a pu être récupéré et converti correctement
                   if (prixParNuit == null) {
                     print(
-                      'Erreur : prix_par_nuit est manquant ou ne peut pas être converti.',
+                      'Erreur : price_per_night est manquant ou ne peut pas être converti.',
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

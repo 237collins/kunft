@@ -146,7 +146,7 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        height: screenHeight * .47,
+                        height: screenHeight * .47, // Taille d'ecran occupée
                         child: ClipRRect(
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(50),
@@ -205,10 +205,9 @@ class _WidgetAnimationState extends State<WidgetAnimation> {
                                     ),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color:
-                                          (_currentIndex == index)
-                                              ? Colors.white
-                                              : const Color(0x66ffffff),
+                                      color: (_currentIndex == index)
+                                          ? Colors.white
+                                          : const Color(0x66ffffff),
                                     ),
                                   );
                                 }),

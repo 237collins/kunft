@@ -336,10 +336,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Hôte disponibles',
                                 style: TextStyle(
                                   color: Color(0xff010101),
@@ -347,13 +347,20 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Text(
-                                'see all',
-                                style: TextStyle(
-                                  color: Color(0xffffd055),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  fontStyle: FontStyle.italic,
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffffd055),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: const Text(
+                                  'Voir tout',
+                                  style: TextStyle(
+                                    // color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    // fontStyle: FontStyle.italic,
+                                  ),
                                 ),
                               ),
                             ],
@@ -390,10 +397,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   ),
                                 ),
                           const SizedBox(height: 18),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Recherche récentes',
                                 style: TextStyle(
                                   color: Color(0xff010101),
@@ -401,13 +408,20 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Text(
-                                'see all',
-                                style: TextStyle(
-                                  color: Color(0xffffd055),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  fontStyle: FontStyle.italic,
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffffd055),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: const Text(
+                                  'Voir tout',
+                                  style: TextStyle(
+                                    // color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    // fontStyle: FontStyle.italic,
+                                  ),
                                 ),
                               ),
                             ],

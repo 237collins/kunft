@@ -71,7 +71,7 @@ class WidgetHouseInfos3Bis extends StatelessWidget {
         : 'https://placehold.co/400x400/EFEFEF/grey?text=No+Image';
 
     final String houseName = logementData['titre'] ?? 'Titre inconnu';
-    final String price = _formatPrice(logementData['prix_par_nuit']);
+    final String price = _formatPrice(logementData['price_per_night']);
     final String locate = logementData['adresse'] ?? 'Lieu inconnu';
     final String ownerName = logementData['user']?['name'] ?? 'Inconnu';
     final String time = _formatDate(logementData['created_at']);

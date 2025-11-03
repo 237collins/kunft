@@ -52,7 +52,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
       constraints: const BoxConstraints(
         // minHeight: 100,
         // minWidth: 130,
-        maxWidth: 300,
+        maxWidth: 250,
         // maxHeight: 150,
       ),
       child: Row(
@@ -66,7 +66,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                   widget.imgHouse,
                   fit: BoxFit.cover,
                   // width: double.infinity,
-                  width: 160,
+                  width: 120,
                   height: 100,
                 ),
               ),
@@ -74,7 +74,7 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
                 bottom: 0,
                 child: Container(
                   height: 60,
-                  width: 160,
+                  width: 120,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: const LinearGradient(
@@ -145,122 +145,132 @@ class _WidgetPopularHouseInfosState extends State<WidgetPopularHouseInfos> {
               ),
             ],
           ),
-          //
-          // Text
-          Container(
-            width: 130,
-            height: 100,
-            padding: const EdgeInsets.only(left: 5, right: 8, bottom: 5),
-            child: Column(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 120,
-                      child: Text(
-                        // nom du mobilier
-                        widget.houseName,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          // fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          // Prix
-                          widget.price,
-                          style: const TextStyle(
-                            color: Color(0xFF256AFD),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'BebasNeue',
-                          ),
-                        ),
-                        //
-                        const Text(
-                          // Duree
-                          ' / Nuit',
-                          style: TextStyle(
-                            color: Color(0xFF256AFD),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    SizedBox(
-                      // width: 150,
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on_rounded,
-                            color: Color(0xFF256AFD),
-                            size: 15,
-                          ),
-                          const SizedBox(width: 3),
-                          Text(
-                            // nom du lieu
-                            widget.locate,
-                            style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                            textAlign: TextAlign.left,
-                            softWrap: true,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                //
-                SizedBox(
-                  // width: 120,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //v======================
+          // Bloc de Text
+          // ==============================
+          Expanded(
+            child: Container(
+              // width: 130,
+              height: 100,
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.ownerName,
-                        style: const TextStyle(
-                          // color: Color(0xffffffff),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
+                      SizedBox(
+                        width: 120,
+                        child: Text(
+                          // nom du mobilier
+                          widget.houseName,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            // fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.access_time,
-                            size: 12,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(width: 3),
                           Text(
-                            widget.time,
+                            // Prix
+                            widget.price,
                             style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 9,
-                              fontStyle: FontStyle.italic,
-                              // fontWeight: FontWeight.w600,
+                              color: Color(0xFF256AFD),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'BebasNeue',
+                            ),
+                          ),
+                          //
+                          const Text(
+                            // Duree
+                            ' / Nuit',
+                            style: TextStyle(
+                              color: Color(0xFF256AFD),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
+                      // const SizedBox(height: 5),
+                      SizedBox(
+                        width: 130,
+                        // decoration: BoxDecoration(color: Color(0xff000000)),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on_rounded,
+                              color: Color(0xFF256AFD),
+                              size: 15,
+                            ),
+                            const SizedBox(width: 3),
+                            Text(
+                              // nom du lieu
+                              widget.locate,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.left,
+                              softWrap: true,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  const Spacer(),
+                  //
+                  SizedBox(
+                    // width: 120,
+                    // decoration: BoxDecoration(color: Color(0xff000000)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 60,
+                          child: Text(
+                            widget.ownerName,
+                            style: const TextStyle(
+                              // color: Color(0xffffffff),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.access_time,
+                              size: 12,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(width: 3),
+                            Text(
+                              widget.time,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 9,
+                                fontStyle: FontStyle.italic,
+                                // fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

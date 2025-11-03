@@ -16,25 +16,6 @@ class _WidgetHouseTextInfos2State extends State<WidgetHouseTextInfos2> {
   bool isExpanded =
       false; // Pour la description du logement (non utilisé ici pour le prix)
 
-  // Fonction utilitaire pour formater le prix
-  String _formatPrice(dynamic price) {
-    if (price == null) return 'N/A';
-    try {
-      double p;
-      if (price is String) {
-        p = double.parse(price);
-      } else if (price is num) {
-        p = price.toDouble();
-      } else {
-        return 'Prix invalide';
-      }
-      return '${NumberFormat('#,##0', 'fr_FR').format(p)} Fcfa';
-    } catch (e) {
-      debugPrint('Erreur de formatage du prix dans WidgetHouseTextInfos2: $e');
-      return 'Prix invalide';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // Récupérer les données du logement, ou utiliser des valeurs par défaut si null
@@ -44,8 +25,8 @@ class _WidgetHouseTextInfos2State extends State<WidgetHouseTextInfos2> {
     // ✅ RETIRÉ : final String description = logement?['description'] ?? 'Aucune description disponible.';
     final String ownerName =
         (logement?['user'] != null && logement?['user']['name'] != null)
-            ? '@${logement!['user']['name'].toString().replaceAll(' ', '.').toLowerCase()}' // Format @prenom.nom
-            : '@proprietaire.inconnu';
+        ? '@${logement!['user']['name'].toString().replaceAll(' ', '.').toLowerCase()}' // Format @prenom.nom
+        : '@proprietaire.inconnu';
 
     String formattedTime = 'Date Inconnue';
     if (logement?['created_at'] != null) {
@@ -65,8 +46,30 @@ class _WidgetHouseTextInfos2State extends State<WidgetHouseTextInfos2> {
       }
     }
 
+    //
+    // Fonction utilitaire pour formater le prix
+    String _formatPrice(dynamic price) {
+      if (price == null) return 'N/A';
+      try {
+        double p;
+        if (price is String) {
+          p = double.parse(price);
+        } else if (price is num) {
+          p = price.toDouble();
+        } else {
+          return 'Prix invalide';
+        }
+        return '${NumberFormat('#,##0', 'fr_FR').format(p)} Fcfa';
+      } catch (e) {
+        debugPrint(
+          'Erreur de formatage du prix dans WidgetHouseTextInfos2: $e',
+        );
+        return 'Prix invalide';
+      }
+    }
+
     // ✅ AJOUTÉ : Extraction et formatage du prix
-    final String formattedPrice = _formatPrice(logement?['prix_par_nuit']);
+    final String formattedPrice = _formatPrice(logement?['price_per_night']);
 
     return Column(
       children: [
@@ -91,10 +94,9 @@ class _WidgetHouseTextInfos2State extends State<WidgetHouseTextInfos2> {
                             fontWeight: FontWeight.w600,
                           ),
                           maxLines: isExpanded ? null : 1,
-                          overflow:
-                              isExpanded
-                                  ? TextOverflow.visible
-                                  : TextOverflow.ellipsis,
+                          overflow: isExpanded
+                              ? TextOverflow.visible
+                              : TextOverflow.ellipsis,
                         ),
                         // const SizedBox(height: 3),
                         // ✅ MODIFIÉ : Affichage dynamique du PRIX du logement

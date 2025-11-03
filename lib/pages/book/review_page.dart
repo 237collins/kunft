@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kunft/pages/home_screen.dart';
+import 'package:kunft/pages/home_screen1/home_screen.dart';
 import 'package:kunft/pages/profile_screen/elements/my_booking.dart';
 import 'package:kunft/provider/ReservationProvider.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -49,7 +49,7 @@ class _ReviewPageInfosState extends State<ReviewPageInfos> {
 
   @override
   Widget build(BuildContext context) {
-    final dynamic prixValue = widget.logementData['prix_par_nuit'];
+    final dynamic prixValue = widget.logementData['price_per_night'];
     double? prixParNuit;
 
     if (prixValue is String) {
@@ -487,7 +487,7 @@ class _ReviewPageInfosState extends State<ReviewPageInfos> {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     final dynamic prixValue = widget.logementData['prix_par_nuit'];
+//     final dynamic prixValue = widget.logementData['price_per_night'];
 //     double? prixParNuit;
 
 //     if (prixValue is String) {

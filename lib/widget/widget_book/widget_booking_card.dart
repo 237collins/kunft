@@ -35,8 +35,8 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
     if (status.toLowerCase() == 'confirmée') {
       return Colors.green.shade700;
     }
-    if (status.toLowerCase() == 'en_cours' ||
-        status.toLowerCase() == 'en_attente') {
+    if (status.toLowerCase() == 'En cours' ||
+        status.toLowerCase() == 'En attente') {
       return const Color(0xFF256AFD);
     }
     return Colors.grey;
@@ -49,6 +49,7 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     // We access the widget's properties using `widget.`
     final int dureeDuSejour = getDureeDuSejour(
       widget.dateDebut,
@@ -113,7 +114,7 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    // const SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -134,65 +135,74 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                     ),
                     const SizedBox(height: 10),
 
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              widget.price,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'BebasNeue',
-                                color: Color(0xFF256AFD),
+                    SizedBox(
+                      // height: 20,
+                      width: screenWidth * .65,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                widget.price,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily: 'BebasNeue',
+                                  color: Color(0xFF256AFD),
+                                ),
+                              ),
+                              const Text(
+                                ' xaf',
+                                style: TextStyle(
+                                  fontFamily: 'BebasNeue',
+                                  color: Color(0xFF256AFD),
+                                ),
+                              ),
+                              // const SizedBox(width: 3),
+                              Text(
+                                ' pour $dureeDuSejour jours',
+                                style: const TextStyle(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                          // const SizedBox(width: 20),
+                          // Affichage du Statut  de la reservation
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                width: 1,
+                                color: _getstatusColor(
+                                  widget.reservationstatus,
+                                ),
                               ),
                             ),
-                            const Text(
-                              ' xaf',
+                            child: Text(
+                              widget.reservationstatus,
                               style: TextStyle(
-                                fontFamily: 'BebasNeue',
-                                color: Color(0xFF256AFD),
+                                fontWeight: FontWeight.w600,
+                                color: _getstatusColor(
+                                  widget.reservationstatus,
+                                ),
+                                fontSize: 10,
                               ),
                             ),
-                            Text(
-                              ' pour $dureeDuSejour jours',
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 10),
-                        // Affichage du Statut  de la reservation
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 2,
                           ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            border: Border.all(
-                              width: 1,
-                              color: _getstatusColor(widget.reservationstatus),
-                            ),
-                          ),
-                          child: Text(
-                            widget.reservationstatus,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: _getstatusColor(widget.reservationstatus),
-                              fontSize: 10,
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 3),
             const Divider(color: Colors.black12),
-            const SizedBox(height: 5),
+            // const SizedBox(height: 3),
             Row(
               children: [
                 Expanded(
@@ -235,10 +245,10 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         color: const Color(0xFF256AFD),
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Text(
                         'Détails',
@@ -255,14 +265,14 @@ class _WidgetBookingCardState extends State<WidgetBookingCard> {
                 const SizedBox(width: 20),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 6.5),
+                    padding: const EdgeInsets.symmetric(vertical: 4.5),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
                         width: 2.5,
                         color: const Color(0xFF256AFD),
                       ),
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Text(
                       'Confirmez',

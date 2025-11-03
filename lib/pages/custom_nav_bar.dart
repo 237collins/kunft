@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import 'package:kunft/pages/home_screen.dart';
+import 'package:kunft/pages/home_screen1/home_screen.dart';
 import 'package:kunft/pages/explore_screen.dart';
 import 'package:kunft/pages/favorites.dart';
 import 'package:kunft/pages/profile_screen/profile_screen.dart';
@@ -34,7 +34,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         child: _pages[_currentIndex],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white, // 🎨 Couleur de fond de la navbar
           boxShadow: [
             BoxShadow(

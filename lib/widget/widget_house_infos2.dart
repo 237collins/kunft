@@ -37,11 +37,9 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder:
-              (context) => PropertyDetail(
-                logementData:
-                    widget.logementData!, // Passe les données complètes
-              ),
+          builder: (context) => PropertyDetail(
+            logementData: widget.logementData!, // Passe les données complètes
+          ),
         ),
       );
     } else {
@@ -72,12 +70,12 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color(0x1a000000),
               spreadRadius: 2,
               blurRadius: 3,
-              offset: const Offset(-2, 2),
+              offset: Offset(-2, 2),
             ),
           ],
         ),
@@ -151,9 +149,9 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                               ),
                             ),
                             //
-                            Text(
+                            const Text(
                               ' | Nuit',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
                                 // fontFamily: 'BebasNeue',
@@ -162,7 +160,7 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 7),
+                        const SizedBox(height: 5),
                         Row(
                           children: [
                             const Icon(
@@ -182,10 +180,9 @@ class _WidgetHouseInfos2State extends State<WidgetHouseInfos2> {
                                 softWrap: true,
                                 textAlign: TextAlign.left,
                                 maxLines: isExpanded ? null : 1,
-                                overflow:
-                                    isExpanded
-                                        ? TextOverflow.visible
-                                        : TextOverflow.ellipsis,
+                                overflow: isExpanded
+                                    ? TextOverflow.visible
+                                    : TextOverflow.ellipsis,
                               ),
                             ),
                           ],

@@ -28,7 +28,7 @@ class WidgetHouseImage1 extends StatelessWidget {
       onTap: () => onTapImage(imgHouse),
       child: Container(
         margin: const EdgeInsets.only(bottom: 15.0),
-        padding: EdgeInsets.only(bottom: 5),
+        padding: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(23.0),
@@ -36,12 +36,12 @@ class WidgetHouseImage1 extends StatelessWidget {
           border: isSelected
               ? Border.all(color: const Color(0xcc2196F3), width: 2.0)
               : null,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black12,
               spreadRadius: 1,
               blurRadius: 5,
-              offset: const Offset(0, 3),
+              offset: Offset(0, 3),
             ),
           ],
         ),

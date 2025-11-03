@@ -1,20 +1,20 @@
 // Nouve
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:kunft/main.dart';
 import 'package:kunft/pages/explore_screen.dart';
+import 'package:kunft/pages/home_screen1/widgets/popular_units.dart';
+import 'package:kunft/pages/home_screen1/widgets/properties_categories.dart';
+import 'package:kunft/pages/home_screens/home_screen2.dart';
+import 'package:kunft/pages/home_screens/main_screeen.dart';
 import 'package:kunft/pages/profile_screen/profile_screen.dart';
 import 'package:kunft/provider/UserProvider.dart';
 import 'package:provider/provider.dart'; // Import de Provider
 
 import 'package:kunft/pages/list_logement.dart';
-import 'package:kunft/pages/list_logement_populaire.dart';
 
 import 'package:kunft/widget/widget_animation.dart';
 import 'package:kunft/widget/widget_house_text_infos.dart';
 import 'package:kunft/widget/widget_house_infos2.dart';
 import 'package:kunft/widget/widget_house_infos3.dart';
-import 'package:kunft/widget/widget_popular_house_infos.dart';
 import 'package:kunft/widget/widget_profile_infos.dart';
 
 // Importez votre LogementProvider
@@ -29,18 +29,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  // ----- Ancien code -------
-  // void initState() {
-  //   super.initState();
-  //   // Utilise addPostFrameCallback pour s'assurer que la fonction de
-  //   // chargement est appelée après le premier rendu du widget.
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     Provider.of<LogementProvider>(
-  //       context,
-  //       listen: false,
-  //     ).fetchHomeScreenData();
-  //   });
-  // }
   // ----- Nouveau code. ------
   @override
   void initState() {
@@ -67,32 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // Test de Notification
-  Future<void> showNotification() async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-          'channel_id', // ID du canal
-          'Channel Name', // Nom du canal visible par l'utilisateur
-          importance: Importance.max,
-          priority: Priority.high,
-        );
-
-    const DarwinNotificationDetails iOSDetails = DarwinNotificationDetails();
-
-    const NotificationDetails platformDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iOSDetails,
-    );
-
-    await flutterLocalNotificationsPlugin.show(
-      0, // ID unique de la notification
-      'Titre de la notification',
-      'Ceci est le corps de la notification.',
-      platformDetails,
-      payload: 'item x', // Données à transmettre lors du clic
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -103,13 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
         final List<dynamic> logements = logementProvider.mainLogements;
         final bool isLoadingLogements = logementProvider.isLoadingMainLogements;
         final String? errorLogements = logementProvider.errorMainLogements;
-
-        final List<dynamic> popularLogements =
-            logementProvider.popularLogements;
-        final bool isLoadingPopularLogements =
-            logementProvider.isLoadingPopularLogements;
-        final String? errorPopularLogements =
-            logementProvider.errorPopularLogements;
 
         // Le dernier logement sera le premier de la liste générale
         final Map<String, dynamic>? dernierLogement = logements.isNotEmpty
@@ -189,103 +144,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
+                      // Nouvelle emplacement
                       const SizedBox(height: 18),
-                      // ----------------------------------------------
-                      // ------- Affichage des logements populaires : Doit afficher les logements les plus visités ----
-                      // ----------------------------------------------
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Logement Populaire',
-                                style: TextStyle(
-                                  color: Color(0xff010101),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ListLogementPopulaire(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF256AFD),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: const Text(
-                                    'Voir tout',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          // FUTURE IMPROVEMENT: Cette section affichera les logements des propriétaires ayant payé l'abonnement
-                          isLoadingPopularLogements
-                              ? const Center(child: CircularProgressIndicator())
-                              : errorPopularLogements != null
-                              ? Center(
-                                  child: Text(
-                                    'Erreur: $errorPopularLogements',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              : popularLogements.isEmpty
-                              ? const Center(
-                                  child: Text(
-                                    'Aucun logement populaire disponible.',
-                                  ),
-                                )
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: SizedBox(
-                                    height: 130,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: popularLogements.map((l) {
-                                        final formattedData = logementProvider
-                                            .formatLogementData(l);
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                            right: 10.0,
-                                          ),
-                                          child: WidgetPopularHouseInfos(
-                                            imgHouse: formattedData['imgUrl']!,
-                                            houseName:
-                                                formattedData['houseName']!,
-                                            price: formattedData['price']!,
-                                            locate: formattedData['locate']!,
-                                            ownerName:
-                                                formattedData['ownerName']!,
-                                            time: formattedData['time']!,
-                                            logementData: l,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ),
-                        ],
-                      ),
+                      // // ----------------------------------------------
+                      // // ------- Affichage des logements populaires : Doit afficher les logements les plus visités ou autres ----
+                      // // ----------------------------------------------
+                      const PopularUnits(),
+
+                      // // ----------------------------------------------
+                      // // ------- Affichage des logements Categories de Properties : Disponible ----
+                      //
+                      //  position des listes de catego
+                      const PropertiesCategories(),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -327,7 +198,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
+
+                      //==================================================================
                       // Boutton de Nav temporaire
+                      //==================================================================
                       Row(
                         children: [
                           InkWell(
@@ -342,32 +216,31 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Text('Recherche'),
                           ),
                           // const SizedBox(width: 20),
-                          // const SizedBox(width: 30),
                           // Exemple dans un bouton
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     // ✅ Passe le BuildContext
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => const ForgotPassword(),
-                          //       ),
-                          //     );
-                          //   },
-                          //   child: const Text('Password test'),
-                          // ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // ✅ Passe le BuildContext
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MainScreeen(),
+                                ),
+                              );
+                            },
+                            child: const Text('Test accueil'),
+                          ),
 
-                          // InkWell(
-                          //   onTap: () {
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => const MyBiooking2(),
-                          //       ),
-                          //     );
-                          //   },
-                          //   child: Text('My Reservations Page'),
-                          // ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen2(),
+                                ),
+                              );
+                            },
+                            child: const Text('Home test'),
+                          ),
 
                           // Test de notication
                           // ElevatedButton(
@@ -388,6 +261,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
+                      //==================================================================
+                      // Fin des Bouttons de Nav temporaire
+                      //==================================================================
                       const SizedBox(height: 16),
                       // Affichage des logements ou indicateur de chargement/message d'erreur
                       isLoadingLogements

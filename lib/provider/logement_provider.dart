@@ -127,9 +127,11 @@ class LogementProvider with ChangeNotifier {
         ? '${l['images'][0]['image_paths']}'
         : 'https://www.batiactu.com/images/auto/620-465-c/20210913_170834_immobilier-dossier-credit-istock.jpg';
 
-    final String ownerName = (l['user'] != null && l['user']['name'] != null)
-        ? '@${(l['user']['name'] as String).replaceAll(' ', '.').toLowerCase()}'
-        : '@Hôte.inconnu';
+    // final String ownerName = (l['user'] != null && l['user']['name'] != null)
+    //     ? '@${(l['user']['name'] as String).replaceAll(' ', '.').toLowerCase()}'
+    //     : '@Hôte.inconnu'; // Ancien  code
+    final String ownerName =
+        '@${(l['users']?['name'] as String?)?.replaceAll(' ', '.').toLowerCase() ?? 'Hôte.inconnu'}';
 
     String formattedTime = 'Date inconnue';
     if (l['created_at'] != null) {
@@ -157,20 +159,20 @@ class LogementProvider with ChangeNotifier {
     }
 
     String formattedPrice = 'N/A';
-    if (l['prix_par_nuit'] != null) {
+    if (l['price_per_night'] != null) {
       try {
         double price;
-        if (l['prix_par_nuit'] is String) {
-          price = double.parse(l['prix_par_nuit'] as String);
-        } else if (l['prix_par_nuit'] is num) {
-          price = (l['prix_par_nuit'] as num).toDouble();
+        if (l['price_per_night'] is String) {
+          price = double.parse(l['price_per_night'] as String);
+        } else if (l['price_per_night'] is num) {
+          price = (l['price_per_night'] as num).toDouble();
         } else {
           throw FormatException('Type de prix inattendu');
         }
         formattedPrice = NumberFormat('#,##0', 'fr_FR').format(price);
       } catch (e) {
         print(
-          'DEBUG: Erreur de formatage du prix pour "${l['prix_par_nuit']}" : $e',
+          'DEBUG: Erreur de formatage du prix pour "${l['price_per_night']}" : $e',
         );
         formattedPrice = 'Prix invalide';
       }
@@ -365,6 +367,9 @@ class LogementProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+  //====================================================================
+  // Pour afficher les hote populaires
+  //====================================================================
 
   Future<void> fetchTrendingOwners(String? authToken) async {
     _isLoadingTrendingOwners = true;
@@ -405,6 +410,10 @@ class LogementProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //====================================================================
+  // Pour afficher les recherches recentes, mais pas encore optimale
+  //====================================================================
 
   Future<void> fetchRecentSearches(String? authToken) async {
     _isLoadingRecentSearches = true;
@@ -447,6 +456,9 @@ class LogementProvider with ChangeNotifier {
     }
   }
 
+  //====================================================================
+  // Pour afficher les logemnts a l'accueil
+  //====================================================================
   Future<void> fetchHomeScreenData(String? authToken) async {
     await Future.wait<void>([
       fetchLastLogement(authToken),
@@ -715,20 +727,20 @@ class LogementProvider with ChangeNotifier {
 //     }
 
 //     String formattedPrice = 'N/A';
-//     if (l['prix_par_nuit'] != null) {
+//     if (l['price_per_night'] != null) {
 //       try {
 //         double price;
-//         if (l['prix_par_nuit'] is String) {
-//           price = double.parse(l['prix_par_nuit'] as String);
-//         } else if (l['prix_par_nuit'] is num) {
-//           price = (l['prix_par_nuit'] as num).toDouble();
+//         if (l['price_per_night'] is String) {
+//           price = double.parse(l['price_per_night'] as String);
+//         } else if (l['price_per_night'] is num) {
+//           price = (l['price_per_night'] as num).toDouble();
 //         } else {
 //           throw FormatException('Type de prix inattendu');
 //         }
 //         formattedPrice = NumberFormat('#,##0', 'fr_FR').format(price);
 //       } catch (e) {
 //         print(
-//           'DEBUG: Erreur de formatage du prix pour "${l['prix_par_nuit']}" : $e',
+//           'DEBUG: Erreur de formatage du prix pour "${l['price_per_night']}" : $e',
 //         );
 //         formattedPrice = 'Prix invalide';
 //       }
@@ -1305,20 +1317,20 @@ class LogementProvider with ChangeNotifier {
 //     }
 
 //     String formattedPrice = 'N/A';
-//     if (l['prix_par_nuit'] != null) {
+//     if (l['price_per_night'] != null) {
 //       try {
 //         double price;
-//         if (l['prix_par_nuit'] is String) {
-//           price = double.parse(l['prix_par_nuit'] as String);
-//         } else if (l['prix_par_nuit'] is num) {
-//           price = (l['prix_par_nuit'] as num).toDouble();
+//         if (l['price_per_night'] is String) {
+//           price = double.parse(l['price_per_night'] as String);
+//         } else if (l['price_per_night'] is num) {
+//           price = (l['price_per_night'] as num).toDouble();
 //         } else {
 //           throw FormatException('Type de prix inattendu');
 //         }
 //         formattedPrice = NumberFormat('#,##0', 'fr_FR').format(price);
 //       } catch (e) {
 //         print(
-//           'DEBUG: Erreur de formatage du prix pour "${l['prix_par_nuit']}" : $e',
+//           'DEBUG: Erreur de formatage du prix pour "${l['price_per_night']}" : $e',
 //         );
 //         formattedPrice = 'Prix invalide';
 //       }
@@ -1799,20 +1811,20 @@ class LogementProvider with ChangeNotifier {
 //     }
 
 //     String formattedPrice = 'N/A';
-//     if (l['prix_par_nuit'] != null) {
+//     if (l['price_per_night'] != null) {
 //       try {
 //         double price;
-//         if (l['prix_par_nuit'] is String) {
-//           price = double.parse(l['prix_par_nuit'] as String);
-//         } else if (l['prix_par_nuit'] is num) {
-//           price = (l['prix_par_nuit'] as num).toDouble();
+//         if (l['price_per_night'] is String) {
+//           price = double.parse(l['price_per_night'] as String);
+//         } else if (l['price_per_night'] is num) {
+//           price = (l['price_per_night'] as num).toDouble();
 //         } else {
 //           throw FormatException('Type de prix inattendu');
 //         }
 //         formattedPrice = NumberFormat('#,##0', 'fr_FR').format(price);
 //       } catch (e) {
 //         print(
-//           'DEBUG: Erreur de formatage du prix pour "${l['prix_par_nuit']}" : $e',
+//           'DEBUG: Erreur de formatage du prix pour "${l['price_per_night']}" : $e',
 //         );
 //         formattedPrice = 'Prix invalide';
 //       }

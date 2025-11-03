@@ -9,7 +9,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
 import 'package:kunft/pages/auth/signup_page.dart';
-import 'package:kunft/pages/home_screen.dart';
+import 'package:kunft/pages/home_screen1/home_screen.dart';
 import 'package:kunft/provider/UserProvider.dart'; // Assurez-vous que le chemin est correct
 import 'package:kunft/widget/login_message/sliding_text_kit.dart';
 

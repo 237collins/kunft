@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kunft/pages/home_screen.dart';
+import 'package:kunft/pages/home_screen1/home_screen.dart';
 import 'package:kunft/widget/notifications_elements/widget_booking_pay_fail.dart';
 import 'package:kunft/widget/notifications_elements/widget_booking_pay_succes.dart';
 import 'package:kunft/widget/notifications_elements/widget_booking_succes.dart';
