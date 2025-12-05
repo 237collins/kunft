@@ -230,17 +230,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Text('Test accueil'),
                           ),
 
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeScreen2(),
-                                ),
-                              );
-                            },
-                            child: const Text('Home test'),
-                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => const HomeScreen2(),
+                          //       ),
+                          //     );
+                          //   },
+                          //   child: const Text('Home test'),
+                          // ),
 
                           // Test de notication
                           // ElevatedButton(
